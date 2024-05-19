@@ -50,8 +50,8 @@ const BalanceBody = () => {
                         </div>
                       )}
                       {firstNewDate && isNewDate && (firstNewDate = false)}
-                      <div className="p-4 flex justify-between hover:bg-slate-700 transition-colors">
-                        <div className="flex flex-col gap-1 font-medium">
+                      <div className="p-4 flex justify-between group hover:bg-slate-700 transition-colors">
+                        <div className="flex flex-col gap-1 font-medium group-hover:text-gray-300">
                           <div>
                             {item.user.name ?? "Anonymous"} -{" "}
                             {item.user.npm ?? "?"}
@@ -61,7 +61,7 @@ const BalanceBody = () => {
                         <div className="flex flex-col gap-1 text-end">
                           <div>
                             {item.prev_balance && (
-                              <div className="text-gray-500 font-medium">
+                              <div className="text-gray-500 font-medium group-hover:text-gray-400">
                                 Rp{" "}
                                 {item.prev_balance
                                   .toLocaleString()
@@ -69,15 +69,19 @@ const BalanceBody = () => {
                                 ,-
                               </div>
                             )}
-                            <div className="text-green-500 font-medium">
+                            <div className="text-green-500 font-medium group-hover:text-green-600">
                               {item.activity === "Add" && "+"} Rp{" "}
                               {item.amount.toLocaleString().replace(/,/g, ".")}
                               ,-
                             </div>
                           </div>
-                          <div>{item.created_at.split("at")[1]}</div>
+                          <div className="group-hover:text-gray-300">
+                            {item.created_at.split("at")[1]}
+                          </div>
                         </div>
                       </div>
+                      {index !==
+                        balanceHistoryState.balanceHistory.length - 1 && <hr />}
                     </div>
                   );
                 })}

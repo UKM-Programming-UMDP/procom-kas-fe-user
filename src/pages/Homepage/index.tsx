@@ -61,7 +61,9 @@ const Homepage = () => {
               </AppearFadeIn>
             </div>
           )}
-          <div className="mx-3 mt-1 mb-3">{appComponent[state.app]}</div>
+          <div className="mx-3 mt-1 mb-3 h-96 overflow-auto">
+            {appComponent[state.app]}
+          </div>
         </CardAutosize>
       </div>
     </div>

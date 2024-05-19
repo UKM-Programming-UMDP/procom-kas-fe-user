@@ -22,7 +22,7 @@ const BalanceHeader = () => {
               <a
                 href="https://ukmprogramming.mdp.ac.id/"
                 target="_blank"
-                className="font-extralight text-blue-500 flex gap-1 items-center"
+                className="font-extralight text-blue-500 flex gap-1 items-center hover:underline"
               >
                 <Link />
                 UKM Programming Website

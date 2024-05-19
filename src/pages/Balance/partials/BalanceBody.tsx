@@ -6,6 +6,7 @@ import AppearFadeIn from "@components/Animation/AppearFadeIn";
 
 const BalanceBody = () => {
   const { state: balanceHistoryState } = useBalanceHistoryContext();
+
   return (
     <AppearFadeIn direction="bottom" delay={0.8}>
       {balanceHistoryState.balanceHistoryLoading ? (
@@ -80,8 +81,7 @@ const BalanceBody = () => {
                           </div>
                         </div>
                       </div>
-                      {index !==
-                        balanceHistoryState.balanceHistory.length - 1 && <hr />}
+                      <hr />
                     </div>
                   );
                 })}

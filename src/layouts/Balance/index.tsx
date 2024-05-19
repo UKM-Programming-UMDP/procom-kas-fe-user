@@ -1,10 +1,15 @@
 import Balance from "@pages/Balance";
-import { BalanceProvider } from "@pages/Balance/context";
+import {
+  BalanceHistoryProvider,
+  BalanceProvider,
+} from "@pages/Balance/context";
 
 const BalanceLayout = () => {
   return (
     <BalanceProvider>
-      <Balance />
+      <BalanceHistoryProvider>
+        <Balance />
+      </BalanceHistoryProvider>
     </BalanceProvider>
   );
 };

@@ -9,6 +9,9 @@ type BalanceStateType = {
 type BalanceHistoryStateType = {
   balanceHistory: BalanceHistoryType;
   balanceHistoryLoading: boolean;
+  totalItems: number;
+  page: number;
+  totalPage: number;
 };
 
 export const initialState: BalanceStateType = {
@@ -19,6 +22,9 @@ export const initialState: BalanceStateType = {
 export const initialBalanceHistoryState: BalanceHistoryStateType = {
   balanceHistory: [],
   balanceHistoryLoading: false,
+  totalItems: 0,
+  page: 1,
+  totalPage: 1,
 };
 
 type BalanceContextType = {

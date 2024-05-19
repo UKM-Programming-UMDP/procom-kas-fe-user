@@ -8,6 +8,7 @@ type GetResponse = {
   note: string;
   user: {
     npm: string;
+    name: string;
   };
   created_at: string;
 }[];

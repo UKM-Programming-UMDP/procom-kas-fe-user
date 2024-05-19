@@ -17,10 +17,32 @@ const useBalanceHistory = (): HookReturn => {
       // handle error
       return;
     }
+
+    const formattedData = res.data.map((item) => {
+      const date = new Date(item.created_at);
+      const options = {
+        day: "numeric" as const,
+        month: "long" as const,
+        year: "numeric" as const,
+        hour: "2-digit" as const,
+        minute: "2-digit" as const,
+        second: "2-digit" as const,
+        hour12: true,
+      };
+      const formattedDate = date.toLocaleString("en-US", options);
+      return {
+        ...item,
+        created_at: formattedDate,
+      };
+    });
+
     setState((prev) => ({
       ...prev,
       balanceHistoryLoading: false,
-      balanceHistory: [...prev.balanceHistory, ...res.data],
+      totalItems: res.pagination?.total_items ?? 0,
+      page: res.pagination?.page ?? 1,
+      totalPage: res.pagination?.total_pages ?? 1,
+      balanceHistory: [...prev.balanceHistory, ...formattedData],
     }));
   };
 

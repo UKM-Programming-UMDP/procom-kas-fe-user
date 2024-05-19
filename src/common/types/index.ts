@@ -4,6 +4,12 @@ export type APIResponse<T = void> = {
   message: string;
   errors: APIFieldError[];
   data: T;
+  pagination?: {
+    page: number;
+    limit: number;
+    total_items: number;
+    total_pages: number;
+  };
 } | null;
 
 export type APIFieldError = {

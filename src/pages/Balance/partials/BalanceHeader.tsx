@@ -18,7 +18,7 @@ const BalanceHeader = () => {
           </div>
           <div className="flex flex-col gap-2">
             <div>
-              <p>UKM Programming Balance</p>
+              <p className="text-lg">UKM Programming Balance</p>
               <a
                 href="https://ukmprogramming.mdp.ac.id/"
                 target="_blank"
@@ -28,7 +28,7 @@ const BalanceHeader = () => {
                 UKM Programming Website
               </a>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap justify-center gap-2">
               <div className="flex flex-col gap-1 rounded-md bg-slate-800 py-1 px-2 border-dashed">
                 <p className="font-bold">
                   Rp {balanceState.balance.toLocaleString().replace(/,/g, ".")}

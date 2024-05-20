@@ -40,7 +40,7 @@ const BalanceFooter = () => {
                   }
                   className={cn(
                     balanceHistoryState.page === index + 1
-                      ? "bg-slate-900"
+                      ? "bg-slate-900 border border-white"
                       : "bg-slate-800 hover:bg-slate-700 hover:scale-105 transition-all",
                     "py-2 px-3 font-bold rounded-md",
                   )}

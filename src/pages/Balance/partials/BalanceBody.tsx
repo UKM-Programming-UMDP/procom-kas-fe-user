@@ -57,8 +57,10 @@ const BalanceBody = () => {
         {balanceHistoryState.balanceHistoryLoading ? (
           <CircularProgress size="2rem" />
         ) : (
-          <div className="bg-slate-800 rounded-md">
-            {balanceHistoryState.mode === "list" ? (
+          <div className="bg-slate-800 rounded-md overflow-x-auto">
+            {balanceHistoryState.balanceHistory.length === 0 ? (
+              <div className="text-center p-2">Balance History is empty</div>
+            ) : balanceHistoryState.mode === "list" ? (
               <BalanceBodyList
                 firstNewDate={firstNewDate}
                 setFirstNewDate={setFirstNewDate}

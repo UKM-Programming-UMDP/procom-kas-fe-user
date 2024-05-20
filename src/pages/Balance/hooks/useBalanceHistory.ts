@@ -66,6 +66,7 @@ const useBalanceHistory = (): HookReturn => {
       const formattedDate = formatDate(date);
       return {
         ...item,
+        prev_balance: item.prev_balance ?? 0,
         user: {
           name: item.user.name ?? "Anonymous",
           npm: item.user.npm ?? "000000000",
@@ -84,7 +85,8 @@ const useBalanceHistory = (): HookReturn => {
       balanceHistory: formattedData,
     }));
 
-    if (formattedData.length === 0) {
+    console.log(page);
+    if (formattedData.length === 0 && page > 1) {
       fetchBalanceHistory(limit, 1, order_by, sort);
     }
   };

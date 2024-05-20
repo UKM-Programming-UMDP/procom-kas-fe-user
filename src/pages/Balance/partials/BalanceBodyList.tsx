@@ -47,12 +47,10 @@ const BalanceBodyList = ({
               </div>
               <div className="flex flex-col gap-1 text-end">
                 <div>
-                  {item.prev_balance && (
-                    <div className="text-gray-500 font-medium group-hover:text-gray-400">
-                      Rp {item.prev_balance.toLocaleString().replace(/,/g, ".")}
-                      ,-
-                    </div>
-                  )}
+                  <div className="text-gray-500 font-medium group-hover:text-gray-400">
+                    Rp {item.prev_balance.toLocaleString().replace(/,/g, ".")}
+                    ,-
+                  </div>
                   <div className="text-green-500 font-medium group-hover:text-green-600">
                     {item.activity === "Add" && "+"} Rp{" "}
                     {item.amount.toLocaleString().replace(/,/g, ".")}

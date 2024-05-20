@@ -12,6 +12,7 @@ type BalanceHistoryStateType = {
   mode: "list" | "table" | "chart";
   page: number;
   limit: number;
+  orderBy: "desc" | "asc";
   totalItems: number;
   totalPages: number;
 };
@@ -27,6 +28,7 @@ export const initialBalanceHistoryState: BalanceHistoryStateType = {
   mode: "list",
   page: 1,
   limit: 10,
+  orderBy: "desc",
   totalItems: 0,
   totalPages: 1,
 };

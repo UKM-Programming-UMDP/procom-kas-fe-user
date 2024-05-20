@@ -7,9 +7,11 @@ import { useState } from "react";
 import BalanceBodyTable from "./BalanceBodyTable";
 import { cn } from "@utils/cn";
 import BalanceBodyChart from "./BalanceBodyChart";
+import useBalanceHistory from "../hooks/useBalanceHistory";
 
 const BalanceBody = () => {
   const { state: balanceHistoryState, setState } = useBalanceHistoryContext();
+  const { fetchBalanceHistory } = useBalanceHistory();
   const [firstNewDate, setFirstNewDate] = useState(true);
 
   type ModeButtonProps = {
@@ -41,16 +43,34 @@ const BalanceBody = () => {
       <div className="flex flex-col gap-4 bg-slate-900 p-4 rounded-md">
         <div className="flex justify-between items-center">
           <div className="text-lg font-semibold">Balance History</div>
-          <div className="flex bg-slate-950 p-2 rounded-md">
-            <ModeButton mode="list" currentMode={balanceHistoryState.mode}>
-              <List />
-            </ModeButton>
-            <ModeButton mode="table" currentMode={balanceHistoryState.mode}>
-              <TableChart />
-            </ModeButton>
-            <ModeButton mode="chart" currentMode={balanceHistoryState.mode}>
-              <BarChart />
-            </ModeButton>
+          <div className="flex gap-4 items-center">
+            {!balanceHistoryState.balanceHistoryLoading && (
+              <AppearFadeIn direction="bottom">
+                <button
+                  onClick={() =>
+                    fetchBalanceHistory(
+                      balanceHistoryState.limit,
+                      balanceHistoryState.page,
+                      balanceHistoryState.orderBy === "desc" ? "asc" : "desc",
+                    )
+                  }
+                  className="bg-slate-800 hover:bg-slate-700 hover:scale-105 transition-all py-2 px-3 font-bold rounded-md uppercase"
+                >
+                  {balanceHistoryState.orderBy}
+                </button>
+              </AppearFadeIn>
+            )}
+            <div className="flex bg-slate-950 p-2 rounded-md">
+              <ModeButton mode="list" currentMode={balanceHistoryState.mode}>
+                <List />
+              </ModeButton>
+              <ModeButton mode="table" currentMode={balanceHistoryState.mode}>
+                <TableChart />
+              </ModeButton>
+              <ModeButton mode="chart" currentMode={balanceHistoryState.mode}>
+                <BarChart />
+              </ModeButton>
+            </div>
           </div>
         </div>
         <hr />

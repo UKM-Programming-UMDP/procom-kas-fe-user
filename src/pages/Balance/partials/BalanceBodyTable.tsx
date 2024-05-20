@@ -1,5 +1,6 @@
 import AppearGrow from "@components/Animation/AppearGrow";
 import { useBalanceHistoryContext } from "../context";
+import AppearFadeIn from "@components/Animation/AppearFadeIn";
 
 const BalanceBodyTable = () => {
   const { state: balanceHistoryState } = useBalanceHistoryContext();
@@ -30,18 +31,26 @@ const BalanceBodyTable = () => {
         <tbody className="bg-white text-gray-500 divide-y divide-gray-200">
           {balanceHistoryState.balanceHistory.map((item, index) => (
             <tr key={index}>
-              <td className="px-6 py-4 whitespace-nowrap">
-                Rp {item.amount.toLocaleString().replace(/,/g, ".")}
-                ,-
-              </td>
+              <AppearFadeIn direction="bottom" delay={0.1 * index}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  Rp {item.amount.toLocaleString().replace(/,/g, ".")}
+                  ,-
+                </td>
+              </AppearFadeIn>
+
               <td className="px-6 py-4 whitespace-nowrap">
                 Rp {item.prev_balance.toLocaleString().replace(/,/g, ".")}
                 ,-
               </td>
+
               <td className="px-6 py-4 whitespace-nowrap">{item.user.npm}</td>
+
               <td className="px-6 py-4 whitespace-nowrap">{item.user.name}</td>
+
               <td className="px-6 py-4 whitespace-nowrap">{item.activity}</td>
+
               <td className="px-6 py-4 whitespace-nowrap">{item.note}</td>
+
               <td className="px-6 py-4 whitespace-nowrap">
                 {item.created_at !== "Today" && item.created_at !== "Yesterday"
                   ? item.created_at.split("at")[0]

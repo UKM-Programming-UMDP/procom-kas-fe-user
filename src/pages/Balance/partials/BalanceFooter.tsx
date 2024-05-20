@@ -18,6 +18,7 @@ const BalanceFooter = () => {
                 fetchBalanceHistory(
                   Number(e.target.value),
                   balanceHistoryState.page,
+                  balanceHistoryState.orderBy,
                 )
               }
             >
@@ -36,7 +37,11 @@ const BalanceFooter = () => {
                   disabled={balanceHistoryState.page === index + 1}
                   key={index}
                   onClick={() =>
-                    fetchBalanceHistory(balanceHistoryState.limit, index + 1)
+                    fetchBalanceHistory(
+                      balanceHistoryState.limit,
+                      index + 1,
+                      balanceHistoryState.orderBy,
+                    )
                   }
                   className={cn(
                     balanceHistoryState.page === index + 1

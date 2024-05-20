@@ -6,7 +6,7 @@ interface HookReturn {
   fetchBalanceHistory: (
     limit?: number,
     page?: number,
-    order_by?: string,
+    order_by?: "desc" | "asc",
     sort?: string,
   ) => void;
 }
@@ -17,7 +17,7 @@ const useBalanceHistory = (): HookReturn => {
   const fetchBalanceHistory = async (
     limit: number = 10,
     page: number = 1,
-    order_by: string = "desc",
+    order_by: "desc" | "asc" = "desc",
     sort: string = "created_at",
   ) => {
     setState((prev) => ({ ...prev, balanceHistoryLoading: true }));
@@ -80,6 +80,7 @@ const useBalanceHistory = (): HookReturn => {
       balanceHistoryLoading: false,
       page: res.pagination?.page ?? 1,
       limit: res.pagination?.limit ?? 10,
+      orderBy: order_by,
       totalItems: res.pagination?.total_items ?? 0,
       totalPages: res.pagination?.total_pages ?? 1,
       balanceHistory: formattedData,

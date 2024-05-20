@@ -2,6 +2,7 @@ import { cn } from "@utils/cn";
 import { useEffect } from "react";
 import { useBalanceHistoryContext } from "../context";
 import AppearGrow from "@components/Animation/AppearGrow";
+import AppearFadeIn from "@components/Animation/AppearFadeIn";
 
 type BalanceBodyListProps = {
   firstNewDate: boolean;
@@ -28,7 +29,7 @@ const BalanceBodyList = ({
         lastDate = currentDate;
 
         return (
-          <div key={index}>
+          <AppearFadeIn key={index} direction="bottom" delay={0.1 * index}>
             {isNewDate && (
               <div
                 className={cn(
@@ -64,7 +65,7 @@ const BalanceBodyList = ({
               </div>
             </div>
             <hr />
-          </div>
+          </AppearFadeIn>
         );
       })}
     </AppearGrow>

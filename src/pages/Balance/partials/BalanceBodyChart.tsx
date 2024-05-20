@@ -43,7 +43,7 @@ const BalanceBodyChart = () => {
 
   return (
     <AppearGrow trigger direction="x">
-      <div className="flex justify-center p-4 bg-gray-200">
+      <div className="flex justify-center py-1 bg-gray-200">
         <BarChart
           dataset={dataset}
           colors={["#008000"]}

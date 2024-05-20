@@ -85,7 +85,6 @@ const useBalanceHistory = (): HookReturn => {
       balanceHistory: formattedData,
     }));
 
-    console.log(page);
     if (formattedData.length === 0 && page > 1) {
       fetchBalanceHistory(limit, 1, order_by, sort);
     }

@@ -16,6 +16,7 @@
     "@fontsource/roboto": "^5.0.13",
     "@mui/icons-material": "^5.15.18",
     "@mui/material": "^5.15.18",
+    "@mui/x-charts": "^7.5.0",
     "axios": "^1.6.8",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.4",

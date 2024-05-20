@@ -5,8 +5,8 @@ import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import BalanceBodyList from "./BalanceBodyList";
 import { useState } from "react";
 import BalanceBodyTable from "./BalanceBodyTable";
-import BalanceBodyChart from "./BalanceBodyChart";
 import { cn } from "@utils/cn";
+import BalanceBodyChart from "./BalanceBodyChart";
 
 const BalanceBody = () => {
   const { state: balanceHistoryState, setState } = useBalanceHistoryContext();

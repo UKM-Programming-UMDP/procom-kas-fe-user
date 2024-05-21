@@ -20,6 +20,7 @@ const Homepage = () => {
     home: <AppList />,
     "payed kas": <PayedKasLayout />,
     balance: <BalanceLayout />,
+    "balance history": <BalanceLayout />,
   };
 
   return (

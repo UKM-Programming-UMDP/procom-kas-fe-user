@@ -4,13 +4,17 @@ export type APIResponse<T = void> = {
   message: string;
   errors: APIFieldError[];
   data: T;
-  pagination?: {
-    page: number;
-    limit: number;
-    total_items: number;
-    total_pages: number;
-  };
+  pagination?: PaginationType;
 } | null;
+
+export type PaginationType = {
+  page: number;
+  limit: number;
+  total_items?: number;
+  total_pages?: number;
+  order_by: "desc" | "asc";
+  sort: string;
+};
 
 export type APIFieldError = {
   field: string;

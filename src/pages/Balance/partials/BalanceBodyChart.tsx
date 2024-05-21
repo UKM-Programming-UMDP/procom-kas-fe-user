@@ -1,12 +1,12 @@
 import AppearGrow from "@components/Animation/AppearGrow";
 import { BarChart } from "@mui/x-charts/BarChart";
-import { useBalanceHistoryContext } from "../context";
+import { useBalanceContext } from "../context";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const BalanceBodyChart = () => {
-  const { state: balanceHistoryState } = useBalanceHistoryContext();
-  const groupedData = balanceHistoryState.balanceHistory.reduce(
+  const { state } = useBalanceContext();
+  const groupedData = state.balanceHistory.reduce(
     (acc: { [key: string]: { date: string; total_amount: number } }, item) => {
       const existingItem = acc[item.created_at];
       if (existingItem) {

@@ -1,24 +1,25 @@
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
-import { useBalanceHistoryContext } from "../context";
+import { useBalanceContext } from "../context";
 import useBalanceHistory from "../hooks/useBalanceHistory";
 import { cn } from "@utils/cn";
 
 const BalanceFooter = () => {
-  const { state: balanceHistoryState } = useBalanceHistoryContext();
+  const { state } = useBalanceContext();
   const { fetchBalanceHistory } = useBalanceHistory();
   return (
     <AppearFadeIn direction="bottom" delay={0.8}>
-      {!balanceHistoryState.balanceHistoryLoading && (
+      {!state.balanceHistoryLoading && (
         <div className="flex justify-between px-1">
           <div>
             <select
-              defaultValue={balanceHistoryState.limit}
+              defaultValue={state.pagination.limit}
               className="py-2 px-3 font-bold outline-none bg-slate-800 hover:bg-slate-700 transition-all rounded-md"
               onChange={(e) =>
                 fetchBalanceHistory(
                   Number(e.target.value),
-                  balanceHistoryState.page,
-                  balanceHistoryState.orderBy,
+                  state.pagination.page,
+                  state.pagination.order_by,
+                  state.pagination.sort,
                 )
               }
             >
@@ -31,20 +32,21 @@ const BalanceFooter = () => {
             </select>
           </div>
           <div className="flex gap-3">
-            {Array.from({ length: balanceHistoryState.totalPages }).map(
+            {Array.from({ length: state.pagination.total_pages || 0 }).map(
               (_, index) => (
                 <button
-                  disabled={balanceHistoryState.page === index + 1}
+                  disabled={state.pagination.page === index + 1}
                   key={index}
                   onClick={() =>
                     fetchBalanceHistory(
-                      balanceHistoryState.limit,
+                      state.pagination.limit,
                       index + 1,
-                      balanceHistoryState.orderBy,
+                      state.pagination.order_by,
+                      state.pagination.sort,
                     )
                   }
                   className={cn(
-                    balanceHistoryState.page === index + 1
+                    state.pagination.page === index + 1
                       ? "bg-slate-900 border border-white"
                       : "bg-slate-800 hover:bg-slate-700 hover:scale-105 transition-all",
                     "py-2 px-3 font-bold rounded-md",

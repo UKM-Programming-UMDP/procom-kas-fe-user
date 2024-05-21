@@ -1,9 +1,9 @@
 import AppearGrow from "@components/Animation/AppearGrow";
-import { useBalanceHistoryContext } from "../context";
+import { useBalanceContext } from "../context";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
 
 const BalanceBodyTable = () => {
-  const { state: balanceHistoryState } = useBalanceHistoryContext();
+  const { state } = useBalanceContext();
   const theads = [
     "Amount",
     "Previous Balance",
@@ -29,7 +29,7 @@ const BalanceBodyTable = () => {
           </tr>
         </thead>
         <tbody className="bg-white text-gray-500 divide-y divide-gray-200">
-          {balanceHistoryState.balanceHistory.map((item, index) => (
+          {state.balanceHistory.map((item, index) => (
             <tr key={index}>
               <AppearFadeIn direction="bottom" delay={0.1 * index}>
                 <td className="px-6 py-4 whitespace-nowrap">

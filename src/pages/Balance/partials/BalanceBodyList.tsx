@@ -1,6 +1,6 @@
 import { cn } from "@utils/cn";
 import { useEffect } from "react";
-import { useBalanceHistoryContext } from "../context";
+import { useBalanceContext } from "../context";
 import AppearGrow from "@components/Animation/AppearGrow";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
 
@@ -18,12 +18,12 @@ const BalanceBodyList = ({
       setFirstNewDate(false);
     }
   }, [firstNewDate, setFirstNewDate]);
-  const { state: balanceHistoryState } = useBalanceHistoryContext();
+  const { state } = useBalanceContext();
   let lastDate = "";
 
   return (
     <AppearGrow trigger direction="x">
-      {balanceHistoryState.balanceHistory.map((item, index) => {
+      {state.balanceHistory.map((item, index) => {
         const currentDate = item.created_at.split("at")[0];
         const isNewDate = currentDate !== lastDate;
         lastDate = currentDate;

@@ -1,5 +1,5 @@
 import { CircularProgress } from "@mui/material";
-import { useBalanceHistoryContext } from "../context";
+import { useBalanceContext } from "../context";
 import { BarChart, List, TableChart } from "@mui/icons-material";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import BalanceBodyList from "./BalanceBodyList";
@@ -10,7 +10,7 @@ import BalanceBodyChart from "./BalanceBodyChart";
 import useBalanceHistory from "../hooks/useBalanceHistory";
 
 const BalanceBody = () => {
-  const { state: balanceHistoryState, setState } = useBalanceHistoryContext();
+  const { state, setState } = useBalanceContext();
   const { fetchBalanceHistory } = useBalanceHistory();
   const [firstNewDate, setFirstNewDate] = useState(true);
 
@@ -31,7 +31,7 @@ const BalanceBody = () => {
           mode === "list" && "rounded-s-md",
           mode === "chart" && "rounded-e-md",
         )}
-        onClick={() => setState({ ...balanceHistoryState, mode })}
+        onClick={() => setState({ ...state, mode })}
       >
         {children}
       </button>
@@ -44,48 +44,49 @@ const BalanceBody = () => {
         <div className="flex justify-between items-center">
           <div className="text-lg font-semibold">Balance History</div>
           <div className="flex gap-4 items-center">
-            {!balanceHistoryState.balanceHistoryLoading && (
+            {!state.balanceHistoryLoading && (
               <AppearFadeIn direction="bottom">
                 <button
                   onClick={() =>
                     fetchBalanceHistory(
-                      balanceHistoryState.limit,
-                      balanceHistoryState.page,
-                      balanceHistoryState.orderBy === "desc" ? "asc" : "desc",
+                      state.pagination.limit,
+                      state.pagination.page,
+                      state.pagination.order_by === "desc" ? "asc" : "desc",
+                      state.pagination.sort,
                     )
                   }
                   className="bg-slate-800 hover:bg-slate-700 hover:scale-105 transition-all py-2 px-3 font-bold rounded-md uppercase"
                 >
-                  {balanceHistoryState.orderBy}
+                  {state.pagination.order_by}
                 </button>
               </AppearFadeIn>
             )}
             <div className="flex bg-slate-950 p-2 rounded-md">
-              <ModeButton mode="list" currentMode={balanceHistoryState.mode}>
+              <ModeButton mode="list" currentMode={state.mode}>
                 <List />
               </ModeButton>
-              <ModeButton mode="table" currentMode={balanceHistoryState.mode}>
+              <ModeButton mode="table" currentMode={state.mode}>
                 <TableChart />
               </ModeButton>
-              <ModeButton mode="chart" currentMode={balanceHistoryState.mode}>
+              <ModeButton mode="chart" currentMode={state.mode}>
                 <BarChart />
               </ModeButton>
             </div>
           </div>
         </div>
         <hr />
-        {balanceHistoryState.balanceHistoryLoading ? (
+        {state.balanceHistoryLoading ? (
           <CircularProgress size="2rem" />
         ) : (
           <div className="bg-slate-800 rounded-md overflow-x-auto">
-            {balanceHistoryState.balanceHistory.length === 0 ? (
+            {state.balanceHistory.length === 0 ? (
               <div className="text-center p-2">Balance History is empty</div>
-            ) : balanceHistoryState.mode === "list" ? (
+            ) : state.mode === "list" ? (
               <BalanceBodyList
                 firstNewDate={firstNewDate}
                 setFirstNewDate={setFirstNewDate}
               />
-            ) : balanceHistoryState.mode === "table" ? (
+            ) : state.mode === "table" ? (
               <BalanceBodyTable />
             ) : (
               <BalanceBodyChart />

@@ -53,8 +53,17 @@ const BalanceBodyList = ({
                     Rp {item.prev_balance.toLocaleString().replace(/,/g, ".")}
                     ,-
                   </div>
-                  <div className="text-green-500 font-medium group-hover:text-green-600">
-                    {item.activity === "Add" && "+"} Rp{" "}
+                  <div
+                    className={cn(
+                      "font-medium ",
+                      item.amount > 0
+                        ? "text-green-500 group-hover:text-green-600"
+                        : item.amount < 0
+                          ? "text-red-500 group-hover:text-red-600"
+                          : "text-gray-300",
+                    )}
+                  >
+                    {item.amount > 0 ? "+" : item.amount < 0 ? "-" : ""} Rp{" "}
                     {item.amount.toLocaleString().replace(/,/g, ".")}
                     ,-
                   </div>

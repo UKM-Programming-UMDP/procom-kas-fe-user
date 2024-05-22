@@ -1,5 +1,5 @@
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
-import { AccountBalanceWallet, Link } from "@mui/icons-material";
+import { AccountBalanceWallet } from "@mui/icons-material";
 import { CircularProgress } from "@mui/material";
 import { useBalanceHistoryContext } from "../context";
 
@@ -16,17 +16,7 @@ const BalanceHeader = () => {
             <AccountBalanceWallet />
           </div>
           <div className="flex flex-col gap-2">
-            <div>
-              <p className="text-lg">UKM Programming Balance</p>
-              <a
-                href="https://ukmprogramming.mdp.ac.id/"
-                target="_blank"
-                className="font-extralight text-blue-500 flex gap-1 items-center hover:underline"
-              >
-                <Link />
-                UKM Programming Website
-              </a>
-            </div>
+            <p className="text-lg">UKM Programming Balance</p>
             <div className="flex flex-wrap justify-center gap-2">
               <div className="flex flex-col gap-1 rounded-md bg-slate-800 py-1 px-2 border-dashed">
                 <p className="font-bold">

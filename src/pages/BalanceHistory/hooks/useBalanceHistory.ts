@@ -1,27 +1,22 @@
 import BalanceHistoryServices from "@services/balanceHistory";
 import { useBalanceHistoryContext } from "../context";
-import { PaginationType } from "@types";
+import { FilterType } from "@types";
 import { formatBalanceHistoryData } from "@utils/formatBalanceHistoryData";
 
 interface HookReturn {
   balanceHistoryService: BalanceHistoryServices;
-  fetchBalanceHistory: (
-    limit?: PaginationType["limit"],
-    page?: PaginationType["page"],
-    order_by?: PaginationType["order_by"],
-    sort?: PaginationType["sort"],
-  ) => void;
+  fetchBalanceHistory: ({ limit, page, order_by, sort }: FilterType) => void;
 }
 const useBalanceHistory = (): HookReturn => {
-  const { setState } = useBalanceHistoryContext();
+  const { state, setState } = useBalanceHistoryContext();
   const balanceHistoryService = new BalanceHistoryServices();
 
-  const fetchBalanceHistory = async (
-    limit: PaginationType["limit"] = 10,
-    page: PaginationType["page"] = 1,
-    order_by: PaginationType["order_by"] = "desc",
-    sort: PaginationType["sort"] = "created_at",
-  ) => {
+  const fetchBalanceHistory = async ({
+    limit = state.filter.limit ?? 10,
+    page = state.filter.page ?? 1,
+    order_by = state.filter.order_by ?? "desc",
+    sort = state.filter.sort ?? "created_at",
+  }: FilterType) => {
     setState((prev) => ({ ...prev, balanceHistoryLoading: true }));
     const res = await balanceHistoryService.get({
       limit,
@@ -40,12 +35,14 @@ const useBalanceHistory = (): HookReturn => {
     setState((prev) => ({
       ...prev,
       balanceHistoryLoading: false,
-      pagination: {
-        ...prev.pagination,
-        page: res.pagination?.page ?? 1,
-        limit: res.pagination?.limit ?? 10,
+      filter: {
+        ...prev.filter,
+        page,
+        limit,
         order_by,
         sort,
+      },
+      pagination: {
         total_items: res.pagination?.total_items ?? 0,
         total_pages: res.pagination?.total_pages ?? 1,
       },
@@ -53,7 +50,7 @@ const useBalanceHistory = (): HookReturn => {
     }));
 
     if (formattedBalanceHistoryData.length === 0 && page > 1) {
-      fetchBalanceHistory(limit, 1, order_by, sort);
+      fetchBalanceHistory({ limit, page: 1, order_by, sort });
     }
   };
 

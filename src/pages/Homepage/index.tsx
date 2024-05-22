@@ -10,6 +10,7 @@ import { appDisplayName } from "@utils/consts";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import PayedKasLayout from "@layouts/PayedKas";
 import BalanceLayout from "@layouts/Balance";
+import BalanceHistoryLayout from "@layouts/BalanceHistory";
 
 const Homepage = () => {
   const { state } = useHomepageContext();
@@ -20,7 +21,7 @@ const Homepage = () => {
     home: <AppList />,
     "payed kas": <PayedKasLayout />,
     balance: <BalanceLayout />,
-    "balance history": <BalanceLayout />,
+    "balance history": <BalanceHistoryLayout />,
   };
 
   return (

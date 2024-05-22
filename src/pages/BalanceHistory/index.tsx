@@ -11,7 +11,7 @@ const BalanceHistory = () => {
 
   useEffect(() => {
     fetchBalance();
-    fetchBalanceHistory();
+    fetchBalanceHistory({});
   }, []);
 
   return (

@@ -18,10 +18,6 @@ export const initialState: BalanceStateType = {
   balanceHistoryLoading: false,
   mode: "list",
   pagination: {
-    page: 1,
-    limit: 10,
-    order_by: "desc",
-    sort: "created_at",
     total_items: 0,
     total_pages: 1,
   },

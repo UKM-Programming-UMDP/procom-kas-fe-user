@@ -48,16 +48,14 @@ const BalanceBody = () => {
               <AppearFadeIn direction="bottom">
                 <button
                   onClick={() =>
-                    fetchBalanceHistory(
-                      state.pagination.limit,
-                      state.pagination.page,
-                      state.pagination.order_by === "desc" ? "asc" : "desc",
-                      state.pagination.sort,
-                    )
+                    fetchBalanceHistory({
+                      order_by:
+                        state.filter.order_by === "desc" ? "asc" : "desc",
+                    })
                   }
                   className="bg-slate-800 hover:bg-slate-700 hover:scale-105 transition-all py-2 px-3 font-bold rounded-md uppercase"
                 >
-                  {state.pagination.order_by}
+                  {state.filter.order_by}
                 </button>
               </AppearFadeIn>
             )}

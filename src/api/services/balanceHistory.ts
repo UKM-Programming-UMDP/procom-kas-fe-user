@@ -1,4 +1,4 @@
-import { APIResponse, PaginationType } from "@types";
+import { APIResponse, FilterType } from "@types";
 import API from "..";
 
 export type GetResponse = {
@@ -22,7 +22,7 @@ export default class BalanceHistoryServices {
     page = 1,
     order_by = "desc",
     sort = "created_at",
-  }: PaginationType) {
+  }: FilterType) {
     const targetPath = `${this.basePath}?limit=${limit}&page=${page}&order_by=${order_by}&sort=${sort}`;
     const res: APIResponse<GetResponse> = await this.api.GET(targetPath);
     return res;

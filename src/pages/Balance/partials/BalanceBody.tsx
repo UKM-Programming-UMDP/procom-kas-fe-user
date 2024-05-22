@@ -4,6 +4,11 @@ import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import { useEffect, useState } from "react";
 import AppearGrow from "@components/Animation/AppearGrow";
 import { cn } from "@utils/cn";
+import {
+  glassmorphismContainer,
+  glassmorphismContainerBorder,
+  glassmorphismContainerHover,
+} from "@utils/glassmorphism";
 
 const BalanceBody = () => {
   const { state } = useBalanceContext();
@@ -16,13 +21,25 @@ const BalanceBody = () => {
 
   return (
     <AppearFadeIn direction="bottom" delay={0.8}>
-      <div className="flex flex-col gap-4 bg-slate-900 p-4 rounded-md">
+      <div
+        className={cn(
+          "flex flex-col gap-4 p-4 rounded-md",
+          glassmorphismContainer(),
+          glassmorphismContainerBorder(),
+        )}
+      >
         <div className="text-lg font-semibold">Latest 10 Balance History</div>
         <hr />
         {state.balanceHistoryLoading ? (
           <CircularProgress size="2rem" />
         ) : (
-          <div className="bg-slate-800 rounded-md overflow-x-auto">
+          <div
+            className={cn(
+              "overflow-x-auto rounded-md",
+              glassmorphismContainer(),
+              glassmorphismContainerBorder(),
+            )}
+          >
             {state.balanceHistory.length === 0 ? (
               <div className="text-center p-2">Balance History is empty</div>
             ) : (
@@ -34,10 +51,20 @@ const BalanceBody = () => {
                       direction="bottom"
                       delay={0.1 * index}
                     >
-                      <div className="p-4 flex justify-between group hover:bg-slate-700 transition-colors">
+                      <div
+                        className={cn(
+                          "p-4 flex justify-between group",
+                          glassmorphismContainerHover(),
+                        )}
+                      >
                         <div className="flex flex-col gap-1 font-medium group-hover:text-gray-300">
                           <div className="flex items-center gap-4">
-                            <div className="bg-slate-900 rounded-full py-3 px-4">
+                            <div
+                              className={cn(
+                                "rounded-full py-3 px-4",
+                                glassmorphismContainer(),
+                              )}
+                            >
                               {index + 1 < 10 ? `0${index + 1}` : index + 1}
                             </div>
                             <div>

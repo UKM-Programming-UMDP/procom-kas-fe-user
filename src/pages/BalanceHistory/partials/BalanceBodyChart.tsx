@@ -3,6 +3,8 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import { useBalanceHistoryContext } from "../context";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { cn } from "@utils/cn";
+import { glassmorphismContainer } from "@utils/glassmorphism";
 
 const BalanceBodyChart = () => {
   const { state } = useBalanceHistoryContext();
@@ -43,7 +45,7 @@ const BalanceBodyChart = () => {
 
   return (
     <AppearGrow trigger direction="x">
-      <div className="flex justify-center py-1 bg-gray-200">
+      <div className={cn("flex justify-center py-1", glassmorphismContainer())}>
         <BarChart
           dataset={dataset}
           colors={["#008000"]}

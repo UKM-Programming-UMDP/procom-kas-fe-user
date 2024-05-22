@@ -2,10 +2,16 @@ import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import { useBalanceHistoryContext } from "../context";
 import useBalanceHistory from "../hooks/useBalanceHistory";
 import { cn } from "@utils/cn";
+import {
+  glassmorphismContainer,
+  glassmorphismContainerBorder,
+  glassmorphismContainerHover,
+} from "@utils/glassmorphism";
 
 const BalanceFooter = () => {
   const { state } = useBalanceHistoryContext();
   const { fetchBalanceHistory } = useBalanceHistory();
+  const limits = [5, 10, 15, 20, 25, 50];
   return (
     <AppearFadeIn direction="bottom" delay={0.8}>
       {!state.balanceHistoryLoading && (
@@ -13,17 +19,20 @@ const BalanceFooter = () => {
           <div>
             <select
               defaultValue={state.filter.limit}
-              className="py-2 px-3 font-bold outline-none bg-slate-800 hover:bg-slate-700 transition-all rounded-md"
+              className={cn(
+                glassmorphismContainer(),
+                glassmorphismContainerHover(),
+                "py-2 px-3 font-bold outline-none rounded-md",
+              )}
               onChange={(e) =>
                 fetchBalanceHistory({ limit: Number(e.target.value) })
               }
             >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-              <option value="20">20</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
+              {limits.map((limit) => (
+                <option key={limit} value={limit} className="text-black">
+                  {limit}
+                </option>
+              ))}
             </select>
           </div>
           <div className="flex gap-3">
@@ -36,9 +45,10 @@ const BalanceFooter = () => {
                 onClick={() => fetchBalanceHistory({ page: index + 1 })}
                 className={cn(
                   state.filter.page === index + 1
-                    ? "bg-slate-900 border border-white"
-                    : "bg-slate-800 hover:bg-slate-700 hover:scale-105 transition-all",
+                    ? `${glassmorphismContainerBorder()}`
+                    : `${"hover:scale-105"} ${glassmorphismContainerHover()}`,
                   "py-2 px-3 font-bold rounded-md",
+                  glassmorphismContainer(),
                 )}
               >
                 {index + 1}

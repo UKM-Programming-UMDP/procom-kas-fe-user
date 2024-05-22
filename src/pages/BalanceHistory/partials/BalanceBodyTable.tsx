@@ -1,5 +1,7 @@
 import AppearGrow from "@components/Animation/AppearGrow";
 import { useBalanceHistoryContext } from "../context";
+import { cn } from "@utils/cn";
+import { glassmorphismContainer } from "@utils/glassmorphism";
 
 const BalanceBodyTable = () => {
   const { state } = useBalanceHistoryContext();
@@ -15,19 +17,21 @@ const BalanceBodyTable = () => {
   return (
     <AppearGrow trigger direction="x">
       <table className="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden">
-        <thead className="bg-gray-200">
+        <thead>
           <tr className="font-semibold">
             {theads.map((thead, index) => (
               <th
                 key={index}
-                className="px-6 py-3 text-left text-xs text-gray-700 uppercase tracking-wider"
+                className="px-6 py-3 text-left text-xs uppercase tracking-wider"
               >
                 {thead}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="bg-white text-gray-500 divide-y divide-gray-200">
+        <tbody
+          className={cn("divide-y divide-gray-200", glassmorphismContainer())}
+        >
           {state.balanceHistory.map((item, index) => (
             <tr key={index}>
               <td className="px-6 py-4 whitespace-nowrap">

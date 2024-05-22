@@ -3,6 +3,10 @@ import { useEffect } from "react";
 import { useBalanceHistoryContext } from "../context";
 import AppearGrow from "@components/Animation/AppearGrow";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
+import {
+  glassmorphismContainer,
+  glassmorphismContainerHover,
+} from "@utils/glassmorphism";
 
 type BalanceBodyListProps = {
   firstNewDate: boolean;
@@ -33,14 +37,20 @@ const BalanceBodyList = ({
             {isNewDate && (
               <div
                 className={cn(
-                  "bg-slate-950 p-4 font-semibold",
+                  "p-4 font-semibold",
                   firstNewDate && "rounded-t-md",
                 )}
               >
                 {currentDate}
               </div>
             )}
-            <div className="p-4 flex justify-between group hover:bg-slate-700 transition-colors">
+            <div
+              className={cn(
+                "p-4 flex justify-between group",
+                glassmorphismContainer(),
+                glassmorphismContainerHover(),
+              )}
+            >
               <div className="flex flex-col gap-1 font-medium group-hover:text-gray-300">
                 <div>
                   {item.user.name} - {item.user.npm}

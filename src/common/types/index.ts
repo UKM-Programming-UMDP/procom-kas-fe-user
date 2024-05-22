@@ -21,7 +21,7 @@ export type APIFieldError = {
   message: string;
 };
 
-export type AppType = "home" | "payed kas" | "balance";
+export type AppType = "home" | "payed kas" | "balance" | "balance history";
 
 export type AppList = {
   displayName: string;

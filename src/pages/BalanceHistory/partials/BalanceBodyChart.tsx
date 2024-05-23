@@ -10,12 +10,13 @@ const BalanceBodyChart = () => {
   const { state } = useBalanceHistoryContext();
   const groupedData = state.balanceHistory.reduce(
     (acc: { [key: string]: { date: string; total_amount: number } }, item) => {
-      const existingItem = acc[item.created_at];
+      const dateOnly = item.created_at.split("at")[0];
+      const existingItem = acc[dateOnly];
       if (existingItem) {
         existingItem.total_amount += item.amount;
       } else {
-        acc[item.created_at] = {
-          date: item.created_at.split("at")[0],
+        acc[dateOnly] = {
+          date: dateOnly,
           total_amount: item.amount,
         };
       }
@@ -23,7 +24,9 @@ const BalanceBodyChart = () => {
     },
     {},
   );
+
   const dataset = Object.values(groupedData);
+  console.log(dataset);
   const valueFormatter = (value: number | null) =>
     `Rp ${value?.toLocaleString().replace(/,/g, ".")},-`;
 

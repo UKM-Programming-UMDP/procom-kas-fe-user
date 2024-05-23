@@ -30,7 +30,7 @@ const Homepage = () => {
         trigger={md}
         className="w-fit mx-auto"
         initial={{ marginTop: "1rem" }}
-        animate={{ marginTop: state.app === "home" ? "6rem" : "3rem" }}
+        animate={{ marginTop: state.app === "home" ? "6rem" : "1rem" }}
       >
         <TextAutosize
           initialSize="3rem"
@@ -41,7 +41,7 @@ const Homepage = () => {
           UKM Programming
         </TextAutosize>
       </AutoMargin>
-      <div className="flex justify-center items-center p-4">
+      <div className="flex justify-center items-center md:p-4 p-1">
         <CardAutosize
           className="mx-auto mt-3"
           trigger={state.app !== "home"}
@@ -63,7 +63,7 @@ const Homepage = () => {
               </AppearFadeIn>
             </div>
           )}
-          <div className="mx-3 mt-1 mb-3 h-96 overflow-auto">
+          <div className="mx-3 mt-1 mb-3 overflow-auto h-[78vh]">
             {appComponent[state.app]}
           </div>
         </CardAutosize>

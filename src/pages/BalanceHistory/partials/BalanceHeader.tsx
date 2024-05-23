@@ -52,16 +52,6 @@ const BalanceHeader = () => {
                 <p className="font-bold">{state.pagination.total_items}</p>
                 <p>Total History</p>
               </div>
-              <div
-                className={cn(
-                  "flex flex-col gap-1 rounded-md py-1 px-2 border-dashed",
-                  glassmorphismContainer(),
-                  glassmorphismContainerBorder(),
-                )}
-              >
-                <p className="font-bold">?</p>
-                <p>Total Payer</p>
-              </div>
             </div>
           </div>
         </div>

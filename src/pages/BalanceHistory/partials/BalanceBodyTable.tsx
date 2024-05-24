@@ -1,7 +1,7 @@
 import AppearGrow from "@components/Animation/AppearGrow";
 import { useBalanceHistoryContext } from "../context";
 import { cn } from "@utils/cn";
-import { glassmorphismContainer } from "@utils/glassmorphism";
+import glassmorphism from "@utils/glassmorphism";
 
 const BalanceBodyTable = () => {
   const { state } = useBalanceHistoryContext();
@@ -30,7 +30,10 @@ const BalanceBodyTable = () => {
           </tr>
         </thead>
         <tbody
-          className={cn("divide-y divide-gray-200", glassmorphismContainer())}
+          className={cn(
+            "divide-y divide-gray-200",
+            glassmorphism({ container: true }),
+          )}
         >
           {state.balanceHistory.map((item, index) => (
             <tr key={index}>

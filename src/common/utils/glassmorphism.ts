@@ -1,17 +1,22 @@
-const glassmorphismContainer = () => {
-  return "bg-purple-50 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-5";
+type GlassmorphismProps = {
+  container?: boolean;
+  border?: boolean;
+  hover?: boolean;
+};
+const glassmorphism = ({ container, border, hover }: GlassmorphismProps) => {
+  let classes = "";
+  if (container) {
+    classes +=
+      "bg-purple-50 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-5 ";
+  }
+  if (hover) {
+    classes +=
+      "hover:bg-purple-100 hover:bg-opacity-10 transition-all duration-200 ";
+  }
+  if (border) {
+    classes += "border border-purple-200";
+  }
+  return classes.trim();
 };
 
-const glassmorphismContainerHover = () => {
-  return "hover:bg-purple-100 hover:bg-opacity-10 transition-all duration-200";
-};
-
-const glassmorphismContainerBorder = () => {
-  return "border border-purple-200";
-};
-
-export {
-  glassmorphismContainer,
-  glassmorphismContainerHover,
-  glassmorphismContainerBorder,
-};
+export default glassmorphism;

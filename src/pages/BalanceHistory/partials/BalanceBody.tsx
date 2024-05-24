@@ -8,11 +8,7 @@ import BalanceBodyTable from "./BalanceBodyTable";
 import { cn } from "@utils/cn";
 import BalanceBodyChart from "./BalanceBodyChart";
 import useBalanceHistory from "../hooks/useBalanceHistory";
-import {
-  glassmorphismContainer,
-  glassmorphismContainerBorder,
-  glassmorphismContainerHover,
-} from "@utils/glassmorphism";
+import glassmorphism from "@utils/glassmorphism";
 
 const BalanceBody = () => {
   const { state, setState } = useBalanceHistoryContext();
@@ -31,8 +27,8 @@ const BalanceBody = () => {
         className={cn(
           "py-1 px-2",
           currentMode === mode
-            ? glassmorphismContainerBorder()
-            : `${"hover:scale-105"} ${glassmorphismContainer()} ${glassmorphismContainerHover()}`,
+            ? glassmorphism({ border: true })
+            : `${"hover:scale-105"} ${glassmorphism({ container: true, hover: true })}`,
           mode === "list" && "rounded-s-md",
           mode === "chart" && "rounded-e-md",
         )}
@@ -48,8 +44,7 @@ const BalanceBody = () => {
       <div
         className={cn(
           "flex flex-col gap-4 p-4 rounded-md",
-          glassmorphismContainer(),
-          glassmorphismContainerBorder(),
+          glassmorphism({ container: true, border: true }),
         )}
       >
         <div className="flex justify-between items-center">
@@ -66,8 +61,7 @@ const BalanceBody = () => {
                   }
                   className={cn(
                     "hover:scale-105 transition-all py-2 px-3 font-bold rounded-md uppercase",
-                    glassmorphismContainer(),
-                    glassmorphismContainerHover(),
+                    glassmorphism({ container: true, hover: true }),
                   )}
                 >
                   {state.filter.order_by}
@@ -94,8 +88,7 @@ const BalanceBody = () => {
           <div
             className={cn(
               "rounded-md overflow-x-auto",
-              glassmorphismContainer(),
-              glassmorphismContainerBorder(),
+              glassmorphism({ container: true, border: true }),
             )}
           >
             {state.balanceHistory.length === 0 ? (

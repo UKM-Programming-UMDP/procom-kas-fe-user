@@ -4,7 +4,7 @@ import { useBalanceHistoryContext } from "../context";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { cn } from "@utils/cn";
-import { glassmorphismContainer } from "@utils/glassmorphism";
+import glassmorphism from "@utils/glassmorphism";
 
 const BalanceBodyChart = () => {
   const { state } = useBalanceHistoryContext();
@@ -26,7 +26,6 @@ const BalanceBodyChart = () => {
   );
 
   const dataset = Object.values(groupedData);
-  console.log(dataset);
   const valueFormatter = (value: number | null) =>
     `Rp ${value?.toLocaleString().replace(/,/g, ".")},-`;
 
@@ -48,7 +47,12 @@ const BalanceBodyChart = () => {
 
   return (
     <AppearGrow trigger direction="x">
-      <div className={cn("flex justify-center py-1", glassmorphismContainer())}>
+      <div
+        className={cn(
+          "flex justify-center py-1",
+          glassmorphism({ container: true }),
+        )}
+      >
         <BarChart
           dataset={dataset}
           colors={["#008000"]}

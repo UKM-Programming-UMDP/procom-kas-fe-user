@@ -3,10 +3,7 @@ import { useEffect } from "react";
 import { useBalanceHistoryContext } from "../context";
 import AppearGrow from "@components/Animation/AppearGrow";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
-import {
-  glassmorphismContainer,
-  glassmorphismContainerHover,
-} from "@utils/glassmorphism";
+import glassmorphism from "@utils/glassmorphism";
 
 type BalanceBodyListProps = {
   firstNewDate: boolean;
@@ -47,8 +44,7 @@ const BalanceBodyList = ({
             <div
               className={cn(
                 "p-4 flex justify-between group",
-                glassmorphismContainer(),
-                glassmorphismContainerHover(),
+                glassmorphism({ container: true, hover: true }),
               )}
             >
               <div className="flex flex-col gap-1 font-medium group-hover:text-gray-300">

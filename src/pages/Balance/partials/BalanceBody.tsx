@@ -4,11 +4,7 @@ import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import { useEffect, useState } from "react";
 import AppearGrow from "@components/Animation/AppearGrow";
 import { cn } from "@utils/cn";
-import {
-  glassmorphismContainer,
-  glassmorphismContainerBorder,
-  glassmorphismContainerHover,
-} from "@utils/glassmorphism";
+import glassmorphism from "@utils/glassmorphism";
 
 const BalanceBody = () => {
   const { state } = useBalanceContext();
@@ -24,8 +20,7 @@ const BalanceBody = () => {
       <div
         className={cn(
           "flex flex-col gap-4 p-4 rounded-md",
-          glassmorphismContainer(),
-          glassmorphismContainerBorder(),
+          glassmorphism({ container: true, border: true }),
         )}
       >
         <div className="text-lg font-semibold">Latest 10 Balance History</div>
@@ -36,8 +31,7 @@ const BalanceBody = () => {
           <div
             className={cn(
               "overflow-x-auto rounded-md",
-              glassmorphismContainer(),
-              glassmorphismContainerBorder(),
+              glassmorphism({ container: true, border: true }),
             )}
           >
             {state.balanceHistory.length === 0 ? (
@@ -54,7 +48,7 @@ const BalanceBody = () => {
                       <div
                         className={cn(
                           "p-4 flex justify-between group",
-                          glassmorphismContainerHover(),
+                          glassmorphism({ hover: true }),
                         )}
                       >
                         <div className="flex flex-col gap-1 font-medium group-hover:text-gray-300">
@@ -62,7 +56,7 @@ const BalanceBody = () => {
                             <div
                               className={cn(
                                 "rounded-full py-3 px-4",
-                                glassmorphismContainer(),
+                                glassmorphism({ container: true }),
                               )}
                             >
                               {index + 1 < 10 ? `0${index + 1}` : index + 1}

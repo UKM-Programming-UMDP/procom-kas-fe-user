@@ -2,11 +2,7 @@ import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import { useBalanceHistoryContext } from "../context";
 import useBalanceHistory from "../hooks/useBalanceHistory";
 import { cn } from "@utils/cn";
-import {
-  glassmorphismContainer,
-  glassmorphismContainerBorder,
-  glassmorphismContainerHover,
-} from "@utils/glassmorphism";
+import glassmorphism from "@utils/glassmorphism";
 
 const BalanceFooter = () => {
   const { state } = useBalanceHistoryContext();
@@ -20,8 +16,7 @@ const BalanceFooter = () => {
             <select
               defaultValue={state.filter.limit}
               className={cn(
-                glassmorphismContainer(),
-                glassmorphismContainerHover(),
+                glassmorphism({ container: true, hover: true }),
                 "py-2 px-3 font-bold outline-none rounded-md",
               )}
               onChange={(e) =>
@@ -45,10 +40,10 @@ const BalanceFooter = () => {
                 onClick={() => fetchBalanceHistory({ page: index + 1 })}
                 className={cn(
                   state.filter.page === index + 1
-                    ? `${glassmorphismContainerBorder()}`
-                    : `${"hover:scale-105"} ${glassmorphismContainerHover()}`,
+                    ? `${glassmorphism({ border: true })}`
+                    : `${"hover:scale-105"} ${glassmorphism({ hover: true })}`,
                   "py-2 px-3 font-bold rounded-md",
-                  glassmorphismContainer(),
+                  glassmorphism({ container: true }),
                 )}
               >
                 {index + 1}

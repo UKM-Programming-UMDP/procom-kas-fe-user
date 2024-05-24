@@ -3,10 +3,7 @@ import { AccountBalanceWallet } from "@mui/icons-material";
 import { CircularProgress } from "@mui/material";
 import { useBalanceContext } from "../context";
 import { cn } from "@utils/cn";
-import {
-  glassmorphismContainer,
-  glassmorphismContainerBorder,
-} from "@utils/glassmorphism";
+import glassmorphism from "@utils/glassmorphism";
 
 const BalanceHeader = () => {
   const { state } = useBalanceContext();
@@ -19,11 +16,12 @@ const BalanceHeader = () => {
         <div
           className={cn(
             "flex gap-4 items-center p-4 rounded-md",
-            glassmorphismContainer(),
-            glassmorphismContainerBorder(),
+            glassmorphism({ container: true, border: true }),
           )}
         >
-          <div className={cn("p-6 rounded-md", glassmorphismContainer())}>
+          <div
+            className={cn("p-6 rounded-md", glassmorphism({ container: true }))}
+          >
             <AccountBalanceWallet />
           </div>
           <div className="flex flex-col gap-2">
@@ -32,8 +30,7 @@ const BalanceHeader = () => {
               <div
                 className={cn(
                   "flex flex-col gap-1 py-1 px-2 rounded-md border-dashed",
-                  glassmorphismContainer(),
-                  glassmorphismContainerBorder(),
+                  glassmorphism({ container: true, border: true }),
                 )}
               >
                 <p className="font-bold">
@@ -45,8 +42,7 @@ const BalanceHeader = () => {
               <div
                 className={cn(
                   "flex flex-col gap-1 py-1 px-2 rounded-md border-dashed",
-                  glassmorphismContainer(),
-                  glassmorphismContainerBorder(),
+                  glassmorphism({ container: true, border: true }),
                 )}
               >
                 <p className="font-bold">{state.pagination.total_items}</p>

@@ -3,8 +3,9 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import { useBalanceHistoryContext } from "../context";
 import { cn } from "@utils/cn";
 import glassmorphism from "@utils/glassmorphism";
-import { useChartWidth } from "../hooks/useChartWidth";
-import { useGroupedChartData } from "../hooks/useGroupedChartData";
+import useGroupedChartData from "../hooks/useGroupedChartData";
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const BalanceBodyChart = () => {
   const { state } = useBalanceHistoryContext();
@@ -12,7 +13,18 @@ const BalanceBodyChart = () => {
     state.balanceHistory,
   );
 
-  const chartWidth = useChartWidth();
+  const theme = useTheme();
+  const isVerySmallScreen = useMediaQuery(theme.breakpoints.down("xs"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.between("xs", "sm"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
+
+  const chartWidth = isVerySmallScreen
+    ? 100
+    : isSmallScreen
+      ? 300
+      : isMediumScreen
+        ? 400
+        : 700;
 
   return (
     <AppearGrow trigger direction="x">

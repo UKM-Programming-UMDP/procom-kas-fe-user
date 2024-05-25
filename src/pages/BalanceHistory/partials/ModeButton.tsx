@@ -2,8 +2,9 @@ import glassmorphism from "@utils/glassmorphism";
 import { useBalanceHistoryContext } from "../context";
 import { cn } from "@utils/cn";
 
+type ModeButtonMode = "list" | "table" | "chart";
 type ModeButtonProps = {
-  mode: "list" | "table" | "chart";
+  mode: ModeButtonMode;
   currentMode: "list" | "table" | "chart";
   children: React.ReactNode;
 };
@@ -29,4 +30,5 @@ const ModeButton = ({ mode, currentMode, children }: ModeButtonProps) => {
   );
 };
 
+export type { ModeButtonMode };
 export default ModeButton;

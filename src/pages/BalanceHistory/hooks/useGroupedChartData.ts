@@ -6,7 +6,7 @@ type GroupedChartDataType = {
   total_amount: number;
 };
 
-export function useGroupedChartData(balanceHistory: BalanceHistoryType[]) {
+function useGroupedChartData(balanceHistory: BalanceHistoryType[]) {
   const [groupedChartData, setGroupedChartData] = useState<
     GroupedChartDataType[]
   >([]);
@@ -40,3 +40,5 @@ export function useGroupedChartData(balanceHistory: BalanceHistoryType[]) {
 
   return { groupedChartData, valueFormatter };
 }
+
+export default useGroupedChartData;

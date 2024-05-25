@@ -2,25 +2,25 @@ import { CircularProgress } from "@mui/material";
 import { useBalanceHistoryContext } from "../context";
 import { BarChart, List, TableChart } from "@mui/icons-material";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
-import BalanceBodyList from "./BalanceBodyList";
-import { useState } from "react";
+import React, { useState } from "react";
 import BalanceBodyTable from "./BalanceBodyTable";
 import { cn } from "@utils/cn";
 import BalanceBodyChart from "./BalanceBodyChart";
 import useBalanceHistory from "../hooks/useBalanceHistory";
 import glassmorphism from "@utils/glassmorphism";
-import ModeButton from "./ModeButton";
+import ModeButton, { ModeButtonMode } from "./ModeButton";
+import BalanceBodyList from "./BalanceBodyList";
 
 const BalanceBody = () => {
   const { state } = useBalanceHistoryContext();
-  const { fetchBalanceHistory } = useBalanceHistory();
+  const { handleOrderByFilter } = useBalanceHistory();
   const [firstNewDate, setFirstNewDate] = useState(true);
 
-  const handleOrderByFilter = () => {
-    fetchBalanceHistory({
-      order_by: state.filter?.order_by === "desc" ? "asc" : "desc",
-    });
-  };
+  const modeButton: { mode: ModeButtonMode; icon: React.ReactNode }[] = [
+    { mode: "list", icon: <List /> },
+    { mode: "table", icon: <TableChart /> },
+    { mode: "chart", icon: <BarChart /> },
+  ];
 
   return (
     <AppearFadeIn direction="bottom" delay={0.8}>
@@ -31,7 +31,7 @@ const BalanceBody = () => {
         )}
       >
         <div className="flex justify-between items-center">
-          <div className="text-lg font-semibold">Balance History</div>
+          <span className="text-lg font-semibold">Balance History</span>
           <div className="flex gap-4 items-center">
             {!state.balanceHistoryLoading && (
               <AppearFadeIn direction="bottom">
@@ -47,15 +47,15 @@ const BalanceBody = () => {
               </AppearFadeIn>
             )}
             <div className="flex p-2">
-              <ModeButton mode="list" currentMode={state.mode}>
-                <List />
-              </ModeButton>
-              <ModeButton mode="table" currentMode={state.mode}>
-                <TableChart />
-              </ModeButton>
-              <ModeButton mode="chart" currentMode={state.mode}>
-                <BarChart />
-              </ModeButton>
+              {modeButton.map((button, index) => (
+                <ModeButton
+                  key={index}
+                  mode={button.mode}
+                  currentMode={state.mode}
+                >
+                  {button.icon}
+                </ModeButton>
+              ))}
             </div>
           </div>
         </div>

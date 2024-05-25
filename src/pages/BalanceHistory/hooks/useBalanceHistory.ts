@@ -13,6 +13,8 @@ type BalanceHistoryParams = {
 interface HookReturn {
   balanceHistoryService: BalanceHistoryServices;
   fetchBalanceHistory: (params: BalanceHistoryParams) => void;
+  handleOrderByFilter: () => void;
+  amountFormatter: (amount: number) => string;
 }
 const useBalanceHistory = (): HookReturn => {
   const { state, setState } = useBalanceHistoryContext();
@@ -70,9 +72,24 @@ const useBalanceHistory = (): HookReturn => {
     }
   };
 
+  const handleOrderByFilter = () => {
+    fetchBalanceHistory({
+      order_by: state.filter?.order_by === "desc" ? "asc" : "desc",
+    });
+  };
+
+  const amountFormatter = (amount: number) => {
+    const sign = amount > 0 ? "+" : amount < 0 ? "-" : "";
+    const formattedAmount = `Rp ${amount.toLocaleString().replace(/,/g, ".")}`;
+
+    return `${sign} ${formattedAmount}`;
+  };
+
   return {
     balanceHistoryService,
     fetchBalanceHistory,
+    handleOrderByFilter,
+    amountFormatter,
   };
 };
 

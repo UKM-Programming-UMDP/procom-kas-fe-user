@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useBalanceHistoryContext } from "../context";
 import AppearGrow from "@components/Animation/AppearGrow";
-import BalanceBodyListItem from "./BalanceBodyListItem";
+import AppearFadeIn from "@components/Animation/AppearFadeIn";
+import { cn } from "@utils/cn";
+import BalanceHistoryCard from "./BalanceHistoryCard";
 
 type BalanceBodyListProps = {
   firstNewDate: boolean;
@@ -12,12 +14,14 @@ const BalanceBodyList = ({
   firstNewDate,
   setFirstNewDate,
 }: BalanceBodyListProps) => {
+  const { state } = useBalanceHistoryContext();
+
   useEffect(() => {
     if (firstNewDate) {
       setFirstNewDate(false);
     }
   }, [firstNewDate, setFirstNewDate]);
-  const { state } = useBalanceHistoryContext();
+
   let lastDate = "";
 
   return (
@@ -28,14 +32,20 @@ const BalanceBodyList = ({
         lastDate = currentDate;
 
         return (
-          <BalanceBodyListItem
-            key={index}
-            item={item}
-            index={index}
-            isNewDate={isNewDate}
-            firstNewDate={firstNewDate}
-            currentDate={currentDate}
-          />
+          <AppearFadeIn key={index} direction="bottom" delay={0.2 * index}>
+            {isNewDate && (
+              <div
+                className={cn(
+                  "p-4 font-semibold",
+                  firstNewDate && "rounded-t-md",
+                )}
+              >
+                {currentDate}
+              </div>
+            )}
+            <BalanceHistoryCard history={item} />
+            <hr />
+          </AppearFadeIn>
         );
       })}
     </AppearGrow>

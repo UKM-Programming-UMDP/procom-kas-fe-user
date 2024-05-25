@@ -20,13 +20,13 @@ const BalanceHeader = () => {
           )}
         >
           <div
-            className={cn("p-6 rounded-md", glassmorphism({ container: true }))}
+            className={cn("p-6 rounded-md md:block hidden", glassmorphism({ container: true }))}
           >
             <AccountBalanceWallet />
           </div>
           <div className="flex flex-col gap-2">
-            <span className="text-lg">UKM Programming Balance History</span>
-            <div className="flex flex-wrap justify-center gap-2">
+            <span className="text-lg md:block hidden">UKM Programming Balance History</span>
+            <div className="flex flex-wrap gap-2">
               <div
                 className={cn(
                   "flex flex-col gap-1 rounded-md py-1 px-2 border-dashed",

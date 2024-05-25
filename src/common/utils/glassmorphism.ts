@@ -11,7 +11,7 @@ const glassmorphism = ({ container, border, hover }: GlassmorphismProps) => {
   }
   if (hover) {
     classes +=
-      "hover:bg-violet-100/10 transition-all duration-200 ";
+      "hover:bg-violet-300/10 transition-all duration-200 ";
   }
   if (border) {
     classes += "border border-purple-700/50";

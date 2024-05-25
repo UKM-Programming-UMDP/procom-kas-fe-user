@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Divider } from "@mui/material";
 import { useBalanceContext } from "../context";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import { cn } from "@utils/cn";
@@ -17,7 +17,7 @@ const BalanceBody = () => {
         )}
       >
         <div className="text-lg font-semibold">Latest 10 Balance History</div>
-        <hr />
+        <Divider color="white" />
         {state.balanceHistoryLoading ? (
           <CircularProgress size="2rem" />
         ) : (

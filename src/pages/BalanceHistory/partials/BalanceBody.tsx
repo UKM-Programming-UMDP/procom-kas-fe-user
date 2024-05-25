@@ -9,34 +9,17 @@ import { cn } from "@utils/cn";
 import BalanceBodyChart from "./BalanceBodyChart";
 import useBalanceHistory from "../hooks/useBalanceHistory";
 import glassmorphism from "@utils/glassmorphism";
+import ModeButton from "./ModeButton";
 
 const BalanceBody = () => {
-  const { state, setState } = useBalanceHistoryContext();
+  const { state } = useBalanceHistoryContext();
   const { fetchBalanceHistory } = useBalanceHistory();
   const [firstNewDate, setFirstNewDate] = useState(true);
 
-  type ModeButtonProps = {
-    mode: "list" | "table" | "chart";
-    currentMode: "list" | "table" | "chart";
-    children: React.ReactNode;
-  };
-  const ModeButton = ({ mode, currentMode, children }: ModeButtonProps) => {
-    return (
-      <button
-        disabled={currentMode === mode}
-        className={cn(
-          "py-1 px-2",
-          currentMode === mode
-            ? glassmorphism({ border: true })
-            : `${"hover:scale-105"} ${glassmorphism({ container: true, hover: true })}`,
-          mode === "list" && "rounded-s-md",
-          mode === "chart" && "rounded-e-md",
-        )}
-        onClick={() => setState({ ...state, mode })}
-      >
-        {children}
-      </button>
-    );
+  const handleOrderByFilter = () => {
+    fetchBalanceHistory({
+      order_by: state.filter?.order_by === "desc" ? "asc" : "desc",
+    });
   };
 
   return (
@@ -53,12 +36,7 @@ const BalanceBody = () => {
             {!state.balanceHistoryLoading && (
               <AppearFadeIn direction="bottom">
                 <button
-                  onClick={() =>
-                    fetchBalanceHistory({
-                      order_by:
-                        state.filter?.order_by === "desc" ? "asc" : "desc",
-                    })
-                  }
+                  onClick={handleOrderByFilter}
                   className={cn(
                     "hover:scale-105 transition-all py-2 px-3 font-bold rounded-md uppercase",
                     glassmorphism({ container: true, hover: true }),

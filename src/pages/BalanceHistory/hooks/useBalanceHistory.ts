@@ -35,7 +35,7 @@ const useBalanceHistory = (): HookReturn => {
 
     const res = await balanceHistoryService.get(params.toString());
 
-    if (!res) {
+    if (!res || !res.status) {
       setState((prev) => ({ ...prev, balanceHistoryLoading: false }));
       // handle error
       return;

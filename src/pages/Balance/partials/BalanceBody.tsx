@@ -1,19 +1,12 @@
 import { CircularProgress } from "@mui/material";
 import { useBalanceContext } from "../context";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
-import { useEffect, useState } from "react";
 import AppearGrow from "@components/Animation/AppearGrow";
 import { cn } from "@utils/cn";
 import glassmorphism from "@utils/glassmorphism";
 
 const BalanceBody = () => {
   const { state } = useBalanceContext();
-  const [firstNewDate, setFirstNewDate] = useState(true);
-  useEffect(() => {
-    if (firstNewDate) {
-      setFirstNewDate(false);
-    }
-  }, [firstNewDate, setFirstNewDate]);
 
   return (
     <AppearFadeIn direction="bottom" delay={0.8}>
@@ -62,9 +55,7 @@ const BalanceBody = () => {
                               {index + 1 < 10 ? `0${index + 1}` : index + 1}
                             </div>
                             <div>
-                              <div>
-                                {item.user.name} ({item.user.npm})
-                              </div>
+                              {item.user.name} ({item.user.npm})
                               <div>{item.note}</div>
                             </div>
                           </div>

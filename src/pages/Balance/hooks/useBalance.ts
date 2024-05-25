@@ -12,7 +12,7 @@ const useBalance = (): HookReturn => {
   const fetchBalance = async () => {
     setState((prev) => ({ ...prev, balanceLoading: true }));
     const res = await balanceService.get();
-    if (!res) {
+    if (!res || !res.status) {
       setState((prev) => ({ ...prev, balanceLoading: false }));
       // handle error
       return;

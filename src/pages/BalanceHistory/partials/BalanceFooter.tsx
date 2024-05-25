@@ -8,6 +8,15 @@ const BalanceFooter = () => {
   const { state } = useBalanceHistoryContext();
   const { fetchBalanceHistory } = useBalanceHistory();
   const limits = [5, 10, 15, 20, 25, 50];
+
+  const handleLimitFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    fetchBalanceHistory({ limit: Number(e.target.value) });
+  };
+
+  const handlePageFilter = (page: number) => {
+    fetchBalanceHistory({ page });
+  };
+
   return (
     <AppearFadeIn direction="bottom" delay={0.8}>
       {!state.balanceHistoryLoading && (
@@ -19,9 +28,7 @@ const BalanceFooter = () => {
                 glassmorphism({ container: true, hover: true }),
                 "py-2 px-3 font-bold outline-none rounded-md",
               )}
-              onChange={(e) =>
-                fetchBalanceHistory({ limit: Number(e.target.value) })
-              }
+              onChange={handleLimitFilter}
             >
               {limits.map((limit) => (
                 <option key={limit} value={limit} className="text-black">
@@ -37,7 +44,7 @@ const BalanceFooter = () => {
               <button
                 disabled={state.pagination?.page === index + 1}
                 key={index}
-                onClick={() => fetchBalanceHistory({ page: index + 1 })}
+                onClick={() => handlePageFilter(index + 1)}
                 className={cn(
                   state.pagination?.page === index + 1
                     ? `${glassmorphism({ border: true })}`

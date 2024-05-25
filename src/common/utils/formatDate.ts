@@ -1,31 +1,14 @@
+import moment from "moment";
+
 export function formatDate(date: Date) {
-  const today = new Date();
-  const yesterday = new Date(today);
+  const today = moment();
+  const yesterday = moment().subtract(1, "days");
 
-  yesterday.setDate(today.getDate() - 1);
-
-  if (
-    date.getDate() === today.getDate() &&
-    date.getMonth() === today.getMonth() &&
-    date.getFullYear() === today.getFullYear()
-  ) {
+  if (moment(date).isSame(today, "day")) {
     return "Today";
-  } else if (
-    date.getDate() === yesterday.getDate() &&
-    date.getMonth() === yesterday.getMonth() &&
-    date.getFullYear() === yesterday.getFullYear()
-  ) {
+  } else if (moment(date).isSame(yesterday, "day")) {
     return "Yesterday";
   } else {
-    const options = {
-      day: "numeric" as const,
-      month: "long" as const,
-      year: "numeric" as const,
-      hour: "2-digit" as const,
-      minute: "2-digit" as const,
-      second: "2-digit" as const,
-      hour12: true,
-    };
-    return date.toLocaleString("en-US", options);
+    return moment(date).format("MMM DD, YYYY [at] hh:mm:ss A");
   }
 }

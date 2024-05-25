@@ -2,29 +2,46 @@ import AppearGrow from "@components/Animation/AppearGrow";
 import { useBalanceHistoryContext } from "../context";
 import { cn } from "@utils/cn";
 import glassmorphism from "@utils/glassmorphism";
+import _ from "lodash";
+import { BalanceHistoryType } from "@services/balanceHistory";
 
 const BalanceBodyTable = () => {
   const { state } = useBalanceHistoryContext();
-  const theads = [
-    "Amount",
-    "Previous Balance",
-    "NPM",
-    "Name",
-    "Activity",
-    "Note",
-    "Date",
+  const tableMap = [
+    ["Amount", "amount"],
+    ["Previous Balance", "prev_balance"],
+    ["NPM", "user.npm"],
+    ["Name", "user.name"],
+    ["Activity", "activity"],
+    ["Note", "note"],
+    ["Date", "created_at"],
   ];
+
+  const getCellValue = (item: BalanceHistoryType, path: string) => {
+    if (path === "amount" || path === "prev_balance") {
+      return `Rp ${item[path].toLocaleString().replace(/,/g, ".")},-`;
+    } else if (
+      path === "created_at" &&
+      item.created_at !== "Today" &&
+      item.created_at !== "Yesterday"
+    ) {
+      return item.created_at.split("at")[0];
+    } else {
+      return _.get(item, path);
+    }
+  };
+
   return (
     <AppearGrow trigger direction="x">
       <table className="min-w-full divide-y divide-gray-200 shadow-sm rounded-lg overflow-hidden">
         <thead>
           <tr className="font-semibold">
-            {theads.map((thead, index) => (
+            {tableMap.map(([header]) => (
               <th
-                key={index}
+                key={header}
                 className="px-6 py-3 text-left text-xs uppercase tracking-wider"
               >
-                {thead}
+                {header}
               </th>
             ))}
           </tr>
@@ -37,29 +54,11 @@ const BalanceBodyTable = () => {
         >
           {state.balanceHistory.map((item, index) => (
             <tr key={index}>
-              <td className="px-6 py-4 whitespace-nowrap">
-                Rp {item.amount.toLocaleString().replace(/,/g, ".")}
-                ,-
-              </td>
-
-              <td className="px-6 py-4 whitespace-nowrap">
-                Rp {item.prev_balance.toLocaleString().replace(/,/g, ".")}
-                ,-
-              </td>
-
-              <td className="px-6 py-4 whitespace-nowrap">{item.user.npm}</td>
-
-              <td className="px-6 py-4 whitespace-nowrap">{item.user.name}</td>
-
-              <td className="px-6 py-4 whitespace-nowrap">{item.activity}</td>
-
-              <td className="px-6 py-4 whitespace-nowrap">{item.note}</td>
-
-              <td className="px-6 py-4 whitespace-nowrap">
-                {item.created_at !== "Today" && item.created_at !== "Yesterday"
-                  ? item.created_at.split("at")[0]
-                  : item.created_at}
-              </td>
+              {tableMap.map(([, path]) => (
+                <td key={path} className="px-6 py-4 whitespace-nowrap">
+                  {getCellValue(item, path)}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>

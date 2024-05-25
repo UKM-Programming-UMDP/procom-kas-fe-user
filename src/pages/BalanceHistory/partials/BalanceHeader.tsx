@@ -25,7 +25,7 @@ const BalanceHeader = () => {
             <AccountBalanceWallet />
           </div>
           <div className="flex flex-col gap-2">
-            <p className="text-lg">UKM Programming Balance History</p>
+            <span className="text-lg">UKM Programming Balance History</span>
             <div className="flex flex-wrap justify-center gap-2">
               <div
                 className={cn(
@@ -33,11 +33,11 @@ const BalanceHeader = () => {
                   glassmorphism({ container: true, border: true }),
                 )}
               >
-                <p className="font-bold">
+                <span className="font-bold">
                   Rp {state.balance.toLocaleString().replace(/,/g, ".")}
                   ,-
-                </p>
-                <p>Current Balance</p>
+                </span>
+                <span>Current Balance</span>
               </div>
               <div
                 className={cn(
@@ -45,8 +45,10 @@ const BalanceHeader = () => {
                   glassmorphism({ container: true, border: true }),
                 )}
               >
-                <p className="font-bold">{state.pagination?.total_items}</p>
-                <p>Total History</p>
+                <span className="font-bold">
+                  {state.pagination?.total_items}
+                </span>
+                <span>Total History</span>
               </div>
             </div>
           </div>

@@ -4,8 +4,7 @@ import { formatDate } from "./formatDate";
 export const formatBalanceHistoryData = (
   balanceHistory: BalanceHistoryType,
 ) => {
-  const date = new Date(balanceHistory.created_at);
-  const formattedDate = formatDate(date);
+  const formattedDate = formatDate(balanceHistory.created_at);
   return {
     ...balanceHistory,
     prev_balance: balanceHistory.prev_balance ?? 0,

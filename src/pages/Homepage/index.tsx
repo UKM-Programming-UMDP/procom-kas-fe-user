@@ -24,6 +24,8 @@ const Homepage = () => {
     "balance history": <BalanceHistoryLayout />,
   };
 
+  const isAppHome = state.app === "home";
+
   return (
     <div className="flex flex-col h-[100vh]">
       <AutoMargin
@@ -44,11 +46,11 @@ const Homepage = () => {
       <div className="flex justify-center items-center md:p-4 p-1">
         <CardAutosize
           className="mx-auto mt-3"
-          trigger={state.app !== "home"}
+          trigger={!isAppHome}
           initialSize={{ width: "32.3rem" }}
           animateSize={{ width: "60rem" }}
         >
-          {state.app !== "home" && (
+          {!isAppHome && (
             <div className="flex h-9">
               <AppearFadeIn direction="left" className="drop-shadow-xl">
                 <button
@@ -63,7 +65,9 @@ const Homepage = () => {
               </AppearFadeIn>
             </div>
           )}
-          <div className="mx-3 mt-1 mb-3 overflow-auto h-[78vh]">
+          <div
+            className={`mx-3 mt-1 mb-3 overflow-auto ${!isAppHome && "md:h-[70vh] h-[80vh]"}`}
+          >
             {appComponent[state.app]}
           </div>
         </CardAutosize>

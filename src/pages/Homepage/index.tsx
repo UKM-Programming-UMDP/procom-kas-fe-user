@@ -10,6 +10,7 @@ import { appDisplayName } from "@utils/consts";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import PayedKasLayout from "@layouts/PayedKas";
 import BalanceLayout from "@layouts/Balance";
+import BalanceHistoryLayout from "@layouts/BalanceHistory";
 
 const Homepage = () => {
   const { state } = useHomepageContext();
@@ -20,7 +21,10 @@ const Homepage = () => {
     home: <AppList />,
     "payed kas": <PayedKasLayout />,
     balance: <BalanceLayout />,
+    "balance history": <BalanceHistoryLayout />,
   };
+
+  const isAppHome = state.app === "home";
 
   return (
     <div className="flex flex-col h-[100vh]">
@@ -28,7 +32,7 @@ const Homepage = () => {
         trigger={md}
         className="w-fit mx-auto"
         initial={{ marginTop: "1rem" }}
-        animate={{ marginTop: state.app === "home" ? "6rem" : "3rem" }}
+        animate={{ marginTop: state.app === "home" ? "6rem" : "1rem" }}
       >
         <TextAutosize
           initialSize="3rem"
@@ -39,14 +43,14 @@ const Homepage = () => {
           UKM Programming
         </TextAutosize>
       </AutoMargin>
-      <div className="flex justify-center items-center p-4">
+      <div className="flex justify-center items-center md:p-4 p-1">
         <CardAutosize
           className="mx-auto mt-3"
-          trigger={state.app !== "home"}
+          trigger={!isAppHome}
           initialSize={{ width: "32.3rem" }}
           animateSize={{ width: "60rem" }}
         >
-          {state.app !== "home" && (
+          {!isAppHome && (
             <div className="flex h-9">
               <AppearFadeIn direction="left" className="drop-shadow-xl">
                 <button
@@ -61,7 +65,11 @@ const Homepage = () => {
               </AppearFadeIn>
             </div>
           )}
-          <div className="mx-3 mt-1 mb-3">{appComponent[state.app]}</div>
+          <div
+            className={`mx-3 mt-1 mb-3 overflow-auto ${!isAppHome && "md:h-[70vh] h-[80vh]"}`}
+          >
+            {appComponent[state.app]}
+          </div>
         </CardAutosize>
       </div>
     </div>

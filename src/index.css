@@ -22,8 +22,12 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  backdrop-filter: blur(100px);
+  backdrop-filter: blur(20px);
   min-height: 100vh;
+}
+
+hr {
+  border-color: #a660f168;
 }
 
 *::-webkit-scrollbar {

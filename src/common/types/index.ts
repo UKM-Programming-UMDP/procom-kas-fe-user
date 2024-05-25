@@ -4,14 +4,27 @@ export type APIResponse<T = void> = {
   message: string;
   errors: APIFieldError[];
   data: T;
+  pagination?: PaginationType;
 } | null;
+
+export type FilterType = {
+  order_by?: "desc" | "asc";
+  sort?: string;
+};
+
+export type PaginationType = {
+  page: number;
+  limit: number;
+  total_items: number;
+  total_pages: number;
+};
 
 export type APIFieldError = {
   field: string;
   message: string;
 };
 
-export type AppType = "home" | "payed kas" | "balance";
+export type AppType = "home" | "payed kas" | "balance" | "balance history";
 
 export type AppList = {
   displayName: string;

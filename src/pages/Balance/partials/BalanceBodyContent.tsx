@@ -20,14 +20,6 @@ const BalanceBodyContent = () => {
               )}
             >
               <div className="flex items-center gap-4 font-medium group-hover:text-gray-300">
-                <div
-                  className={cn(
-                    "rounded-full py-3 px-4",
-                    glassmorphism({ container: true }),
-                  )}
-                >
-                  {index + 1 < 10 ? `0${index + 1}` : index + 1}
-                </div>
                 <div>
                   {item.user.name} ({item.user.npm})<div>{item.note}</div>
                 </div>

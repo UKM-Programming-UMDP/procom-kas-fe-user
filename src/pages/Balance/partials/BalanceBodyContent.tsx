@@ -29,9 +29,9 @@ const BalanceBodyContent = () => {
                 className={cn(
                   "font-medium ",
                   item.amount > 0
-                    ? "text-green-500 group-hover:text-green-600"
+                    ? "text-green-500 group-hover:text-green-400"
                     : item.amount < 0
-                      ? "text-red-500 group-hover:text-red-600"
+                      ? "text-red-500 group-hover:text-red-400"
                       : "text-gray-300",
                 )}
               >

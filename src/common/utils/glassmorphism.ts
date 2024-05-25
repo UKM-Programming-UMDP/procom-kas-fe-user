@@ -7,14 +7,14 @@ const glassmorphism = ({ container, border, hover }: GlassmorphismProps) => {
   let classes = "";
   if (container) {
     classes +=
-      "bg-purple-50 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-5 ";
+      "bg-fuchsia-300/5 ";
   }
   if (hover) {
     classes +=
-      "hover:bg-purple-100 hover:bg-opacity-10 transition-all duration-200 ";
+      "hover:bg-violet-100/10 transition-all duration-200 ";
   }
   if (border) {
-    classes += "border border-purple-200";
+    classes += "border border-purple-700/50";
   }
   return classes.trim();
 };

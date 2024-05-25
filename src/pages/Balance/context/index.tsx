@@ -1,14 +1,12 @@
-import { GetResponse as BalanceHistoryType } from "@services/balanceHistory";
-import { PaginationType } from "@types";
+import { BalanceHistoryType } from "@services/balanceHistory";
 import { createContext, useContext, useState } from "react";
 
 type BalanceStateType = {
   balance: number;
   balanceLoading: boolean;
-  balanceHistory: BalanceHistoryType;
+  balanceHistory: BalanceHistoryType[];
   balanceHistoryLoading: boolean;
-  mode: "list" | "table" | "chart";
-  pagination: PaginationType;
+  totalBalanceHistory: number;
 };
 
 export const initialState: BalanceStateType = {
@@ -16,11 +14,7 @@ export const initialState: BalanceStateType = {
   balanceLoading: false,
   balanceHistory: [],
   balanceHistoryLoading: false,
-  mode: "list",
-  pagination: {
-    total_items: 0,
-    total_pages: 1,
-  },
+  totalBalanceHistory: 0,
 };
 
 type BalanceContextType = {

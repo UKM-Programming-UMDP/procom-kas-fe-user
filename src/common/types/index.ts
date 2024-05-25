@@ -8,15 +8,15 @@ export type APIResponse<T = void> = {
 } | null;
 
 export type FilterType = {
-  page?: number;
-  limit?: number;
   order_by?: "desc" | "asc";
   sort?: string;
 };
 
 export type PaginationType = {
-  total_pages: number;
+  page: number;
+  limit: number;
   total_items: number;
+  total_pages: number;
 };
 
 export type APIFieldError = {

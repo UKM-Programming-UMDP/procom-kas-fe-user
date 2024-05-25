@@ -45,7 +45,7 @@ const BalanceHeader = () => {
                   glassmorphism({ container: true, border: true }),
                 )}
               >
-                <p className="font-bold">{state.pagination.total_items}</p>
+                <p className="font-bold">{state.pagination?.total_items}</p>
                 <p>Total History</p>
               </div>
             </div>

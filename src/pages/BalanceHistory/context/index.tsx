@@ -1,15 +1,15 @@
-import { GetResponse as BalanceHistoryType } from "@services/balanceHistory";
+import { BalanceHistoryType } from "@services/balanceHistory";
 import { FilterType, PaginationType } from "@types";
 import { createContext, useContext, useState } from "react";
 
 type BalanceHistoryStateType = {
   balance: number;
   balanceLoading: boolean;
-  balanceHistory: BalanceHistoryType;
+  balanceHistory: BalanceHistoryType[];
   balanceHistoryLoading: boolean;
   mode: "list" | "table" | "chart";
-  filter: FilterType;
-  pagination: PaginationType;
+  filter?: FilterType;
+  pagination?: PaginationType;
 };
 
 export const initialState: BalanceHistoryStateType = {
@@ -19,12 +19,12 @@ export const initialState: BalanceHistoryStateType = {
   balanceHistoryLoading: false,
   mode: "list",
   filter: {
-    page: 1,
-    limit: 10,
     order_by: "desc",
     sort: "created_at",
   },
   pagination: {
+    page: 1,
+    limit: 10,
     total_pages: 1,
     total_items: 0,
   },

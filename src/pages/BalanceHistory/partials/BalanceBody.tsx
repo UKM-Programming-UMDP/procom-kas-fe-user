@@ -56,7 +56,7 @@ const BalanceBody = () => {
                   onClick={() =>
                     fetchBalanceHistory({
                       order_by:
-                        state.filter.order_by === "desc" ? "asc" : "desc",
+                        state.filter?.order_by === "desc" ? "asc" : "desc",
                     })
                   }
                   className={cn(
@@ -64,7 +64,7 @@ const BalanceBody = () => {
                     glassmorphism({ container: true, hover: true }),
                   )}
                 >
-                  {state.filter.order_by}
+                  {state.filter?.order_by}
                 </button>
               </AppearFadeIn>
             )}

@@ -1,7 +1,7 @@
-import { APIResponse, FilterType } from "@types";
+import { APIResponse, PaginationType } from "@types";
 import API from "..";
 
-export type GetResponse = {
+export type BalanceHistoryType = {
   amount: number;
   prev_balance: number;
   activity: string;
@@ -11,20 +11,21 @@ export type GetResponse = {
     name: string;
   };
   created_at: string;
-}[];
+};
+
+export type GetResponse = {
+  data: BalanceHistoryType[];
+  pagination?: PaginationType;
+};
 
 export default class BalanceHistoryServices {
   basePath: string = "/balance/history";
   private api: API = new API();
 
-  async get({
-    limit = 10,
-    page = 1,
-    order_by = "desc",
-    sort = "created_at",
-  }: FilterType) {
-    const targetPath = `${this.basePath}?limit=${limit}&page=${page}&order_by=${order_by}&sort=${sort}`;
-    const res: APIResponse<GetResponse> = await this.api.GET(targetPath);
+  async get(queryParams?: string) {
+    const targetPath = `${this.basePath}?${queryParams}`;
+    const res: APIResponse<BalanceHistoryType[]> =
+      await this.api.GET(targetPath);
     return res;
   }
 }

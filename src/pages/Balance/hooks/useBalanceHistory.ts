@@ -1,29 +1,26 @@
 import BalanceHistoryServices from "@services/balanceHistory";
 import { useBalanceContext } from "../context";
-import { FilterType } from "@types";
 import { formatBalanceHistoryData } from "@utils/formatBalanceHistoryData";
 
 interface HookReturn {
   balanceHistoryService: BalanceHistoryServices;
-  fetchBalanceHistory: ({ limit, page, order_by, sort }: FilterType) => void;
+  fetchBalanceHistory: () => void;
 }
 const useBalanceHistory = (): HookReturn => {
   const { setState } = useBalanceContext();
   const balanceHistoryService = new BalanceHistoryServices();
 
-  const fetchBalanceHistory = async ({
-    limit = 10,
-    page = 1,
-    order_by = "desc",
-    sort = "created_at",
-  }: FilterType) => {
+  const fetchBalanceHistory = async () => {
     setState((prev) => ({ ...prev, balanceHistoryLoading: true }));
-    const res = await balanceHistoryService.get({
-      limit,
-      page,
-      order_by,
-      sort,
+
+    const params = new URLSearchParams({
+      limit: "10",
+      page: "1",
+      order_by: "desc",
+      sort: "created_at",
     });
+
+    const res = await balanceHistoryService.get(params.toString());
     if (!res) {
       setState((prev) => ({ ...prev, balanceHistoryLoading: false }));
       // handle error
@@ -35,12 +32,8 @@ const useBalanceHistory = (): HookReturn => {
     setState((prev) => ({
       ...prev,
       balanceHistoryLoading: false,
-      pagination: {
-        ...prev.pagination,
-        total_items: res.pagination?.total_items ?? 0,
-        total_pages: res.pagination?.total_pages ?? 1,
-      },
       balanceHistory: formattedBalanceHistoryData,
+      totalBalanceHistory: res.pagination?.total_items ?? 0,
     }));
   };
 

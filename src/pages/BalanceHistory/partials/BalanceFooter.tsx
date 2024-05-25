@@ -14,7 +14,7 @@ const BalanceFooter = () => {
         <div className="flex justify-between px-1">
           <div>
             <select
-              defaultValue={state.filter.limit}
+              defaultValue={state.pagination?.limit}
               className={cn(
                 glassmorphism({ container: true, hover: true }),
                 "py-2 px-3 font-bold outline-none rounded-md",
@@ -32,14 +32,14 @@ const BalanceFooter = () => {
           </div>
           <div className="flex gap-3">
             {Array.from({
-              length: state.pagination.total_pages || 0,
+              length: state.pagination?.total_pages || 0,
             }).map((_, index) => (
               <button
-                disabled={state.filter.page === index + 1}
+                disabled={state.pagination?.page === index + 1}
                 key={index}
                 onClick={() => fetchBalanceHistory({ page: index + 1 })}
                 className={cn(
-                  state.filter.page === index + 1
+                  state.pagination?.page === index + 1
                     ? `${glassmorphism({ border: true })}`
                     : `${"hover:scale-105"} ${glassmorphism({ hover: true })}`,
                   "py-2 px-3 font-bold rounded-md",

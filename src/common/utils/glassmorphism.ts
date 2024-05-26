@@ -6,15 +6,13 @@ type GlassmorphismProps = {
 const glassmorphism = ({ container, border, hover }: GlassmorphismProps) => {
   let classes = "";
   if (container) {
-    classes +=
-      "bg-fuchsia-300/5 ";
+    classes += "bg-fuchsia-300/5 ";
   }
   if (hover) {
-    classes +=
-      "hover:bg-violet-300/10 transition-all duration-200 ";
+    classes += "hover:bg-violet-300/10 transition-all duration-200 ";
   }
   if (border) {
-    classes += "border border-purple-700/50";
+    classes += "border border-purple-700/20";
   }
   return classes.trim();
 };

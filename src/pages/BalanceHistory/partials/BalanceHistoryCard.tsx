@@ -24,7 +24,7 @@ const BalanceHistoryCard = (props: Props) => {
         <span>{history.note}</span>
       </div>
       <div className="flex flex-col text-end">
-        <span className="text-gray-500 font-medium">
+        <span className="text-gray-300/70 font-medium">
           Rp {history.prev_balance.toLocaleString().replace(/,/g, ".")}
           ,-
         </span>
@@ -42,7 +42,6 @@ const BalanceHistoryCard = (props: Props) => {
         </span>
         <span>{history.created_at.split("at")[1]}</span>
       </div>
-      
     </div>
   );
 };

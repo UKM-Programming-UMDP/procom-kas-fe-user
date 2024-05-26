@@ -1,6 +1,6 @@
 import glassmorphism from "@utils/glassmorphism";
 import { useBalanceHistoryContext } from "../context";
-import { cn } from "@utils/cn";
+import { cn } from "@utils/index";
 
 type ModeButtonMode = "list" | "table" | "chart";
 type ModeButtonProps = {

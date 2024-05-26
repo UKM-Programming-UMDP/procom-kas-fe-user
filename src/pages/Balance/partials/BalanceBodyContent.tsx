@@ -1,7 +1,7 @@
 import AppearGrow from "@components/Animation/AppearGrow";
 import { useBalanceContext } from "../context";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
-import { cn } from "@utils/cn";
+import { cn } from "@utils/index";
 import glassmorphism from "@utils/glassmorphism";
 import useFormatAmount from "../hooks/useFormatAmount";
 

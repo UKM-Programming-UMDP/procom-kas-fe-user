@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useBalanceHistoryContext } from "../context";
 import AppearGrow from "@components/Animation/AppearGrow";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
-import { cn } from "@utils/cn";
+import { cn } from "@utils/index";
 import BalanceHistoryCard from "./BalanceHistoryCard";
 
 type BalanceBodyListProps = {

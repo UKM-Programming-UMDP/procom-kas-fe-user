@@ -1,6 +1,6 @@
 import BalanceHistoryServices from "@services/balanceHistory";
 import { useBalanceContext } from "../context";
-import { formatBalanceHistoryData } from "@utils/formatBalanceHistoryData";
+import { balanceHistoryFormatter } from "@utils/formatter";
 
 interface HookReturn {
   balanceHistoryService: BalanceHistoryServices;
@@ -27,7 +27,7 @@ const useBalanceHistory = (): HookReturn => {
       return;
     }
 
-    const formattedBalanceHistoryData = res.data.map(formatBalanceHistoryData);
+    const formattedBalanceHistoryData = res.data.map(balanceHistoryFormatter);
 
     setState((prev) => ({
       ...prev,

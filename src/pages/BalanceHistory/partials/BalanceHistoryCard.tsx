@@ -1,14 +1,13 @@
 import { BalanceHistoryType } from "@services/balanceHistory";
-import { cn } from "@utils/cn";
+import { cn } from "@utils/index";
+import { amountFormatter } from "@utils/formatter";
 import glassmorphism from "@utils/glassmorphism";
-import useBalanceHistory from "../hooks/useBalanceHistory";
 
 interface Props {
   history: BalanceHistoryType;
 }
 const BalanceHistoryCard = (props: Props) => {
   const { history } = props;
-  const { amountFormatter } = useBalanceHistory();
 
   return (
     <div

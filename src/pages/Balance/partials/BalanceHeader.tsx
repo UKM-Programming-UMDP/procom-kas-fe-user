@@ -2,7 +2,7 @@ import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import { AccountBalanceWallet } from "@mui/icons-material";
 import { CircularProgress } from "@mui/material";
 import { useBalanceContext } from "../context";
-import { cn } from "@utils/cn";
+import { cn } from "@utils/index";
 import glassmorphism from "@utils/glassmorphism";
 
 const BalanceHeader = () => {

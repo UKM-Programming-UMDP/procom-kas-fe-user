@@ -1,7 +1,7 @@
 import AppearGrow from "@components/Animation/AppearGrow";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { useBalanceHistoryContext } from "../context";
-import { cn } from "@utils/cn";
+import { cn } from "@utils/index";
 import glassmorphism from "@utils/glassmorphism";
 import useGroupedChartData from "../hooks/useGroupedChartData";
 import { useTheme } from "@mui/material/styles";

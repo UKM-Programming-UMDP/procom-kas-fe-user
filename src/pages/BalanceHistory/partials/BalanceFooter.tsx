@@ -1,7 +1,7 @@
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import { useBalanceHistoryContext } from "../context";
 import useBalanceHistory from "../hooks/useBalanceHistory";
-import { cn } from "@utils/cn";
+import { cn } from "@utils/index";
 import glassmorphism from "@utils/glassmorphism";
 
 const BalanceFooter = () => {

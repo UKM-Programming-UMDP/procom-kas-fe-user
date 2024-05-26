@@ -1,6 +1,6 @@
 import AppearGrow from "@components/Animation/AppearGrow";
 import { useBalanceHistoryContext } from "../context";
-import { cn } from "@utils/cn";
+import { cn } from "@utils/index";
 import glassmorphism from "@utils/glassmorphism";
 import _ from "lodash";
 import { BalanceHistoryType } from "@services/balanceHistory";

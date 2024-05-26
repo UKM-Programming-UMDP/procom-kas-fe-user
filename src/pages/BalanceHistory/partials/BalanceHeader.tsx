@@ -2,7 +2,7 @@ import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import { AccountBalanceWallet } from "@mui/icons-material";
 import { CircularProgress } from "@mui/material";
 import { useBalanceHistoryContext } from "../context";
-import { cn } from "@utils/cn";
+import { cn } from "@utils/index";
 import glassmorphism from "@utils/glassmorphism";
 
 const BalanceHeader = () => {
@@ -20,12 +20,17 @@ const BalanceHeader = () => {
           )}
         >
           <div
-            className={cn("p-6 rounded-md md:block hidden", glassmorphism({ container: true }))}
+            className={cn(
+              "p-6 rounded-md md:block hidden",
+              glassmorphism({ container: true }),
+            )}
           >
             <AccountBalanceWallet />
           </div>
           <div className="flex flex-col gap-2">
-            <span className="text-lg md:block hidden">UKM Programming Balance History</span>
+            <span className="text-lg md:block hidden">
+              UKM Programming Balance History
+            </span>
             <div className="flex flex-wrap gap-2">
               <div
                 className={cn(

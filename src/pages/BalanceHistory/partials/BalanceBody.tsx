@@ -4,7 +4,7 @@ import { BarChart, List, TableChart } from "@mui/icons-material";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import React, { useState } from "react";
 import BalanceBodyTable from "./BalanceBodyTable";
-import { cn } from "@utils/cn";
+import { cn } from "@utils/index";
 import BalanceBodyChart from "./BalanceBodyChart";
 import useBalanceHistory from "../hooks/useBalanceHistory";
 import glassmorphism from "@utils/glassmorphism";

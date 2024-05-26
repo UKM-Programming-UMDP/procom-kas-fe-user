@@ -1,7 +1,7 @@
 import BalanceHistoryServices from "@services/balanceHistory";
 import { useBalanceHistoryContext } from "../context";
 import { FilterType, PaginationType } from "@types";
-import { formatBalanceHistoryData } from "@utils/formatBalanceHistoryData";
+import { balanceHistoryFormatter } from "@utils/formatter";
 
 type BalanceHistoryParams = {
   limit?: PaginationType["limit"];
@@ -14,7 +14,6 @@ interface HookReturn {
   balanceHistoryService: BalanceHistoryServices;
   fetchBalanceHistory: (params: BalanceHistoryParams) => void;
   handleOrderByFilter: () => void;
-  amountFormatter: (amount: number) => string;
 }
 const useBalanceHistory = (): HookReturn => {
   const { state, setState } = useBalanceHistoryContext();
@@ -43,7 +42,7 @@ const useBalanceHistory = (): HookReturn => {
       return;
     }
 
-    const formattedBalanceHistoryData = res.data.map(formatBalanceHistoryData);
+    const formattedBalanceHistoryData = res.data.map(balanceHistoryFormatter);
 
     setState((prev) => ({
       ...prev,
@@ -78,18 +77,10 @@ const useBalanceHistory = (): HookReturn => {
     });
   };
 
-  const amountFormatter = (amount: number) => {
-    const sign = amount > 0 ? "+" : amount < 0 ? "-" : "";
-    const formattedAmount = `Rp ${amount.toLocaleString().replace(/,/g, ".")}`;
-
-    return `${sign} ${formattedAmount}`;
-  };
-
   return {
     balanceHistoryService,
     fetchBalanceHistory,
     handleOrderByFilter,
-    amountFormatter,
   };
 };
 

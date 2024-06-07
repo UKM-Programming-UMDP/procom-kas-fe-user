@@ -3,22 +3,24 @@ import useBalanceHistory from "./hooks/useBalanceHistory";
 import { useEffect } from "react";
 import BalanceHeader from "./partials/BalanceHeader";
 import BalanceBody from "./partials/BalanceBody";
+import BalanceFooter from "./partials/BalanceFooter";
 
-const Balance = () => {
+const BalanceHistory = () => {
   const { fetchBalance } = useBalance();
   const { fetchBalanceHistory } = useBalanceHistory();
 
   useEffect(() => {
     fetchBalance();
-    fetchBalanceHistory();
+    fetchBalanceHistory({});
   }, []);
 
   return (
     <div className="flex flex-col gap-2">
       <BalanceHeader />
       <BalanceBody />
+      <BalanceFooter />
     </div>
   );
 };
 
-export default Balance;
+export default BalanceHistory;

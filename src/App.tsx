@@ -1,4 +1,4 @@
-import HomepageLayout from "@layouts/Homepage";
+import HomepageLayout from "@pages/Homepage/layout";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {

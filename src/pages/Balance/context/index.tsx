@@ -1,23 +1,30 @@
+import { BalanceHistoryType } from "@services/balanceHistory";
 import { createContext, useContext, useState } from "react";
 
-type StateType = {
+type BalanceStateType = {
   balance: number;
   balanceLoading: boolean;
+  balanceHistory: BalanceHistoryType[];
+  balanceHistoryLoading: boolean;
+  totalBalanceHistory: number;
 };
 
-export const initialState: StateType = {
+export const initialState: BalanceStateType = {
   balance: 0,
   balanceLoading: false,
+  balanceHistory: [],
+  balanceHistoryLoading: false,
+  totalBalanceHistory: 0,
 };
 
-type ContextType = {
-  state: StateType;
-  setState: React.Dispatch<React.SetStateAction<StateType>>;
+type BalanceContextType = {
+  state: BalanceStateType;
+  setState: React.Dispatch<React.SetStateAction<BalanceStateType>>;
 };
 
-const BalanceContext = createContext<ContextType | null>(null);
+const BalanceContext = createContext<BalanceContextType | null>(null);
 
-const useBalanceContext = (): ContextType => {
+const useBalanceContext = (): BalanceContextType => {
   const context = useContext(BalanceContext);
   if (!context) {
     throw new Error("useBalanceContext must be used within a BalanceProvider");
@@ -28,7 +35,7 @@ const useBalanceContext = (): ContextType => {
 const BalanceProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [state, setState] = useState<StateType>(initialState);
+  const [state, setState] = useState<BalanceStateType>(initialState);
 
   return (
     <BalanceContext.Provider value={{ state, setState }}>
@@ -38,4 +45,4 @@ const BalanceProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 export { BalanceProvider, useBalanceContext };
-export type { StateType };
+export type { BalanceStateType };

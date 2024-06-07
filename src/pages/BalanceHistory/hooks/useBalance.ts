@@ -1,12 +1,12 @@
 import BalanceServices from "@services/balance";
-import { useBalanceContext } from "../context";
+import { useBalanceHistoryContext } from "../context";
 
 interface HookReturn {
   balanceService: BalanceServices;
   fetchBalance: () => void;
 }
 const useBalance = (): HookReturn => {
-  const { setState } = useBalanceContext();
+  const { setState } = useBalanceHistoryContext();
   const balanceService = new BalanceServices();
 
   const fetchBalance = async () => {

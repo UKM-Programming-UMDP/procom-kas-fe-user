@@ -12,7 +12,7 @@ const usePayedKas = (): HookReturn => {
   const fetchPayedKas = async () => {
     setState((prev) => ({ ...prev, payedKasLoading: true }));
     const res = await payedKasService.get();
-    if (!res) {
+    if (!res || !res.status) {
       setState((prev) => ({ ...prev, payedKasLoading: false }));
       // handle error
       return;

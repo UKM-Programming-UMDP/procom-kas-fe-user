@@ -8,9 +8,9 @@ import { ArrowBack } from "@mui/icons-material";
 import useHomepage from "./hooks/useHomepage";
 import { appDisplayName } from "@utils/consts";
 import AppearFadeIn from "@components/Animation/AppearFadeIn";
-import PayedKasLayout from "@layouts/PayedKas";
-import BalanceLayout from "@layouts/Balance";
-import BalanceHistoryLayout from "@layouts/BalanceHistory";
+import PayedKasLayout from "@pages/PayedKas/layout";
+import BalanceLayout from "@pages/Balance/layout";
+import BalanceHistoryLayout from "@pages/BalanceHistory/layout";
 
 const Homepage = () => {
   const { state } = useHomepageContext();

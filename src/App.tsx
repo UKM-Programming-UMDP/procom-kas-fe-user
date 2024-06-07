@@ -1,4 +1,4 @@
-import HomepageLayout from "@pages/Homepage/layout";
+import Homepage from "@pages/Homepage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
     <BrowserRouter>
       <div className="min-h-[100vh]">
         <Routes>
-          <Route path="/" element={<HomepageLayout />} />
+          <Route path="/" element={<Homepage />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -5,7 +5,12 @@ import { SnackbarProvider } from "notistack";
 function App() {
   return (
     <BrowserRouter>
-      <SnackbarProvider>
+      <SnackbarProvider
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
         <div className="min-h-[100vh]">
           <Routes>
             <Route path="/" element={<Homepage />} />

@@ -6,7 +6,7 @@ export function errMessage(err: APIResponse<object>): string {
   if (err?.message) {
     return err.message;
   } else {
-    return "An error occurred.";
+    return "Internal Server Error";
   }
 }
 
@@ -18,64 +18,48 @@ export const snackbar = {
   error: (message: string) => {
     enqueueSnackbar(message, {
       variant: "error",
-      anchorOrigin: {
-        vertical: "top",
-        horizontal: "right",
-      },
-      preventDuplicate: true,
-      autoHideDuration: 2000,
       style: {
-        background: "linear-gradient(rgb(215, 17, 0), rgb(255, 89, 54))",
-        opacity: "0.95",
+        backgroundColor: "rgba(255, 0, 0, 0.2)",
+        border: "1px solid rgba(255, 0, 0, 0.5)",
+        borderRadius: "10px",
+        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+        color: "rgba(255, 255, 255, 0.9)",
       },
     });
   },
-
   success: (message: string) => {
     enqueueSnackbar(message, {
       variant: "success",
-      anchorOrigin: {
-        vertical: "top",
-        horizontal: "right",
-      },
-      preventDuplicate: true,
-      autoHideDuration: 2000,
       style: {
-        background:
-          "linear-gradient(rgb(12, 255, 12), rgb(65, 194, 0), rgb(0, 218, 191))",
-        opacity: "0.85",
+        backgroundColor: "rgba(0, 255, 0, 0.33)",
+        border: "1px solid rgba(0, 255, 0, 0.5)",
+        borderRadius: "10px",
+        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+        color: "rgba(255, 255, 255, 0.9)",
       },
     });
   },
   info: (message: string) => {
     enqueueSnackbar(message, {
       variant: "info",
-      anchorOrigin: {
-        vertical: "top",
-        horizontal: "right",
-      },
-      preventDuplicate: true,
-      autoHideDuration: 2000,
       style: {
-        background:
-          "linear-gradient(rgb(49, 121, 255), rgb(100, 154, 255), rgb(91, 59, 255))",
-        opacity: "0.85",
+        backgroundColor: "rgba(0, 251, 255, 0.3)",
+        border: "1px solid rgba(0, 251, 255, 0.5)",
+        borderRadius: "10px",
+        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+        color: "rgba(255, 255, 255, 0.9)",
       },
     });
   },
   warning: (message: string) => {
     enqueueSnackbar(message, {
       variant: "warning",
-      anchorOrigin: {
-        vertical: "top",
-        horizontal: "right",
-      },
-      preventDuplicate: true,
-      autoHideDuration: 2000,
       style: {
-        background:
-          "linear-gradient(rgb(203, 129, 0), rgb(214, 145, 25), rgb(198, 185, 14))",
-        opacity: "0.95",
+        backgroundColor: "rgba(255, 255, 0, 0.33)",
+        border: "1px solid rgba(255, 255, 0, 0.5)",
+        borderRadius: "10px",
+        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+        color: "rgba(255, 255, 255, 0.9)",
       },
     });
   },

@@ -2,6 +2,7 @@ import BalanceHistoryServices from "@services/balanceHistory";
 import { useBalanceHistoryContext } from "../context";
 import { FilterType, PaginationType } from "@types";
 import { balanceHistoryFormatter } from "@utils/formatter";
+import { errNotification } from "@components/Snackbar";
 
 type BalanceHistoryParams = {
   limit?: PaginationType["limit"];
@@ -38,7 +39,7 @@ const useBalanceHistory = (): HookReturn => {
 
     if (!res || !res.status) {
       setState((prev) => ({ ...prev, balanceHistoryLoading: false }));
-      // handle error
+      errNotification(res);
       return;
     }
 

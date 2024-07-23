@@ -1,3 +1,4 @@
+import { errNotification } from "@components/Snackbar";
 import { usePayedKasContext } from "../context";
 import PayedKasService from "@services/payedKas";
 
@@ -14,7 +15,7 @@ const usePayedKas = (): HookReturn => {
     const res = await payedKasService.get();
     if (!res || !res.status) {
       setState((prev) => ({ ...prev, payedKasLoading: false }));
-      // handle error
+      errNotification(res);
       return;
     }
     setState((prev) => ({

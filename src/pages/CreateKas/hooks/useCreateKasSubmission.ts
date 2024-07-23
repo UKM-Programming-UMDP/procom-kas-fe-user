@@ -28,8 +28,7 @@ const useCreateKasSubmission = (): HookReturn => {
     }));
 
     try {
-      const response = await kasService.submission(submission);
-      console.log(response);
+      const response = await kasService.post(submission);
       if (response && response.status) {
         setState((prev) => ({
           ...prev,

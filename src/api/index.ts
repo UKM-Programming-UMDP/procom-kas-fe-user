@@ -14,16 +14,29 @@ type Headers = {
   "Content-type": string;
 };
 
+type APIContentType = {
+  isFile?: boolean;
+  isForm?: boolean;
+};
+
 export default class API {
-  headers: Headers = {
-    Accept: "application/json",
-    "Content-type": "application/json",
-  };
+  headers: Headers;
   api: AxiosInstance;
 
-  constructor() {
+  constructor(
+    { isFile, isForm }: APIContentType = { isFile: false, isForm: false },
+  ) {
+    this.headers = {
+      Accept: "application/json",
+      "Content-type": isFile
+        ? "multipart/form-data"
+        : isForm
+          ? "application/x-www-form-urlencoded"
+          : "application/json",
+    };
+
     this.api = axios.create({
-      baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`,
+      baseURL: `${import.meta.env.VITE_BACKEND_URL}/v1`,
       headers: this.headers as unknown as AxiosHeaders,
       httpsAgent: false,
     } as AxiosRequestConfig);
@@ -44,13 +57,18 @@ export default class API {
 
   async POST<T>(path: string, data: any): Promise<APIResponse<T>> {
     try {
+      // console.log(this.headers, data);
       const res = await this.api.post(path, data);
       return res.data;
     } catch (err: AxiosError | any) {
       if (isAxiosError(err)) {
-        return err?.response?.data;
+        console.error("Axios error:", err.message);
+        throw new Error(
+          `API Error: ${err.response?.status} ${err.response?.data?.message}`,
+        );
       } else {
-        return err;
+        console.error("Unexpected error:", err);
+        throw err;
       }
     }
   }

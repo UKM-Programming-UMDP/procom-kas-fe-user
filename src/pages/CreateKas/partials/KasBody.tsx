@@ -8,6 +8,7 @@ import { Image } from "@mui/icons-material";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import useUploadImage from "../hooks/useUploadImage";
+import useCreateKasSubmission from "../hooks/useCreateKasSubmission";
 
 const MySwal = withReactContent(Swal);
 
@@ -22,8 +23,9 @@ const KasBody: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [monthCount, setMonthCount] = useState<number>(0);
-  const kasService = new CreateKasService();
+  // const kasService = new CreateKasService();
   const { uploadFile, uriId } = useUploadImage();
+  const { kasService, submissionKas } = useCreateKasSubmission();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -66,10 +68,24 @@ const KasBody: React.FC = () => {
       note: note,
       evidence: uriId,
     };
-    console.log(submissionData);
     try {
-      const response = await kasService.submission(submissionData);
-      console.log(response);
+      const response = await kasService.post(JSON.stringify(submissionData));
+      // const response = await axios.post(
+      //   "https://api.fanesp.online/v1/kas-submissions",
+      //   JSON.stringify({
+      //     user: {
+      //       npm: "2125240020",
+      //     },
+      //     payed_amount: 10000,
+      //     note: "-",
+      //     evidence: "cfmeqjczytlntcijxgwrzqwxsvwqrmvcmtimsixo-a.png",
+      //   }),
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/x-www-form-urlencoded",
+      //     },
+      //   },
+      // );
       if (response && response.status) {
         MySwal.fire({
           icon: "success",

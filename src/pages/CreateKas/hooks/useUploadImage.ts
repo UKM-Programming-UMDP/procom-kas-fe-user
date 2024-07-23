@@ -41,7 +41,7 @@ const useUploadImage = () => {
 
     try {
       const res: APIResponse<UploadImageResponse> =
-        await uploadService.upload(submission);
+        await uploadService.post(submission);
       if (res?.status === true) {
         console.log(res?.data.url_id);
         setUriId(res?.data.url_id);

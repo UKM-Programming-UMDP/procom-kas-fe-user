@@ -1,14 +1,10 @@
 import { APIResponse } from "@types";
 import API from "..";
+import qs from "qs";
 
 export type GetResponse = {
   submission_id: string;
-  user: {
-    npm: string;
-    name: string;
-    email: string;
-    kas_payed: number;
-  };
+  user: UserType;
   payed_amount: number;
   status: {
     ID: number;
@@ -40,12 +36,13 @@ export default class CreateKasService {
   kasPath: string = "/kas-submissions";
   userPath: string = "/users";
   private api: API = new API();
-  async submission(
-    submission: SubmissionRequest,
+  private apiForm: API = new API({ isForm: true });
+  async post(
+    submission: SubmissionRequest | string,
   ): Promise<APIResponse<GetResponse>> {
     const targetPath = `${this.kasPath}`;
     try {
-      const res: APIResponse<GetResponse> = await this.api.POST(
+      const res: APIResponse<GetResponse> = await this.apiForm.POST(
         targetPath,
         submission,
       );

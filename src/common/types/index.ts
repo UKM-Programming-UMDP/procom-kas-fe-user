@@ -24,7 +24,12 @@ export type APIFieldError = {
   message: string;
 };
 
-export type AppType = "home" | "payed kas" | "balance" | "balance history";
+export type AppType =
+  | "home"
+  | "payed kas"
+  | "balance"
+  | "balance history"
+  | "kas submission";
 
 export type AppList = {
   displayName: string;

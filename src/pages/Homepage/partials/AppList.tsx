@@ -1,5 +1,10 @@
 import AppCard from "@components/Card/AppCard";
-import { CurrencyBitcoin, History, PointOfSale } from "@mui/icons-material";
+import {
+  CurrencyBitcoin,
+  History,
+  PointOfSale,
+  PostAdd,
+} from "@mui/icons-material";
 import { AppList as AppListType } from "@types";
 import useHomepage from "../hooks/useHomepage";
 import { appDisplayName } from "@utils/consts";
@@ -22,6 +27,11 @@ const AppList = () => {
       displayName: appDisplayName["balance history"],
       icon: <History fontSize="large" />,
       appName: "balance history",
+    },
+    {
+      displayName: appDisplayName["kas submission"],
+      icon: <PostAdd fontSize="large" />,
+      appName: "kas submission",
     },
   ];
   return (

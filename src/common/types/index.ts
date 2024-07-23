@@ -31,3 +31,5 @@ export type AppList = {
   icon: JSX.Element;
   appName: AppType;
 };
+
+export type SnackbarType = "error" | "success" | "info" | "warning";

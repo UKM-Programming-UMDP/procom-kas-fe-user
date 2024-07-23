@@ -1,6 +1,6 @@
 import BalanceServices from "@services/balance";
 import { useBalanceContext } from "../context";
-import { errNotification } from "@components/Snackbar";
+import { errMessage, snackbar } from "@utils/snackbar";
 
 interface HookReturn {
   balanceService: BalanceServices;
@@ -15,7 +15,7 @@ const useBalance = (): HookReturn => {
     const res = await balanceService.get();
     if (!res || !res.status) {
       setState((prev) => ({ ...prev, balanceLoading: false }));
-      errNotification(res);
+      snackbar.error(errMessage(res));
       return;
     }
     setState((prev) => ({

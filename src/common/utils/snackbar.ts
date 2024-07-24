@@ -1,18 +1,12 @@
 import { APIResponse } from "@types";
 import { enqueueSnackbar } from "notistack";
-import { SnackbarType } from "@types";
 
 export function errMessage(err: APIResponse<object>): string {
   if (err?.message) {
     return err.message;
-  } else {
-    return "Internal Server Error";
   }
+  return "Internal Server Error";
 }
-
-type enqueueSnackbar = {
-  variant: SnackbarType;
-};
 
 const commonSnackbarStyle = {
   borderRadius: "10px",

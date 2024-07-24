@@ -14,6 +14,12 @@ type enqueueSnackbar = {
   variant: SnackbarType;
 };
 
+const commonSnackbarStyle = {
+  borderRadius: "10px",
+  boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+  color: "rgba(255, 255, 255, 0.9)",
+};
+
 export const snackbar = {
   error: (message: string) => {
     enqueueSnackbar(message, {
@@ -21,9 +27,7 @@ export const snackbar = {
       style: {
         backgroundColor: "rgba(255, 0, 0, 0.2)",
         border: "1px solid rgba(255, 0, 0, 0.5)",
-        borderRadius: "10px",
-        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-        color: "rgba(255, 255, 255, 0.9)",
+        ...commonSnackbarStyle,
       },
     });
   },
@@ -33,9 +37,7 @@ export const snackbar = {
       style: {
         backgroundColor: "rgba(0, 255, 0, 0.33)",
         border: "1px solid rgba(0, 255, 0, 0.5)",
-        borderRadius: "10px",
-        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-        color: "rgba(255, 255, 255, 0.9)",
+        ...commonSnackbarStyle,
       },
     });
   },
@@ -45,9 +47,7 @@ export const snackbar = {
       style: {
         backgroundColor: "rgba(0, 251, 255, 0.3)",
         border: "1px solid rgba(0, 251, 255, 0.5)",
-        borderRadius: "10px",
-        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-        color: "rgba(255, 255, 255, 0.9)",
+        ...commonSnackbarStyle,
       },
     });
   },
@@ -57,9 +57,7 @@ export const snackbar = {
       style: {
         backgroundColor: "rgba(255, 255, 0, 0.33)",
         border: "1px solid rgba(255, 255, 0, 0.5)",
-        borderRadius: "10px",
-        boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-        color: "rgba(255, 255, 255, 0.9)",
+        ...commonSnackbarStyle,
       },
     });
   },

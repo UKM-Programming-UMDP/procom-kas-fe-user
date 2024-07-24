@@ -23,7 +23,7 @@ export default class API {
 
   constructor() {
     this.api = axios.create({
-      baseURL: `${import.meta.env.VITE_BACKEND_URL}/api`,
+      baseURL: `${import.meta.env.VITE_BACKEND_URL}/v1`,
       headers: this.headers as unknown as AxiosHeaders,
       httpsAgent: false,
     } as AxiosRequestConfig);

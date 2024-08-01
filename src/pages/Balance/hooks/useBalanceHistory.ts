@@ -1,6 +1,7 @@
 import BalanceHistoryServices from "@services/balanceHistory";
 import { useBalanceContext } from "../context";
 import { balanceHistoryFormatter } from "@utils/formatter";
+import { errMessage, snackbar } from "@utils/snackbar";
 
 interface HookReturn {
   balanceHistoryService: BalanceHistoryServices;
@@ -23,7 +24,7 @@ const useBalanceHistory = (): HookReturn => {
     const res = await balanceHistoryService.get(params.toString());
     if (!res || !res.status) {
       setState((prev) => ({ ...prev, balanceHistoryLoading: false }));
-      // handle error
+      snackbar.error(errMessage(res));
       return;
     }
 

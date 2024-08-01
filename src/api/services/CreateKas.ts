@@ -1,6 +1,6 @@
 import { APIResponse } from "@types";
 import API from "..";
-import qs from "qs";
+//import qs from "qs";
 
 export type GetResponse = {
   submission_id: string;

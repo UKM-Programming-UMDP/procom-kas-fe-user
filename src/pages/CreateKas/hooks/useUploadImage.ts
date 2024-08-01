@@ -1,4 +1,3 @@
-import { useState } from "react";
 import UploadImage, {
   UploadImageRequest,
   UploadImageResponse,
@@ -6,16 +5,17 @@ import UploadImage, {
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { APIResponse } from "@types";
+import { useCreateKasContext } from "@pages/CreateKas/context/index";
 
 const MySwal = withReactContent(Swal);
 
 const useUploadImage = () => {
-  const [uriId, setUriId] = useState<string>("");
+  const { state, setState } = useCreateKasContext();
   const uploadService = new UploadImage();
 
   const uploadFile = async (file: File) => {
     const validTypes = ["image/jpeg", "image/jpg", "image/png"];
-    const maxSize = 5 * 1024 * 1024; // max 5 MB
+    const maxSize = 5 * 1024 * 1024;
 
     if (!validTypes.includes(file.type)) {
       MySwal.fire({
@@ -44,7 +44,10 @@ const useUploadImage = () => {
         await uploadService.post(submission);
       if (res?.status === true) {
         console.log(res?.data.url_id);
-        setUriId(res?.data.url_id);
+        setState((prevState) => ({
+          ...prevState,
+          uriId: res?.data.url_id,
+        }));
         MySwal.fire({
           icon: "success",
           title: "Success",
@@ -57,11 +60,12 @@ const useUploadImage = () => {
           text: "File upload failed. Please try again.",
         });
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const error = err as APIResponse;
       MySwal.fire({
         icon: "error",
         title: "Error",
-        text: "An error occurred during the file upload.",
+        text: error?.message,
       });
     } finally {
       MySwal.fire({
@@ -71,8 +75,6 @@ const useUploadImage = () => {
       });
     }
   };
-
-  return { uploadFile, uriId };
+  return { uploadFile, uriId: state.uriId };
 };
-
 export default useUploadImage;

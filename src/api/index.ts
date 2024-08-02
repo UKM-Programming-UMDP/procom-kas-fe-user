@@ -57,7 +57,6 @@ export default class API {
 
   async POST<T>(path: string, data: any): Promise<APIResponse<T>> {
     try {
-      // console.log(this.headers, data);
       const res = await this.api.post(path, data);
       return res.data;
     } catch (err: AxiosError | any) {

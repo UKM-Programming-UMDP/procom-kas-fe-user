@@ -18,8 +18,6 @@ export type GetResponse = {
 export type UserType = {
   npm: string;
   name: string;
-  email: string;
-  kas_payed: number;
 };
 
 export type SubmissionRequest = {
@@ -31,7 +29,7 @@ export type SubmissionRequest = {
   evidence: string;
 };
 
-export default class CreateKasService {
+export default class KasSubmissionService {
   kasPath: string = "/kas-submissions";
   userPath: string = "/users";
   private api: API = new API();
@@ -47,17 +45,15 @@ export default class CreateKasService {
       );
       return res;
     } catch (error) {
-      console.error("Error creating submission:", error);
       throw error;
     }
   }
-  async get(queryParams: string = ""): Promise<APIResponse<UserType[]>> {
-    const targetPath = `${this.userPath}${queryParams ? `?${queryParams}` : ""}`;
+  async get(queryParams?: string): Promise<APIResponse<UserType[]>> {
+    const targetPath = `${this.userPath}?${queryParams}`;
     try {
       const res: APIResponse<UserType[]> = await this.api.GET(targetPath);
       return res;
     } catch (error) {
-      console.error("Error fetching users:", error);
       throw error;
     }
   }

@@ -1,13 +1,9 @@
-import CreateKasService, { UserType } from "@services/CreateKas";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
-import { APIResponse } from "@types";
+import KasSubmissionService, { UserType } from "@services/kasSubmission";
 import { useCreateKasContext } from "../context";
 import { snackbar, errMessage } from "@utils/snackbar";
-const MySwal = withReactContent(Swal);
 
 interface HookReturn {
-  kasService: CreateKasService;
+  kasService: KasSubmissionService;
   fetchUsers: () => void;
   selectUser: (user: UserType) => void;
   loading: boolean;
@@ -20,7 +16,7 @@ const useGetUser = (): HookReturn => {
   const fetchUsers = async () => {
     setState((prevState) => ({ ...prevState, userLoading: true }));
 
-    const kasService = new CreateKasService();
+    const kasService = new KasSubmissionService();
 
     const res = await kasService.get();
     if (res && res.data) {
@@ -46,7 +42,7 @@ const useGetUser = (): HookReturn => {
   return {
     fetchUsers,
     selectUser,
-    kasService: new CreateKasService(),
+    kasService: new KasSubmissionService(),
     loading: state.userLoading,
     users: state.user,
   };

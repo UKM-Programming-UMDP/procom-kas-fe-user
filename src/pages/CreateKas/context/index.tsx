@@ -1,4 +1,4 @@
-import { GetResponse, UserType } from "@services/CreateKas";
+import { GetResponse, UserType } from "@services/kasSubmission";
 import { createContext, useContext, useState } from "react";
 import useDialog, { UseDialogReturn } from "@hooks/useDialog";
 import { UploadImageResponse } from "@services/UploadImage";

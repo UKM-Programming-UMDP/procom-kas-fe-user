@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import CreateKasService, { SubmissionRequest } from "@services/CreateKas";
+import KasSubmissionService, {
+  SubmissionRequest,
+  UserType,
+} from "@services/kasSubmission";
 import { useCreateKasContext } from "../context";
 import useUploadImage from "../hooks/useUploadImage";
-import { UserType } from "@services/CreateKas";
 import { snackbar } from "@utils/snackbar";
 
 const useCreateKasSubmission = () => {
-  const kasService = new CreateKasService();
+  const kasService = new KasSubmissionService();
   const { state, setState } = useCreateKasContext();
   const { selectedUsers, errors } = state;
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null);

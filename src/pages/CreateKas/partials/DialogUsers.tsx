@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BaseDialog, DialogContent } from "@components/Dialog";
-import { UserType } from "@services/CreateKas";
+import { UserType } from "@services/kasSubmission";
 import useGetUser from "../hooks/useGetUser";
 import glassmorphism from "@utils/glassmorphism";
 import { Search } from "@mui/icons-material";

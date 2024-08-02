@@ -6,6 +6,7 @@ import { useCreateKasContext } from "../context";
 import { APIResponse } from "@types";
 import useUploadImage from "../hooks/useUploadImage";
 import { UserType } from "@services/CreateKas";
+import { snackbar } from "@utils/snackbar";
 const MySwal = withReactContent(Swal);
 
 const useCreateKasSubmission = () => {
@@ -31,6 +32,7 @@ const useCreateKasSubmission = () => {
 
     if (!selectedUser) {
       newErrors.user = "User is required.";
+      snackbar.warning(newErrors.user);
       hasError = true;
     } else {
       newErrors.user = "";
@@ -38,6 +40,7 @@ const useCreateKasSubmission = () => {
 
     if (!payedAmount || payedAmount <= 0) {
       newErrors.payedAmount = "Payment amount must be greater than 0.";
+      snackbar.warning(newErrors.payedAmount);
       hasError = true;
     } else {
       newErrors.payedAmount = "";
@@ -46,6 +49,7 @@ const useCreateKasSubmission = () => {
     if (!note) {
       newErrors.note = "Note is required.";
       hasError = true;
+      snackbar.warning(newErrors.note);
     } else {
       newErrors.note = "";
     }
@@ -53,6 +57,7 @@ const useCreateKasSubmission = () => {
     if (!uriId) {
       newErrors.fileUpload = "File upload is required.";
       hasError = true;
+      snackbar.warning(newErrors.fileUpload);
     } else {
       newErrors.fileUpload = "";
     }
@@ -78,44 +83,19 @@ const useCreateKasSubmission = () => {
     setState((prev) => ({
       ...prev,
       createKasLoading: true,
-      createKasError: null,
-      createKasSuccess: false,
     }));
 
     try {
-      const response = await kasService.post(JSON.stringify(submissionData));
-      if (response && response.status) {
-        setState((prev) => ({
-          ...prev,
-          createKasSuccess: true,
-        }));
-        MySwal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Data created successfully!",
-        });
-      } else {
-        setState((prev) => ({
-          ...prev,
-          createKasError: "Error creating submission",
-        }));
-        MySwal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Error creating submission",
-        });
+      const res = await kasService.post(JSON.stringify(submissionData));
+      if (res && res.status) {
+        snackbar.success(res.message);
       }
-    } catch (err: unknown) {
-      const error = err as APIResponse<void>;
-      setState((prev) => ({
-        ...prev,
-        createKasError: error?.message || "Error creating submission",
-      }));
-      MySwal.fire({
-        icon: "error",
-        title: "Error",
-        text: error?.message || "Error creating submission",
-      });
+    } catch (error) {
+      if (error instanceof Error) {
+        snackbar.error(error?.message);
+      } else {
+        snackbar.error("An unexpected error occurred");
+      }
     } finally {
       setState((prev) => ({
         ...prev,

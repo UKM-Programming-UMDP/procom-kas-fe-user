@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { APIResponse } from "@types";
 import { useCreateKasContext } from "../context";
-
+import { snackbar, errMessage } from "@utils/snackbar";
 const MySwal = withReactContent(Swal);
 
 interface HookReturn {
@@ -19,24 +19,20 @@ const useGetUser = (): HookReturn => {
 
   const fetchUsers = async () => {
     setState((prevState) => ({ ...prevState, userLoading: true }));
-    try {
-      const kasService = new CreateKasService();
-      const res = await kasService.get();
-      if (res && res.data) {
-        setState((prevState) => ({
-          ...prevState,
-          user: res.data,
-          userLoading: false,
-        }));
-      }
-    } catch (err: unknown) {
-      const error = err as APIResponse<void>;
-      MySwal.fire({
-        icon: "error",
-        title: "Error",
-        text: error?.message + " Error fetching users",
-      });
+
+    const kasService = new CreateKasService();
+
+    const res = await kasService.get();
+    if (res && res.data) {
+      setState((prevState) => ({
+        ...prevState,
+        user: res.data,
+        userLoading: false,
+      }));
+    }
+    if (!res || !res.status) {
       setState((prevState) => ({ ...prevState, userLoading: false }));
+      snackbar.error(errMessage(res));
     }
   };
 

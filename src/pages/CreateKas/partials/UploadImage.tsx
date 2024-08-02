@@ -3,31 +3,29 @@ import useUploadImage from "../hooks/useUploadImage";
 import Swal from "sweetalert2";
 import { Upload } from "@mui/icons-material";
 import withReactContent from "sweetalert2-react-content";
-import { APIResponse } from "@types";
 import useCreateKasSubmission from "../hooks/useCreateKasSubmission";
+
 const MySwal = withReactContent(Swal);
 
 const UploadImage = () => {
-  const { uploadFile } = useUploadImage();
+  const { uploadFile, uriId } = useUploadImage();
   const [file, setFile] = useState<File | null>(null);
+  const baseImageURL = uriId
+    ? new URL(
+        `${import.meta.env.VITE_BACKEND_URL}/v1/file/images/${uriId}`,
+      ).toString()
+    : "";
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const uploadedFile = e.target.files[0];
-      try {
-        await uploadFile(uploadedFile);
-        setFile(uploadedFile);
-      } catch (err: unknown) {
-        const error = err as APIResponse<void>;
-        MySwal.fire({
-          icon: "error",
-          title: "Error",
-          text: error?.message || "Error uploading file",
-        });
-      }
+      await uploadFile(uploadedFile);
+      setFile(uploadedFile);
     }
   };
+
   const { errors } = useCreateKasSubmission();
+
   return (
     <div className="mb-3 w-full">
       <label htmlFor="photo">Evidence</label>
@@ -38,11 +36,12 @@ const UploadImage = () => {
         className="sr-only"
         onChange={handleFileChange}
       />
+
       <label htmlFor="photo">
-        {file ? (
+        {file && uriId != "" ? (
           <div
             style={{
-              backgroundImage: `url(${URL.createObjectURL(file)})`,
+              backgroundImage: `url(${baseImageURL})`,
             }}
             className="min-h-80 w-full bg-contain bg-no-repeat bg-center mt-3 mb-3"
           ></div>
@@ -57,7 +56,7 @@ const UploadImage = () => {
           </div>
         )}
       </label>
-      {errors.fileUpload && (
+      {errors?.fileUpload && (
         <div className="text-red-600 mt-1 mb-3">{errors.fileUpload}</div>
       )}
     </div>

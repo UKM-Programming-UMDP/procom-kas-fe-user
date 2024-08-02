@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import CreateKasService, { SubmissionRequest } from "@services/CreateKas";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
 import { useCreateKasContext } from "../context";
-import { APIResponse } from "@types";
 import useUploadImage from "../hooks/useUploadImage";
 import { UserType } from "@services/CreateKas";
 import { snackbar } from "@utils/snackbar";
-const MySwal = withReactContent(Swal);
 
 const useCreateKasSubmission = () => {
   const kasService = new CreateKasService();

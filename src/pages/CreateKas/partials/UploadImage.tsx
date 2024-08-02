@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import useUploadImage from "../hooks/useUploadImage";
-import Swal from "sweetalert2";
 import { Upload } from "@mui/icons-material";
-import withReactContent from "sweetalert2-react-content";
 import useCreateKasSubmission from "../hooks/useCreateKasSubmission";
-
-const MySwal = withReactContent(Swal);
 
 const UploadImage = () => {
   const { uploadFile, uriId } = useUploadImage();

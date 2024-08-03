@@ -33,13 +33,13 @@ export default class KasSubmissionService {
   kasPath: string = "/kas-submissions";
   userPath: string = "/users";
   private api: API = new API();
-  private apiForm: API = new API({ isForm: true });
+  private apiForm: API = new API();
   async post(
     submission: SubmissionRequest | string,
   ): Promise<APIResponse<GetResponse>> {
     const targetPath = `${this.kasPath}`;
     try {
-      const res: APIResponse<GetResponse> = await this.apiForm.POST(
+      const res: APIResponse<GetResponse> = await this.apiForm.POSTFORM(
         targetPath,
         submission,
       );

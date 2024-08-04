@@ -1,4 +1,5 @@
 import { PaginationType } from "@types";
+
 export type BalanceHistoryModel = {
   amount: number;
   prev_balance: number;

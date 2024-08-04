@@ -1,10 +1,10 @@
-import { BalanceHistoryType } from "@services/balanceHistory";
+import { BalanceHistoryModel } from "@api/balanceHistory/model";
 import { createContext, useContext, useState } from "react";
 
 type BalanceStateType = {
   balance: number;
   balanceLoading: boolean;
-  balanceHistory: BalanceHistoryType[];
+  balanceHistory: BalanceHistoryModel[];
   balanceHistoryLoading: boolean;
   totalBalanceHistory: number;
 };

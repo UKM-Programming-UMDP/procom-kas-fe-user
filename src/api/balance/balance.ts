@@ -1,10 +1,6 @@
 import { APIResponse } from "@types";
+import { BalanceModel } from "./model";
 import API from "..";
-
-type GetResponse = {
-  balance: number;
-  updated_at: string;
-};
 
 export default class BalanceServices {
   basePath: string = "/balance";
@@ -12,7 +8,7 @@ export default class BalanceServices {
 
   async get() {
     const targetPath = this.basePath;
-    const res: APIResponse<GetResponse> = await this.api.GET(targetPath);
+    const res: APIResponse<BalanceModel> = await this.api.GET(targetPath);
     return res;
   }
 }

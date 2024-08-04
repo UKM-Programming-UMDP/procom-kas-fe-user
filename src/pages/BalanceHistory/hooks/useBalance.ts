@@ -1,4 +1,4 @@
-import BalanceServices from "@services/balance";
+import BalanceServices from "@api/balance/balance";
 import { useBalanceHistoryContext } from "../context";
 import { snackbar, errMessage } from "@utils/snackbar";
 

@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-import KasSubmissionService, {
-  SubmissionRequest,
-  UserType,
-} from "@services/kasSubmission";
+import KasSubmissionService from "@api/kasSubmission/kasSubmission";
+import { KasSubmissionCreateModel, UserModel } from "@api/kasSubmission/model";
 import { useCreateKasContext } from "../context";
 import useUploadImage from "../hooks/useUploadImage";
 import { snackbar } from "@utils/snackbar";
@@ -11,7 +9,7 @@ const useCreateKasSubmission = () => {
   const kasService = new KasSubmissionService();
   const { state, setState } = useCreateKasContext();
   const { selectedUsers, errors } = state;
-  const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserModel | null>(null);
   const { uriId } = useUploadImage();
 
   useEffect(() => {
@@ -69,7 +67,7 @@ const useCreateKasSubmission = () => {
       return false;
     }
 
-    const submissionData: SubmissionRequest = {
+    const submissionData: KasSubmissionCreateModel = {
       user: {
         npm: selectedUser?.npm || "",
       },

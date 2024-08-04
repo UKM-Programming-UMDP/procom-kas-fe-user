@@ -1,16 +1,12 @@
-import { useState } from "react";
-import UploadImage, {
-  UploadImageRequest,
-  UploadImageResponse,
-} from "@services/UploadImage";
+import UploadImage from "@api/upload/UploadImage";
+import { UploadFileModel, UploadModel } from "@api/upload/model";
 import { APIResponse } from "@types";
-import { snackbar, errMessage } from "@utils/snackbar";
+import { snackbar } from "@utils/snackbar";
 import { useCreateKasContext } from "@pages/CreateKas/context/index";
 
 const useUploadImage = () => {
   const { state, setState } = useCreateKasContext();
   const uploadService = new UploadImage();
-  const [uriId, setUriId] = useState<string | null>(null);
 
   const uploadFile = async (file: File) => {
     const validTypes = ["image/jpeg", "image/jpg", "image/png"];
@@ -25,16 +21,14 @@ const useUploadImage = () => {
       return;
     }
 
-    const submission: UploadImageRequest = {
+    const submission: UploadFileModel = {
       file: file,
     };
 
     try {
-      const res: APIResponse<UploadImageResponse> =
+      const res: APIResponse<UploadModel> =
         await uploadService.post(submission);
-
       if (res?.status === true) {
-        setUriId(res?.data.url_id);
         setState((prevState) => ({
           ...prevState,
           uriId: res?.data.url_id,

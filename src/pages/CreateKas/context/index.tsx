@@ -1,17 +1,17 @@
-import { GetResponse, UserType } from "@services/kasSubmission";
+import { KasSubmissionModel, UserModel } from "@api/kasSubmission/model";
 import { createContext, useContext, useState } from "react";
 import useDialog, { UseDialogReturn } from "@hooks/useDialog";
-import { UploadImageResponse } from "@services/UploadImage";
+import { UploadImageModel } from "@api/upload/model";
 
 type StateType = {
-  createKas: GetResponse[];
-  uploadFile: UploadImageResponse[];
-  user: UserType[];
+  createKas: KasSubmissionModel[];
+  uploadFile: UploadImageModel[];
+  user: UserModel[];
   createKasLoading: boolean;
   userLoading: boolean;
   userStatus: boolean;
   uploadFileLoading: boolean;
-  selectedUsers: UserType[];
+  selectedUsers: UserModel[];
   payedAmount: number;
   note: string;
   uriId: string;

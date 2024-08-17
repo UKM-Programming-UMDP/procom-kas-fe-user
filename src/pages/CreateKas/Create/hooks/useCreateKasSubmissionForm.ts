@@ -16,7 +16,7 @@ const useCreateKasSubmissionForm = (): HookReturn => {
 
   const kassubmissionreqForm = useForm<KasSubmissionCreateModel>({
     defaultValues: kassubmissionreqDefaultValues,
-    values: kassubmissionDetailsFormatter(state.kassubreqDetails),
+    values: kassubmissionDetailsFormatter(state.kassubmissionreqDetails),
     resolver: kassubmissionValidations as Resolver<KasSubmissionCreateModel>,
   });
 

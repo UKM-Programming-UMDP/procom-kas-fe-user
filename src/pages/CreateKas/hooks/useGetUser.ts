@@ -4,9 +4,7 @@ import { useCreateKasContext } from "../context";
 import { snackbar, errMessage } from "@utils/snackbar";
 
 interface HookReturn {
-  kasService: KasSubmissionService;
   fetchUsers: () => void;
-  selectUser: (user: UserModel) => void;
   loading: boolean;
   users: UserModel[];
 }
@@ -34,17 +32,8 @@ const useGetUser = (): HookReturn => {
     }
   };
 
-  const selectUser = (user: UserModel) => {
-    setState((prevState) => ({
-      ...prevState,
-      selectedUsers: [...prevState.selectedUsers, user],
-    }));
-  };
-
   return {
     fetchUsers,
-    selectUser,
-    kasService: new KasSubmissionService(),
     loading: state.userLoading,
     users: state.user,
   };

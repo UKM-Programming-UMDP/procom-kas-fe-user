@@ -9,8 +9,6 @@ import { UploadFileModel } from "@api/file/model";
 
 const useCreateKasSubmission = () => {
   const kasService = new KasSubmissionService();
-  const { state, setState } = useCreateKasContext();
-  const [selectedUser, setSelectedUser] = useState<UserModel | null>(null);
   const fileService = new FileServices();
   const { setValue, handleSubmit } = useFormContext();
 
@@ -52,8 +50,6 @@ const useCreateKasSubmission = () => {
   return {
     handleSubmitForm,
     handleFile,
-    uriId: state.uriId,
-    selectedUser,
   };
 };
 

@@ -1,31 +1,13 @@
-import {
-  KasSubmissionCreateModel,
-  KasSubmissionModel,
-  UserModel,
-} from "@api/kasSubmission/model";
+import { KasSubmissionCreateModel, UserModel } from "@api/kasSubmission/model";
 import { createContext, useContext, useState } from "react";
 import useDialog, { UseDialogReturn } from "@hooks/useDialog";
-import { UploadModel } from "@api/file/model";
 
 type StateType = {
-  createKas: KasSubmissionModel[];
-  uploadFile: UploadModel[];
   user: UserModel[];
   createKasLoading: boolean;
   userLoading: boolean;
-  userStatus: boolean;
   uploadFileLoading: boolean;
-  selectedUsers: UserModel[];
-  payedAmount: number;
-  note: string;
-  uriId: string;
-  errors: {
-    user: string;
-    payedAmount: string;
-    note: string;
-    fileUpload: string;
-  };
-  kassubreqDetails: KasSubmissionCreateModel;
+  kassubmissionreqDetails: KasSubmissionCreateModel;
   predefinedNotes: Record<
     "bca" | "mandiri" | "gopay" | "cash" | "ovo" | "dana",
     string
@@ -33,24 +15,11 @@ type StateType = {
 };
 
 export const initialState: StateType = {
-  createKas: [],
-  kassubreqDetails: {} as KasSubmissionCreateModel,
-  uploadFile: [],
+  kassubmissionreqDetails: {} as KasSubmissionCreateModel,
   createKasLoading: false,
   user: [],
-  userStatus: false,
   userLoading: false,
   uploadFileLoading: false,
-  selectedUsers: [],
-  payedAmount: 0,
-  note: "",
-  uriId: "",
-  errors: {
-    user: "",
-    payedAmount: "",
-    note: "",
-    fileUpload: "",
-  },
   predefinedNotes: {
     bca: "Payment via BCA",
     mandiri: "Payment via Mandiri",

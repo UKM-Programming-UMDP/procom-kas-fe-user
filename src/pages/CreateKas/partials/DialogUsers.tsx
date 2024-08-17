@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BaseDialog, DialogContent } from "@components/Dialog";
-import { UserType } from "@services/kasSubmission";
-import useGetUser from "../hooks/useGetUser";
+import { UserModel } from "@api/kasSubmission/model";
+import useGetUser from "../List/hooks/useGetUser";
 import glassmorphism from "@utils/glassmorphism";
 import { Search } from "@mui/icons-material";
 import { DialogTitle } from "@mui/material";
+import { userFilter } from "../List/utils/userFilter";
+import { useFormContext } from "react-hook-form";
 
 interface Props {
   isOpen: boolean;
@@ -12,40 +14,31 @@ interface Props {
 }
 
 const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
-  const { users, loading, fetchUsers, selectUser } = useGetUser();
+  const { users, loading, fetchUsers } = useGetUser();
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState<UserType[]>([]);
-  const [activeNpm, setActiveNpm] = useState<string | null>(null);
+  const [filteredUsers, setFilteredUsers] = useState<UserModel[]>([]);
+  const { setValue, getValues } = useFormContext();
 
   useEffect(() => {
-    if (isOpen) {
-      fetchUsers();
-      const storedUser = localStorage.getItem("selectedUser");
-      if (storedUser) {
-        const user = JSON.parse(storedUser);
-        setActiveNpm(user.npm);
-      }
+    fetchUsers();
+    const storedUser = localStorage.getItem("selectedUser");
+    if (storedUser) {
+      setValue("user.npm", JSON.parse(storedUser));
     }
-  }, [isOpen]);
+  }, [fetchUsers, setValue]);
 
   useEffect(() => {
-    setFilteredUsers(
-      users.filter(
-        (user) =>
-          user.npm.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          user.name.toLowerCase().includes(searchTerm.toLowerCase()),
-      ),
-    );
+    setFilteredUsers(userFilter(users, searchTerm));
   }, [searchTerm, users]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleUserSelect = (user: UserType) => {
-    selectUser(user);
-    setActiveNpm(user.npm);
-    localStorage.setItem("selectedUser", JSON.stringify(user));
+  const handleUserSelect = (user: UserModel) => {
+    const selectedNpm = user.npm;
+    setValue("user.npm", selectedNpm);
+    localStorage.setItem("selectedUser", JSON.stringify(selectedNpm));
     onClose();
   };
 
@@ -60,12 +53,10 @@ const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
         }}
       >
         <div>Search Your NPM</div>
-        {filteredUsers.length === 0 ? (
+        {filteredUsers.length === 0 && (
           <div className="italic text-neutral-300">
-            Note: If npm is not found, please register your account to admin
+            Note: If npm is not found, please register your account with admin.
           </div>
-        ) : (
-          ""
         )}
       </DialogTitle>
       <DialogContent>
@@ -76,7 +67,11 @@ const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
             placeholder="Search"
             value={searchTerm}
             onChange={handleSearchChange}
-            className={`w-full pl-10 pr-4 py-2 focus:border-cyan-500 rounded-lg outline-none ${glassmorphism({ container: true })}`}
+            className={`w-full pl-10 pr-4 py-2 focus:border-cyan-500 rounded-lg outline-none ${glassmorphism(
+              {
+                container: true,
+              },
+            )}`}
           />
         </div>
         {loading ? (
@@ -88,15 +83,17 @@ const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
                 <div
                   key={user.npm}
                   onClick={() => handleUserSelect(user)}
-                  className={`cursor-pointer p-2 my-2 rounded-lg ${glassmorphism({ hover: true })} ${user.npm === activeNpm ? glassmorphism({ container: true }) : ""}`}
+                  className={`cursor-pointer p-2 my-2 rounded-lg ${glassmorphism(
+                    {
+                      hover: true,
+                    },
+                  )} ${user.npm === getValues("user.npm") ? glassmorphism({ container: true }) : ""}`}
                 >
                   {user.npm} - {user.name}
                 </div>
               ))
             ) : (
-              <div className="text-center text-neutral-300">
-                NPM is not found
-              </div>
+              <div className="text-center text-neutral-300">NPM not found</div>
             )}
           </div>
         )}

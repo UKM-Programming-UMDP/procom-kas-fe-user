@@ -1,11 +1,15 @@
-import { KasSubmissionModel, UserModel } from "@api/kasSubmission/model";
+import {
+  KasSubmissionCreateModel,
+  KasSubmissionModel,
+  UserModel,
+} from "@api/kasSubmission/model";
 import { createContext, useContext, useState } from "react";
 import useDialog, { UseDialogReturn } from "@hooks/useDialog";
-import { UploadImageModel } from "@api/upload/model";
+import { UploadModel } from "@api/file/model";
 
 type StateType = {
   createKas: KasSubmissionModel[];
-  uploadFile: UploadImageModel[];
+  uploadFile: UploadModel[];
   user: UserModel[];
   createKasLoading: boolean;
   userLoading: boolean;
@@ -21,6 +25,7 @@ type StateType = {
     note: string;
     fileUpload: string;
   };
+  kassubreqDetails: KasSubmissionCreateModel;
   predefinedNotes: Record<
     "bca" | "mandiri" | "gopay" | "cash" | "ovo" | "dana",
     string
@@ -29,7 +34,7 @@ type StateType = {
 
 export const initialState: StateType = {
   createKas: [],
-
+  kassubreqDetails: {} as KasSubmissionCreateModel,
   uploadFile: [],
   createKasLoading: false,
   user: [],

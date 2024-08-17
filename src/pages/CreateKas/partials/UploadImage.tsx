@@ -1,40 +1,32 @@
 import React, { useState } from "react";
-import useUploadImage from "../hooks/useUploadImage";
 import { Upload } from "@mui/icons-material";
-import useCreateKasSubmission from "../hooks/useCreateKasSubmission";
+import useCreateKasSubmission from "../Create/hooks/useCreateKasSubmission";
+import { Controller, useFormContext } from "react-hook-form";
 
 const UploadImage = () => {
-  const { uploadFile, uriId } = useUploadImage();
+  const { handleFile } = useCreateKasSubmission();
   const [file, setFile] = useState<File | null>(null);
-  const baseImageURL = uriId
+  const { control, getValues } = useFormContext();
+  const urlId = getValues("evidence");
+  const baseImageURL = urlId
     ? new URL(
-        `${import.meta.env.VITE_BACKEND_URL}/v1/file/images/${uriId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/v1/file/images/${urlId}`,
       ).toString()
     : "";
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const uploadedFile = e.target.files[0];
-      await uploadFile(uploadedFile);
+      await handleFile(uploadedFile);
       setFile(uploadedFile);
     }
   };
 
-  const { errors } = useCreateKasSubmission();
-
   return (
     <div className="mb-3 w-full">
       <label htmlFor="photo">Evidence</label>
-      <input
-        id="photo"
-        name="photo"
-        type="file"
-        className="sr-only"
-        onChange={handleFileChange}
-      />
-
       <label htmlFor="photo">
-        {file && uriId != "" ? (
+        {file && urlId != "" ? (
           <div
             style={{
               backgroundImage: `url(${baseImageURL})`,
@@ -52,9 +44,22 @@ const UploadImage = () => {
           </div>
         )}
       </label>
-      {errors?.fileUpload && (
-        <div className="text-red-600 mt-1 mb-3">{errors.fileUpload}</div>
-      )}
+      <input
+        id="photo"
+        type="file"
+        className="sr-only"
+        onChange={handleFileChange}
+      />
+      <Controller
+        name="evidence"
+        control={control}
+        defaultValue={""}
+        render={({ fieldState }) => (
+          <div className="text-red-500 text-sm mt-1">
+            {fieldState.error?.message}
+          </div>
+        )}
+      />
     </div>
   );
 };

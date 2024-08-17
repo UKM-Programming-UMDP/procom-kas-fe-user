@@ -5,6 +5,7 @@ import {
   UserModel,
   KasSubmissionCreateModel,
 } from "./model";
+import { FetchCallback } from "@types";
 
 export default class KasSubmissionService {
   kasPath: string = "/kas-submissions";
@@ -13,17 +14,22 @@ export default class KasSubmissionService {
   private apiForm: API = new API();
   async post(
     submission: KasSubmissionCreateModel | string,
-  ): Promise<APIResponse<KasSubmissionModel>> {
+    callback: FetchCallback<KasSubmissionModel>,
+  ) {
     const targetPath = `${this.kasPath}`;
-    try {
-      const res: APIResponse<KasSubmissionModel> = await this.apiForm.POSTFORM(
-        targetPath,
-        submission,
-      );
-      return res;
-    } catch (error) {
-      throw error;
+
+    const res: APIResponse<KasSubmissionModel> = await this.apiForm.POSTFORM(
+      targetPath,
+      submission,
+    );
+
+    if (!res?.status) {
+      callback.onError(res?.message || "unknown error");
+    } else {
+      if (res.data) callback.onSuccess(res.data);
     }
+
+    callback.onFullfilled && callback.onFullfilled();
   }
   async get(queryParams?: string): Promise<APIResponse<UserModel[]>> {
     const targetPath = `${this.userPath}?${queryParams}`;

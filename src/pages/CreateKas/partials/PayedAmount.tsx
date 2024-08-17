@@ -1,27 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { cn } from "@utils/index";
 import glassmorphism from "@utils/glassmorphism";
-import { useCreateKasContext } from "../context";
-import useCreateKasSubmission from "../hooks/useCreateKasSubmission";
+import { Controller, useFormContext } from "react-hook-form";
+
 const PayedAmount: React.FC = () => {
-  const { state, setState } = useCreateKasContext();
   const [monthCount, setMonthCount] = useState<number>(0);
-  const { errors } = useCreateKasSubmission();
+  const { control, setValue, getValues, trigger } = useFormContext();
+
   const handleMonthCount = (count: number) => {
     const newCount = Math.max(0, count);
     setMonthCount(newCount);
-    setState((prevState) => ({
-      ...prevState,
-      payedAmount: 10000 * newCount,
-    }));
+    const newPayedAmount = 10000 * newCount;
+
+    setValue("payed_amount", newPayedAmount);
+    trigger("payed_amount");
   };
 
   const handlePayedAmountChange = (value: number) => {
-    setState((prevState) => ({
-      ...prevState,
-      payedAmount: value,
-    }));
+    setValue("payed_amount", value);
+    trigger("payed_amount");
   };
+
   return (
     <div className="mb-3">
       <label htmlFor="kas_payed" className="block mb-2">
@@ -49,24 +48,35 @@ const PayedAmount: React.FC = () => {
         >
           +
         </button>
-        <p className="text-green-600 mt-auto mb-auto flex gap-3">
-          Rp.
-          <input
-            type="text"
-            name="kas_payed"
-            value={state.payedAmount}
-            onChange={(e) =>
-              handlePayedAmountChange(parseInt(e.target.value) || 0)
-            }
-            className={`outline outline-offset-1 outline-none w-sm w-20 border-bottom rounded-lg text-md bg-transparent ${glassmorphism({ hover: true })}`}
-          />
-          , -
-        </p>
+        <Controller
+          name="payed_amount"
+          control={control}
+          defaultValue={0}
+          render={({ field, fieldState }) => (
+            <div className="block">
+              <div className="text-green-600 mt-auto mb-auto flex gap-3">
+                Rp.
+                <input
+                  type="text"
+                  {...field}
+                  onChange={(e) => {
+                    const value = parseInt(e.target.value) || 0;
+                    field.onChange(e);
+                    handlePayedAmountChange(value);
+                  }}
+                  className={`outline outline-offset-1 outline-none w-sm w-20 border-bottom rounded-lg text-md bg-transparent ${glassmorphism({ hover: true })}`}
+                />
+                , -
+              </div>
+              <div className="text-red-500 text-sm mt-1">
+                {fieldState.error?.message}
+              </div>
+            </div>
+          )}
+        />
       </div>
-      {errors.payedAmount && (
-        <div className="text-red-600 mb-3 mt-1">{errors.payedAmount}</div>
-      )}
     </div>
   );
 };
+
 export default PayedAmount;

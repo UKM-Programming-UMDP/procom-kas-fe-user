@@ -27,6 +27,7 @@ const useGetUser = (): HookReturn => {
         userLoading: false,
       }));
     }
+
     if (!res || !res.status) {
       setState((prevState) => ({ ...prevState, userLoading: false }));
       snackbar.error(errMessage(res));

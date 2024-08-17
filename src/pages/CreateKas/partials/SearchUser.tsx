@@ -1,34 +1,65 @@
-import glassmorphism from "@utils/glassmorphism";
-import { useState } from "react";
-import DialogUsers from "./DialogUsers";
+import { useState, useEffect, useCallback } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import { Search } from "@mui/icons-material";
-import useCreateKasSubmission from "../hooks/useCreateKasSubmission";
+import glassmorphism from "@utils/glassmorphism";
+import DialogUsers from "./DialogUsers";
+import useGetUser from "../hooks/useGetUser";
+
 const SearchUser = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const handleOpenDialog = () => {
-    setIsDialogOpen(true);
-  };
-  const { selectedUser, errors } = useCreateKasSubmission();
+  const { control, getValues, setValue } = useFormContext();
+  const { users, fetchUsers } = useGetUser();
+  const npm = getValues("user.npm");
+  const activeUser = users.find((user) => user.npm === npm);
 
-  const handleCloseDialog = () => {
+  useEffect(() => {
+    if (!activeUser) {
+      fetchUsers();
+      const storedUser = localStorage.getItem("selectedUser");
+      if (storedUser) {
+        setValue("user.npm", JSON.parse(storedUser));
+      }
+    }
+  }, [fetchUsers, setValue]);
+
+  const handleOpenDialog = useCallback(() => {
+    setIsDialogOpen(true);
+  }, []);
+
+  const handleCloseDialog = useCallback(() => {
     setIsDialogOpen(false);
-  };
+  }, []);
 
   return (
     <div className="mb-3">
-      <button
-        type="button"
-        className={`w-full flex items-center gap-2 rounded-lg py-2 px-3 ${glassmorphism({ container: true, border: true })}`}
-        onClick={handleOpenDialog}
-      >
-        <Search />
-        {selectedUser
-          ? `${selectedUser.npm} - ${selectedUser.name}`
-          : "Search..."}
-      </button>
-      {errors.user && <div className="text-red-600 mb-3">{errors.user}</div>}
-      <DialogUsers isOpen={isDialogOpen} onClose={handleCloseDialog} />
+      <Controller
+        name="user.npm"
+        control={control}
+        defaultValue="user.npm"
+        render={({ field, fieldState }) => (
+          <>
+            <button
+              type="button"
+              className={`w-full flex items-center gap-2 rounded-lg py-2 px-3 ${glassmorphism({ container: true, border: true })}`}
+              onClick={handleOpenDialog}
+            >
+              <Search />
+
+              {activeUser
+                ? `${activeUser.npm} - ${activeUser.name}`
+                : field.value || "Search..."}
+            </button>
+            <div className="text-red-500 text-sm mt-2">
+              {fieldState.error?.message}
+            </div>
+          </>
+        )}
+      />
+      {isDialogOpen && (
+        <DialogUsers isOpen={isDialogOpen} onClose={handleCloseDialog} />
+      )}
     </div>
   );
 };
+
 export default SearchUser;

@@ -1,25 +1,20 @@
 import React from "react";
 import NoteKas from "./NoteKas";
 import glassmorphism from "@utils/glassmorphism";
-import { useCreateKasContext } from "@pages/CreateKas/context/index";
 import PayedAmount from "./PayedAmount";
 import UploadImage from "./UploadImage";
-import useCreateKasSubmission from "../hooks/useCreateKasSubmission";
+import useCreateKasSubmission from "../Create/hooks/useCreateKasSubmission";
 import SearchUser from "./SearchUser";
+import { useForm } from "react-hook-form";
+import { KasSubmissionCreateModel } from "@api/kasSubmission/model";
+
 const KasBody: React.FC = () => {
-  const { state } = useCreateKasContext();
-  const { payedAmount, note } = state;
-  const { handleSubmit } = useCreateKasSubmission();
-
-  const handleFormSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await handleSubmit(payedAmount, note);
-  };
-
+  const { handleSubmitForm } = useCreateKasSubmission();
+  const { handleSubmit } = useForm<KasSubmissionCreateModel>();
   return (
     <div className={`p-3 text-dark-700`}>
       <form
-        onSubmit={handleFormSubmit}
+        onSubmit={handleSubmit(handleSubmitForm)}
         className={`p-5 ${glassmorphism({ container: true, border: true })}`}
       >
         <SearchUser />

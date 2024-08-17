@@ -1,10 +1,14 @@
+import useCreateKasSubmissionForm from "./Create/hooks/useCreateKasSubmissionForm";
 import KasBody from "./partials/KasBody";
+import { FormProvider } from "react-hook-form";
 
 const CreateKasLayout = () => {
+  const { kassubmissionreqForm } = useCreateKasSubmissionForm();
   return (
-    <div className="flex flex-col gap-2">
+    <FormProvider {...kassubmissionreqForm}>
       <KasBody />
-    </div>
+    </FormProvider>
   );
 };
+
 export default CreateKasLayout;

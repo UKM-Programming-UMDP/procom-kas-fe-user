@@ -12,6 +12,12 @@ export type FilterType = {
   sort?: string;
 };
 
+export type FetchCallback<T> = {
+  onSuccess: (data: T) => void;
+  onError: (errMessage: string) => void;
+  onFullfilled?: () => void;
+};
+
 export type PaginationType = {
   page: number;
   limit: number;

@@ -4,8 +4,8 @@ import useDialog, { UseDialogReturn } from "@hooks/useDialog";
 
 type StateType = {
   user: UserModel[];
-  createKasLoading: boolean;
   userLoading: boolean;
+  createKasLoading: boolean;
   uploadFileLoading: boolean;
   kassubmissionreqDetails: KasSubmissionCreateModel;
   predefinedNotes: Record<
@@ -15,10 +15,10 @@ type StateType = {
 };
 
 export const initialState: StateType = {
-  kassubmissionreqDetails: {} as KasSubmissionCreateModel,
-  createKasLoading: false,
   user: [],
   userLoading: false,
+  kassubmissionreqDetails: {} as KasSubmissionCreateModel,
+  createKasLoading: false,
   uploadFileLoading: false,
   predefinedNotes: {
     bca: "Payment via BCA",
@@ -34,7 +34,7 @@ type ContextType = {
   state: StateType;
   setState: React.Dispatch<React.SetStateAction<StateType>>;
   dialog: {
-    finreqDetails: UseDialogReturn;
+    userreqDetails: UseDialogReturn;
   };
 };
 
@@ -55,7 +55,7 @@ const CreateKasProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [state, setState] = useState<StateType>(initialState);
   const dialog = {
-    finreqDetails: useDialog(),
+    userreqDetails: useDialog(),
   };
 
   return (

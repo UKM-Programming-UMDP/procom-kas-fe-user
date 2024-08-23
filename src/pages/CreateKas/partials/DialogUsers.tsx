@@ -7,6 +7,7 @@ import { Search } from "@mui/icons-material";
 import { DialogTitle } from "@mui/material";
 import { userFilter } from "../List/utils/userFilter";
 import { useFormContext } from "react-hook-form";
+import { LocalStorage } from "@utils/localStorage";
 
 interface Props {
   isOpen: boolean;
@@ -18,13 +19,11 @@ const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState<UserModel[]>([]);
   const { setValue, getValues } = useFormContext();
+  const { setItem, getItem } = LocalStorage("user.npm");
 
   useEffect(() => {
     fetchUsers();
-    const storedUser = localStorage.getItem("selectedUser");
-    if (storedUser) {
-      setValue("user.npm", JSON.parse(storedUser));
-    }
+    setValue("user.npm", getItem());
   }, [fetchUsers, setValue]);
 
   useEffect(() => {
@@ -38,7 +37,7 @@ const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
   const handleUserSelect = (user: UserModel) => {
     const selectedNpm = user.npm;
     setValue("user.npm", selectedNpm);
-    localStorage.setItem("selectedUser", JSON.stringify(selectedNpm));
+    setItem(selectedNpm);
     onClose();
   };
 

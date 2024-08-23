@@ -5,7 +5,7 @@ import { Controller, useFormContext } from "react-hook-form";
 
 const PayedAmount: React.FC = () => {
   const [monthCount, setMonthCount] = useState<number>(0);
-  const { control, setValue, getValues, trigger } = useFormContext();
+  const { control, setValue, trigger } = useFormContext();
 
   const handleMonthCount = (count: number) => {
     const newCount = Math.max(0, count);

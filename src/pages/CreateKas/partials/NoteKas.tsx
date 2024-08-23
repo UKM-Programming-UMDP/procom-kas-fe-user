@@ -3,28 +3,23 @@ import glassmorphism from "@utils/glassmorphism";
 import { useCreateKasContext } from "@pages/CreateKas/context/index";
 import QuickNote from "./QuickNote";
 import { Controller, useFormContext } from "react-hook-form";
+import { LocalStorage } from "@utils/localStorage";
 
 const Note: React.FC = () => {
-  const { state, setState } = useCreateKasContext();
-  const { control, setValue } = useFormContext();
+  const { control, setValue, getValues } = useFormContext();
+  const { setItem, getItem } = LocalStorage("note");
 
+  // Initialize the form value from local storage on component mount
   useEffect(() => {
-    const storedNote = localStorage.getItem("note");
+    const storedNote = getItem();
     if (storedNote) {
       setValue("note", storedNote);
-      setState((prevState) => ({
-        ...prevState,
-        note: storedNote,
-      }));
     }
-  }, [setValue, setState]);
+  }, [setValue, getItem]);
 
+  // Update local storage whenever the form value changes
   const handleInputChange = (value: string) => {
-    setState((prevState) => ({
-      ...prevState,
-      note: value,
-    }));
-    localStorage.setItem("note", value);
+    setItem(value);
   };
 
   return (
@@ -36,7 +31,7 @@ const Note: React.FC = () => {
         <Controller
           name="note"
           control={control}
-          defaultValue="note"
+          defaultValue=""
           render={({ field, fieldState }) => (
             <>
               <textarea

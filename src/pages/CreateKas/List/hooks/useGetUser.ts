@@ -9,6 +9,7 @@ const useKasSubmissionService = () => {
 
   const fetchUsers = useCallback(async () => {
     setLoading(true);
+
     const kasService = new KasSubmissionService();
     const res = await kasService.get();
 

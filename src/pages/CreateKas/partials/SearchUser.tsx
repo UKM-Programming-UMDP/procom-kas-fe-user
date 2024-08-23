@@ -4,21 +4,21 @@ import { Search } from "@mui/icons-material";
 import glassmorphism from "@utils/glassmorphism";
 import DialogUsers from "./DialogUsers";
 import useGetUser from "../hooks/useGetUser";
+import { LocalStorage } from "@utils/localStorage";
 
 const SearchUser = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { control, getValues, setValue } = useFormContext();
   const { users, fetchUsers } = useGetUser();
+  const { setItem, getItem } = LocalStorage("user.npm");
+
   const npm = getValues("user.npm");
   const activeUser = users.find((user) => user.npm === npm);
 
   useEffect(() => {
     if (!activeUser) {
       fetchUsers();
-      const storedUser = localStorage.getItem("selectedUser");
-      if (storedUser) {
-        setValue("user.npm", JSON.parse(storedUser));
-      }
+      setValue("user.npm", getItem());
     }
   }, [fetchUsers, setValue]);
 

@@ -1,29 +1,28 @@
-import { useState, useEffect } from "react";
 import KasSubmissionService from "@api/kasSubmission/kasSubmission";
-import { KasSubmissionCreateModel, UserModel } from "@api/kasSubmission/model";
-import { useCreateKasContext } from "../../context";
+import { KasSubmissionCreateModel } from "@api/kasSubmission/model";
 import { snackbar } from "@utils/snackbar";
 import { useFormContext } from "react-hook-form";
 import FileServices from "@api/file/file";
-import { UploadFileModel } from "@api/file/model";
 
 const useCreateKasSubmission = () => {
   const kasService = new KasSubmissionService();
   const fileService = new FileServices();
-  const { setValue, handleSubmit } = useFormContext();
+  const { setValue, trigger, handleSubmit } = useFormContext();
 
   const handleFile = async (file: File) => {
-    const submission: UploadFileModel = { file };
-
-    await fileService.post(submission, {
-      onSuccess: (data) => {
-        setValue("evidence", data.url_id);
-        console.log(data);
+    await fileService.post(
+      { file },
+      {
+        onSuccess: (data) => {
+          setValue("evidence", data.url_id);
+          trigger("evidence");
+          console.log(data);
+        },
+        onError: (errMessage) => {
+          snackbar.error(errMessage);
+        },
       },
-      onError: (errMessage) => {
-        snackbar.error(errMessage);
-      },
-    });
+    );
   };
 
   const handleSubmitForm = () => {

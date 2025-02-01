@@ -1,24 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Upload } from "@mui/icons-material";
 import useCreateKasSubmission from "../Create/hooks/useCreateKasSubmission";
 import { Controller, useFormContext } from "react-hook-form";
 
 const UploadImage = () => {
   const { handleFile } = useCreateKasSubmission();
-  const [file, setFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
   const { control, getValues } = useFormContext();
   const urlId = getValues("evidence");
-  const baseImageURL = urlId
-    && new URL(
-        `${import.meta.env.VITE_BACKEND_URL}/v1/file/images/${urlId}`,
-      ).toString()
-    ;
+
+  const baseImageURL = urlId && `${import.meta.env.VITE_BACKEND_URL}/v1/file/images/${urlId}`;
+
+  useEffect(() => { 
+    urlId && setPreview(baseImageURL);  
+  }, [urlId]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const uploadedFile = e.target.files[0];
       await handleFile(uploadedFile);
-      setFile(uploadedFile);
+      setPreview(URL.createObjectURL(uploadedFile)); 
     }
   };
 
@@ -26,10 +27,10 @@ const UploadImage = () => {
     <div className="mb-3 w-full">
       <label htmlFor="photo">Evidence</label>
       <label htmlFor="photo">
-        {file && urlId != "" ? (
+        {preview ? (
           <div
             style={{
-              backgroundImage: `url(${baseImageURL})`,
+              backgroundImage: `url(${preview})`,
             }}
             className="min-h-80 w-full bg-contain bg-no-repeat bg-center mt-3 mb-3"
           ></div>

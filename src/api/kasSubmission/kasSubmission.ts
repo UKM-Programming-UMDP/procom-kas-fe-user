@@ -1,17 +1,17 @@
-import { APIResponse } from "@types";
 import API from "..";
+import { FetchCallback } from "@types";
 import {
   KasSubmissionModel,
   UserModel,
   KasSubmissionCreateModel,
 } from "./model";
-import { FetchCallback } from "@types";
 
 export default class KasSubmissionService {
   kasPath: string = "/kas-submissions";
   userPath: string = "/users";
   private api: API = new API();
   private apiForm: API = new API();
+
   async post(
     submission: KasSubmissionCreateModel | string,
     callback: FetchCallback<KasSubmissionModel>,

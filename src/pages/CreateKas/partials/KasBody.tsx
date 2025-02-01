@@ -7,29 +7,27 @@ import useCreateKasSubmission from "../Create/hooks/useCreateKasSubmission";
 import SearchUser from "./SearchUser";
 import { useForm } from "react-hook-form";
 import { KasSubmissionCreateModel } from "@api/kasSubmission/model";
+import { ActionButton } from "@components/Button";
 
 const KasBody: React.FC = () => {
   const { handleSubmitForm } = useCreateKasSubmission();
   const { handleSubmit } = useForm<KasSubmissionCreateModel>();
+  
   return (
-    <div className={`p-3 text-dark-700`}>
-      <form
-        onSubmit={handleSubmit(handleSubmitForm)}
-        className={`p-5 ${glassmorphism({ container: true, border: true })}`}
-      >
-        {/* <SearchUser /> */}
-        <PayedAmount />
-        <NoteKas />
-        <UploadImage />
-        <div className="mt-3">
-          <button
-            type="submit"
-            className={`w-full rounded-lg py-2 px-3 bg-violet-500 shadow-lg`}
-          >
-            Submit
-          </button>
-        </div>
-      </form>
+    <div className={`p-5 text-dark-700 ${glassmorphism({ container: true, border: true })} ` }>
+      <SearchUser />
+      <PayedAmount />
+      <NoteKas />
+      <UploadImage />
+      <ActionButton 
+        label="Submit" 
+        onClick={handleSubmit(handleSubmitForm)} 
+        submitLoading={false} 
+        variant="contained" 
+        size="large" 
+        className={`w-full rounded-lg py-2 px-3 shadow-lg`}
+        color="primary"
+      />
     </div>
   );
 };

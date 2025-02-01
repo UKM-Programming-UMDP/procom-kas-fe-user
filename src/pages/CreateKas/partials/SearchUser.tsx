@@ -43,7 +43,6 @@ const SearchUser = () => {
               onClick={handleOpenDialog}
             >
               <Search />
-
               {activeUser
                 ? `${activeUser.npm} - ${activeUser.name}`
                 : field.value || "Search..."}

@@ -12,9 +12,7 @@ const useCreateKasSubmission = () => {
   const handleFile = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file); 
-   const listFile = {
-      file: file
-   } 
+  
     await fileService.post(formData, {
       onSuccess: (data) => {
         setValue("evidence", data.url_id);

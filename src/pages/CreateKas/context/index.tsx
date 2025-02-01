@@ -7,8 +7,7 @@ type StateType = {
   userLoading: boolean;
   createKasLoading: boolean;
   uploadFileLoading: boolean;
-  kassubmissionreqDetails: KasSubmissionCreateModel;
-
+  kassubmissionreqDetails: KasSubmissionCreateModel
   predefinedNotes: Record<
     "bca" | "mandiri" | "gopay" | "cash" | "ovo" | "dana",
     string
@@ -21,7 +20,7 @@ type StateType = {
 };
 
 export const initialState: StateType = {
-  user: [],
+  users: [],
   userLoading: false,
   kassubmissionreqDetails: {} as KasSubmissionCreateModel,
   createKasLoading: false,

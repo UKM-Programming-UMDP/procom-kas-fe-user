@@ -9,10 +9,10 @@ const UploadImage = () => {
   const { control, getValues } = useFormContext();
   const urlId = getValues("evidence");
   const baseImageURL = urlId
-    ? new URL(
+    && new URL(
         `${import.meta.env.VITE_BACKEND_URL}/v1/file/images/${urlId}`,
       ).toString()
-    : "";
+    ;
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {

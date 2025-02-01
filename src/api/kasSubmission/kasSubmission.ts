@@ -18,7 +18,7 @@ export default class KasSubmissionService {
   ) {
     const targetPath = `${this.kasPath}`;
 
-    const res: APIResponse<KasSubmissionModel> = await this.apiForm.POSTFORM(
+    const res = await this.apiForm.POSTFORM<KasSubmissionModel>(
       targetPath,
       submission,
     );
@@ -31,13 +31,33 @@ export default class KasSubmissionService {
 
     callback.onFullfilled && callback.onFullfilled();
   }
-  async get(queryParams?: string): Promise<APIResponse<UserModel[]>> {
-    const targetPath = `${this.userPath}?${queryParams}`;
+
+  // async get(params: string, callback: FetchCallback<UserModel>) {
+  //   const targetPath = `${this.userPath}?${params}`;
+
+  //   const res = await this.api.GET<UserModel>(targetPath);
+  //   if (!res?.status) {
+  //     callback.onError(res?.message || "unknown error");
+  //   } else {
+  //     if (res.data) callback.onSuccess(res.data);
+  //   }
+
+  //   callback.onFullfilled && callback.onFullfilled();
+  // }
+  async get(params: string, callback: FetchCallback<UserModel[]>) { 
+    const targetPath = params ? `${this.userPath}?${params}` : this.userPath;
+  
     try {
-      const res: APIResponse<UserModel[]> = await this.api.GET(targetPath);
-      return res;
+      const res = await this.api.GET<UserModel[]>(targetPath); 
+      if (!res?.status) {
+        callback.onError(res?.message || "Gagal mengambil data");
+      } else {
+        callback.onSuccess(res.data);
+      }
     } catch (error) {
-      throw error;
+      callback.onError("Gagal mengambil data: " + String(error));
+    } finally {
+      callback.onFullfilled?.();
     }
   }
 }

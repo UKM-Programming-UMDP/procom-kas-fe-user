@@ -1,23 +1,17 @@
 import React, { useEffect } from "react";
 import glassmorphism from "@utils/glassmorphism";
-import { useCreateKasContext } from "@pages/CreateKas/context/index";
 import QuickNote from "./QuickNote";
 import { Controller, useFormContext } from "react-hook-form";
 import { LocalStorage } from "@utils/localStorage";
 
 const Note: React.FC = () => {
-  const { control, setValue, getValues } = useFormContext();
+  const { control, setValue } = useFormContext();
   const { setItem, getItem } = LocalStorage("note");
 
-  // Initialize the form value from local storage on component mount
   useEffect(() => {
-    const storedNote = getItem();
-    if (storedNote) {
-      setValue("note", storedNote);
-    }
+    setValue("note", getItem());
   }, [setValue, getItem]);
 
-  // Update local storage whenever the form value changes
   const handleInputChange = (value: string) => {
     setItem(value);
   };

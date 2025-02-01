@@ -17,7 +17,7 @@ const KasBody: React.FC = () => {
         onSubmit={handleSubmit(handleSubmitForm)}
         className={`p-5 ${glassmorphism({ container: true, border: true })}`}
       >
-        <SearchUser />
+        {/* <SearchUser /> */}
         <PayedAmount />
         <NoteKas />
         <UploadImage />

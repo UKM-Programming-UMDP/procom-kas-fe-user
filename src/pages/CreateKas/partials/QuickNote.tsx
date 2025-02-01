@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 import { LocalStorage } from "@utils/localStorage";
 
 const QuickNote: React.FC = () => {
-  const { state, setState } = useCreateKasContext();
+  const { state } = useCreateKasContext();
   const { setValue } = useFormContext();
   const { predefinedNotes } = state;
   const { setItem, getItem } = LocalStorage("note");
@@ -18,7 +18,7 @@ const QuickNote: React.FC = () => {
 
   return (
     <div className="mb-3 w-full overflow-x-auto">
-      <div className="flex gap-4 snap-x snap-mandatory scroll-smooth">
+      <div className="flex gap-4 snap-x snap-mandatory scroll-smooth outline-none">
         {Object.keys(predefinedNotes).map((key) => (
           <div
             key={key}

@@ -1,32 +1,81 @@
-import { useState, useCallback } from "react";
-import KasSubmissionService from "@api/kasSubmission/kasSubmission";
-import { snackbar, errMessage } from "@utils/snackbar";
 import { UserModel } from "@api/kasSubmission/model";
+import KasSubmissionService from "@api/kasSubmission/kasSubmission";
+import { useCreateKasContext } from "../../context";
+import { snackbar } from "@utils/snackbar";
+import { useEffect, useState, useCallback } from "react";
+import { FilterType } from "@types";
 
-const useKasSubmissionService = () => {
-  const [loading, setLoading] = useState(false);
-  const [users, setUsers] = useState<UserModel[]>([]);
+interface HookReturn {
+  fetchUsers: () => void;
+  loading: boolean;
+  users: UserModel[];
+}
 
-  const fetchUsers = useCallback(async () => {
-    setLoading(true);
+const useGetUser = (): HookReturn => {
+  const { state, setState } = useCreateKasContext();
+  const [filters, setFilters] = useState<FilterType[]>([
+    {
+      key: "npm",
+      label: "npm",
+      options: [
+        {
+          label: "npm",
+          value: "user.npm",
+        },
+        {
+          label: "name",
+          value: "user.name",
+        },
+      ],
+    },
+  ]);
+
+  const fetchUsers = useCallback(() => {
+    setState((prevState) => ({ ...prevState, userLoading: true }));
 
     const kasService = new KasSubmissionService();
-    const res = await kasService.get();
 
-    if (res && res.data) {
-      setUsers(res.data);
-    } else {
-      snackbar.error(errMessage(res));
+    kasService.get("name", {
+      onSuccess: (data) => {
+        setState((prevState) => ({
+          ...prevState,
+          userLoading: false,
+          users: data,
+        }));
+
+        setFilters((prevFilters) => [
+          ...prevFilters,
+          {
+            key: "user.npm",
+            label: "npm",
+            options: data.map((user: UserModel) => ({
+              label: user.name,
+              value: user.npm,
+            })),
+          },
+        ]);
+      },
+      onError: (error: unknown) => {
+        snackbar.error(JSON.stringify(error));
+        setState((prevState) => ({
+          ...prevState,
+          userLoading: false,
+        }));
+      },
+    });
+  }, [setState]);
+
+  useEffect(() => {
+    if (!filters.find((filter) => filter.key === "npm")) {
+      fetchUsers();
     }
-
-    setLoading(false);
-  }, []);
+  }, [fetchUsers, filters]);
 
   return {
     fetchUsers,
-    users,
-    loading,
+    loading: state.userLoading,
+    users: state.users, 
   };
 };
 
-export default useKasSubmissionService;
+export default useGetUser;

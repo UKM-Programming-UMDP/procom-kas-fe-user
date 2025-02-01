@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { BaseDialog, DialogContent } from "@components/Dialog";
+import { BaseDialog, DialogContent, LoadingDialog } from "@components/Dialog";
 import { UserModel } from "@api/kasSubmission/model";
-import useGetUser from "../List/hooks/useGetUser";
+import useGetUser from "../hooks/useGetUser";
 import glassmorphism from "@utils/glassmorphism";
 import { Search } from "@mui/icons-material";
 import { DialogTitle } from "@mui/material";
 import { userFilter } from "../List/utils/userFilter";
 import { useFormContext } from "react-hook-form";
 import { LocalStorage } from "@utils/localStorage";
+import { SearchBar } from "@components/Input";
 
 interface Props {
   isOpen: boolean;
@@ -22,16 +23,15 @@ const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
   const { setItem, getItem } = LocalStorage("user.npm");
 
   useEffect(() => {
-    fetchUsers();
     setValue("user.npm", getItem());
-  }, [fetchUsers, setValue]);
+  }, [setValue]);
 
   useEffect(() => {
     setFilteredUsers(userFilter(users, searchTerm));
   }, [searchTerm, users]);
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
   };
 
   const handleUserSelect = (user: UserModel) => {
@@ -42,31 +42,28 @@ const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <BaseDialog open={isOpen} onClose={onClose}>
-      <DialogTitle
-        fontSize="0.9rem"
-        sx={{
-          padding: "0.8rem 1.2rem",
-          backgroundColor: "#323232",
-          borderBottom: "1px solid #55555590",
-        }}
-      >
+    <BaseDialog
+      open={isOpen}
+      onClose={onClose}
+      title="Search your NPM"
+      message={
+        filteredUsers.length === 0
+          ? "Note: If npm is not found, please register your account with admin."
+          : ""
+      }
+    >
+      <DialogTitle fontSize="0.9rem">
         <div>Search Your NPM</div>
         {filteredUsers.length === 0 && (
-          <div className="italic text-neutral-300">
-            Note: If npm is not found, please register your account with admin.
-          </div>
+          <div className="italic text-neutral-300"></div>
         )}
       </DialogTitle>
       <DialogContent>
         <div className="relative mb-2">
-          <Search className="absolute top-1/2 left-2 transform -translate-y-1/2 text-gray-500" />
-          <input
-            type="search"
-            placeholder="Search"
-            value={searchTerm}
+          <SearchBar
+            placeholder="Search..."
             onChange={handleSearchChange}
-            className={`w-full pl-10 pr-4 py-2 focus:border-cyan-500 rounded-lg outline-none ${glassmorphism(
+            className={`w-full pl-10 pr-4 py-20 focus:border-cyan-500 rounded-lg outline-none ${glassmorphism(
               {
                 container: true,
               },
@@ -74,7 +71,7 @@ const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
           />
         </div>
         {loading ? (
-          <div>Loading...</div>
+          <>Loading...</>
         ) : (
           <div className="snap-y overflow-y-auto max-h-[300px]">
             {filteredUsers.length > 0 ? (
@@ -86,7 +83,11 @@ const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
                     {
                       hover: true,
                     },
-                  )} ${user.npm === getValues("user.npm") ? glassmorphism({ container: true }) : ""}`}
+                  )} ${
+                    user.npm === getValues("user.npm")
+                      ? glassmorphism({ container: true })
+                      : ""
+                  }`}
                 >
                   {user.npm} - {user.name}
                 </div>

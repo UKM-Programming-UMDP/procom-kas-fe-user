@@ -10,17 +10,16 @@ const SearchUser = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { control, getValues, setValue } = useFormContext();
   const { users, fetchUsers } = useGetUser();
-  const { setItem, getItem } = LocalStorage("user.npm");
+  const { getItem } = LocalStorage("user.npm");
 
   const npm = getValues("user.npm");
   const activeUser = users.find((user) => user.npm === npm);
 
   useEffect(() => {
     if (!activeUser) {
-      fetchUsers();
       setValue("user.npm", getItem());
     }
-  }, [fetchUsers, setValue]);
+  }, [setValue]);
 
   const handleOpenDialog = useCallback(() => {
     setIsDialogOpen(true);

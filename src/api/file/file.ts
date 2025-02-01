@@ -1,15 +1,12 @@
 import API from "..";
-import { UploadFileModel, UploadModel } from "./model";
+import { UploadModel } from "./model";
 import { FetchCallback } from "@types";
 
 export default class FileServices {
   basePath: string = "/file/images";
   private api: API = new API();
 
-  async post(
-    submission: UploadFileModel,
-    callback: FetchCallback<UploadModel>,
-  ) {
+  async post(submission: FormData, callback: FetchCallback<UploadModel>) {
     const targetPath = `${this.basePath}`;
     const res = await this.api.POSTFORM<UploadModel>(targetPath, submission);
 

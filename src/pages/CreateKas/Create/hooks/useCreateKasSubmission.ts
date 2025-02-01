@@ -10,19 +10,22 @@ const useCreateKasSubmission = () => {
   const { setValue, trigger, handleSubmit } = useFormContext();
 
   const handleFile = async (file: File) => {
-    await fileService.post(
-      { file },
-      {
-        onSuccess: (data) => {
-          setValue("evidence", data.url_id);
-          trigger("evidence");
-          console.log(data);
-        },
-        onError: (errMessage) => {
-          snackbar.error(errMessage);
-        },
+    const formData = new FormData();
+    formData.append("file", file); 
+   const listFile = {
+      file: file
+   } 
+    await fileService.post(formData, {
+      onSuccess: (data) => {
+        setValue("evidence", data.url_id);
+        trigger("evidence");
+        console.log(data);
       },
-    );
+      onError: (errMessage) => {
+        snackbar.error(errMessage);
+      },
+    });
+    
   };
 
   const handleSubmitForm = () => {

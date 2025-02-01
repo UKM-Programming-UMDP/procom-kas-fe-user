@@ -17,7 +17,7 @@ export type UserModel = {
   name: string;
 };
 
-export type KasSubmissionCreateModel = {
+export type KasSubmissionCreateModel  = Partial<KasSubmissionModel> & {
   user: {
     npm: string;
   };
@@ -25,3 +25,4 @@ export type KasSubmissionCreateModel = {
   note: string;
   evidence: string;
 };
+

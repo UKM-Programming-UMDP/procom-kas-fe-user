@@ -2,7 +2,6 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
   KasSubmissionCreateModel,
-  KasSubmissionModel,
 } from "@api/kasSubmission/model";
 
 export const kassubmissionreqDefaultValues: KasSubmissionCreateModel = {

@@ -2,7 +2,6 @@ import { KasSubmissionCreateModel, UserModel } from "@api/kasSubmission/model";
 import { createContext, useContext, useState } from "react";
 import useDialog, { UseDialogReturn } from "@hooks/useDialog";
 
-
 type StateType = {
   user: UserModel[];
   userLoading: boolean;

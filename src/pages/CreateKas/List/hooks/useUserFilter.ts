@@ -10,8 +10,7 @@ interface HookReturn {
 
 const useUserFilter = (): HookReturn => {
     const { setState } = useCreateKasContext();
-    const { fetchUsers } = useGetUser();
-   
+    const { fetchUsers } = useGetUser();  
     const kasService = new KasSubmissionService();
 
     const handleChangeSearch = (value: string) => {
@@ -43,10 +42,9 @@ const useUserFilter = (): HookReturn => {
     });
   };
   
- 
-    return {
-      handleChangeSearch,
-    };
+  return {
+    handleChangeSearch,
+  };
 };
 
 export default useUserFilter;

@@ -21,8 +21,7 @@ const useCreateKasSubmission = () => {
     await fileService.post(formData, {
       onSuccess: (data) => {
         setValue("evidence", data.url_id);
-        trigger("evidence");
-        console.log(data);     
+        trigger("evidence");  
       },
       onError: (errMessage) => {
         snackbar.error(errMessage);

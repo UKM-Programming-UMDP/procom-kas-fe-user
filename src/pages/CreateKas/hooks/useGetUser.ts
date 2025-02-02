@@ -4,7 +4,6 @@ import { snackbar } from "@utils/snackbar";
 import { FilterParams} from "@types";
 import { filterMapper } from "../List/utils/filterMapper";
 import { useFormContext } from "react-hook-form";
-import { useEffect } from "react";
 
 interface HookReturn {
   fetchUsers: (filterParams?: FilterParams) => void;

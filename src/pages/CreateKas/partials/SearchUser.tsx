@@ -2,10 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { Search } from "@mui/icons-material";
 import glassmorphism from "@utils/glassmorphism";
-import DialogUsers, LoadingDialog from "./DialogUsers";
+import DialogUsers from "./DialogUsers";
 import useGetUser from "../hooks/useGetUser";
 import { LocalStorage } from "@utils/localStorage";
-import { LoadingDialog } from "@components/Dialog";
 
 const SearchUser = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

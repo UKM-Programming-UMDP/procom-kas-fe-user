@@ -8,18 +8,18 @@ import { LocalStorage } from "@utils/localStorage";
 
 const SearchUser = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { control, getValues, setValue } = useFormContext();
-  // const { users, fetchUsers } = useGetUser();
-  const { getItem } = LocalStorage("user.npm");
+  const {control, getValues, setValue } = useFormContext();
+  const {fetchUsers, handleActiveUser } = useGetUser();
+  const {getItem} = LocalStorage("user.npm");
+  const active= handleActiveUser();
 
-  const npm = getValues("user.npm");
-  // const activeUser = users.find((user) => user.npm === npm);
-
-  // useEffect(() => {
-  //   if (!activeUser) {
-  //     setValue("user.npm", getItem());
-  //   }
-  // }, [setValue]);
+  useEffect(() => {
+    const storedNpm = getItem();
+    if (!getValues("user.npm") && storedNpm) {
+      fetchUsers();
+      setValue("user.npm", storedNpm);
+    }
+  }, [setValue, fetchUsers]);
 
   const handleOpenDialog = useCallback(() => {
     setIsDialogOpen(true);
@@ -43,9 +43,7 @@ const SearchUser = () => {
               onClick={handleOpenDialog}
             >
               <Search />
-              {/* {activeUser
-                ? `${activeUser.npm} - ${activeUser.name}`
-                : field.value || "Search..."} */}
+              {active ? `${active.npm} - ${active.name}` : "Select a user"}
             </button>
             <div className="text-red-500 text-sm mt-2">
               {fieldState.error?.message}

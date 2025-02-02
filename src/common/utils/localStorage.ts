@@ -1,5 +1,3 @@
-import { json } from "react-router-dom";
-
 export const LocalStorage = (key: string) => {
   const setItem = (value: unknown) => {
     try {

@@ -3,15 +3,24 @@ import { useCreateKasContext } from "../context";
 import { snackbar } from "@utils/snackbar";
 import { FilterParams} from "@types";
 import { filterMapper } from "../List/utils/filterMapper";
+import { useFormContext } from "react-hook-form";
+import { useEffect } from "react";
 
 interface HookReturn {
   fetchUsers: (filterParams?: FilterParams) => void;
+  handleActiveUser: () => { npm: string; name: string } | null;
 }
 
 const useGetUser = (): HookReturn => {
   const { state, setState } = useCreateKasContext();
   const kasService = new KasSubmissionService();
+  const {  getValues } = useFormContext();
   
+  const handleActiveUser = () => {
+    const activeUser = state.user.find((user) => user.npm === getValues("user.npm"));
+    return activeUser ? { npm: activeUser.npm, name: activeUser.name }: null;
+  };
+
   const fetchUsers = (
     filterParams: FilterParams = filterMapper(
       Object.assign(state.filters)
@@ -41,6 +50,7 @@ const useGetUser = (): HookReturn => {
   };
 
   return {
+    handleActiveUser,
     fetchUsers,
   };
 };

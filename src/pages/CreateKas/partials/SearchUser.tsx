@@ -35,7 +35,7 @@ const SearchUser = () => {
         name="user.npm"
         control={control}
         defaultValue="user.npm"
-        render={({ field, fieldState }) => (
+        render={({ fieldState }) => (
           <>
             <button
               type="button"

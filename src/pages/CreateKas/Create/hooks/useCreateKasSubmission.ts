@@ -4,12 +4,16 @@ import { snackbar } from "@utils/snackbar";
 import { useFormContext } from "react-hook-form";
 import FileServices from "@api/file/file";
 import { useCreateKasContext } from "@pages/CreateKas/context";
+import { Redirect } from "../utils/redirect";
+
 
 const useCreateKasSubmission = () => {
   const kasService = new KasSubmissionService();
   const fileService = new FileServices();
   const { setValue, trigger, handleSubmit } = useFormContext();
-  const {satet, setState} = useCreateKasContext()
+  const { setState } = useCreateKasContext();
+  const {handleRedirect} = Redirect();
+
   const handleFile = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file); 
@@ -47,7 +51,8 @@ const useCreateKasSubmission = () => {
           setState((prevState) => ({
             ...prevState,   
             submissionKasLoading: false,
-          })); 
+          }));
+          handleRedirect();
         },
         onError: (errMessage) => {
           snackbar.error(errMessage);

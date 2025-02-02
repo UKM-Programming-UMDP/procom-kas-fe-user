@@ -6,7 +6,6 @@ import FileServices from "@api/file/file";
 import { useCreateKasContext } from "@pages/CreateKas/context";
 import { Redirect } from "../utils/redirect";
 
-
 const useCreateKasSubmission = () => {
   const kasService = new KasSubmissionService();
   const fileService = new FileServices();

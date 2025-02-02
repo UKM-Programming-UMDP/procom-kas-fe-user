@@ -13,7 +13,7 @@ const SearchBar = (props: Props) => {
 
   const isFirstRender = useRef(true);
   const [tempValue, setTempValue] = useState<string>("");
-  const debouncedValue = useDebouncer(tempValue, 500);
+  const debouncedValue = useDebouncer(tempValue, 1000);
 
   useEffect(() => {
     if (isFirstRender.current) {

@@ -3,12 +3,13 @@ import { KasSubmissionCreateModel } from "@api/kasSubmission/model";
 import { snackbar } from "@utils/snackbar";
 import { useFormContext } from "react-hook-form";
 import FileServices from "@api/file/file";
+import { useCreateKasContext } from "@pages/CreateKas/context";
 
 const useCreateKasSubmission = () => {
   const kasService = new KasSubmissionService();
   const fileService = new FileServices();
   const { setValue, trigger, handleSubmit } = useFormContext();
-
+  const {satet, setState} = useCreateKasContext()
   const handleFile = async (file: File) => {
     const formData = new FormData();
     formData.append("file", file); 
@@ -17,7 +18,7 @@ const useCreateKasSubmission = () => {
       onSuccess: (data) => {
         setValue("evidence", data.url_id);
         trigger("evidence");
-        console.log(data);
+        console.log(data);     
       },
       onError: (errMessage) => {
         snackbar.error(errMessage);
@@ -34,14 +35,26 @@ const useCreateKasSubmission = () => {
         note: values.note,
         evidence: values.evidence,
       };
+      
+      setState((prevState) => ({
+        ...prevState,   
+        submissionKasLoading: true,
+      })); 
 
       kasService.post(JSON.stringify(submissionData), {
         onSuccess: (data) => {
           snackbar.success("Successfully created Kas submission");
-          console.log(data);
+          setState((prevState) => ({
+            ...prevState,   
+            submissionKasLoading: false,
+          })); 
         },
         onError: (errMessage) => {
           snackbar.error(errMessage);
+          setState((prevState) => ({
+            ...prevState,   
+            submissionKasLoading: false,
+          })); 
         },
       });
     })();

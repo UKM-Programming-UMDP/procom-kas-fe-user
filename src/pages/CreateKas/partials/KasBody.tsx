@@ -8,11 +8,12 @@ import SearchUser from "./SearchUser";
 import { useForm } from "react-hook-form";
 import { KasSubmissionCreateModel } from "@api/kasSubmission/model";
 import { ActionButton } from "@components/Button";
+import { useCreateKasContext } from "../context";
 
 const KasBody: React.FC = () => {
   const { handleSubmitForm } = useCreateKasSubmission();
   const { handleSubmit } = useForm<KasSubmissionCreateModel>();
-  
+  const {state} = useCreateKasContext();
   return (
     <div className={`p-5 text-dark-700 ${glassmorphism({ container: true, border: true })} `}>
       <SearchUser />
@@ -22,7 +23,7 @@ const KasBody: React.FC = () => {
       <ActionButton 
         label="Submit" 
         onClick={handleSubmit(handleSubmitForm)} 
-        submitLoading={false} 
+        submitLoading={state.createKasLoading} 
         variant="contained" 
         size="large" 
         className={`w-full rounded-lg py-2 px-3 shadow-lg`}

@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { BaseDialog, DialogContent, LoadingDialog } from "@components/Dialog";
-import { UserModel } from "@api/kasSubmission/model";
+import React, { useEffect } from "react";
+import { BaseDialog, DialogContent } from "@components/Dialog";
+import { useFormContext } from "react-hook-form";
+import { SearchBar } from "@components/Input";
+import { LoadingDialog } from "@components/Dialog";
 import useGetUser from "../hooks/useGetUser";
 import glassmorphism from "@utils/glassmorphism";
-import { Search } from "@mui/icons-material";
-import { DialogTitle } from "@mui/material";
-import { userFilter } from "../List/utils/userFilter";
-import { useFormContext } from "react-hook-form";
 import { LocalStorage } from "@utils/localStorage";
-import { SearchBar } from "@components/Input";
+import { UserModel } from "@api/kasSubmission/model";
+import useUserFilter from "../List/hooks/useUserFilter";
+import { useCreateKasContext } from "../context";
 
 interface Props {
   isOpen: boolean;
@@ -16,26 +16,19 @@ interface Props {
 }
 
 const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
-  const { users, loading, fetchUsers } = useGetUser();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState<UserModel[]>([]);
+  const { handleChangeSearch } = useUserFilter();
   const { setValue, getValues } = useFormContext();
-  const { setItem, getItem } = LocalStorage("user.npm");
-
+  const { setItem } = LocalStorage("user.npm");
+  const { state } = useCreateKasContext();
+  const { userLoading, user } = state;
+  const { fetchUsers } = useGetUser();
+  
   useEffect(() => {
-    setValue("user.npm", getItem());
-  }, [setValue]);
+      fetchUsers();
+  }, [])
 
-  useEffect(() => {
-    setFilteredUsers(userFilter(users, searchTerm));
-  }, [searchTerm, users]);
-
-  const handleSearchChange = (value: string) => {
-    setSearchTerm(value);
-  };
-
-  const handleUserSelect = (user: UserModel) => {
-    const selectedNpm = user.npm;
+  const handleUserSelect = (selectedUser: UserModel) => {
+    const selectedNpm = selectedUser.npm;
     setValue("user.npm", selectedNpm);
     setItem(selectedNpm);
     onClose();
@@ -45,58 +38,44 @@ const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
     <BaseDialog
       open={isOpen}
       onClose={onClose}
-      title="Search your NPM"
+      title="Search Your NPM"
       message={
-        filteredUsers.length === 0
+        user.length === 0
           ? "Note: If npm is not found, please register your account with admin."
           : ""
       }
     >
-      <DialogTitle fontSize="0.9rem">
-        <div>Search Your NPM</div>
-        {filteredUsers.length === 0 && (
-          <div className="italic text-neutral-300"></div>
-        )}
-      </DialogTitle>
       <DialogContent>
         <div className="relative mb-2">
           <SearchBar
             placeholder="Search..."
-            onChange={handleSearchChange}
-            className={`w-full pl-10 pr-4 py-20 focus:border-cyan-500 rounded-lg outline-none ${glassmorphism(
-              {
-                container: true,
-              },
-            )}`}
+            onChange={handleChangeSearch}
+            className={`w-full pl-10 pr-4 py-2 focus:border-cyan-500 rounded-lg outline-none ${glassmorphism({
+              container: true,
+            })}`}
           />
         </div>
-        {loading ? (
-          <>Loading...</>
-        ) : (
-          <div className="snap-y overflow-y-auto max-h-[300px]">
-            {filteredUsers.length > 0 ? (
-              filteredUsers.map((user) => (
-                <div
-                  key={user.npm}
-                  onClick={() => handleUserSelect(user)}
-                  className={`cursor-pointer p-2 my-2 rounded-lg ${glassmorphism(
-                    {
-                      hover: true,
-                    },
-                  )} ${
-                    user.npm === getValues("user.npm")
-                      ? glassmorphism({ container: true })
-                      : ""
-                  }`}
-                >
-                  {user.npm} - {user.name}
-                </div>
-              ))
-            ) : (
-              <div className="text-center text-neutral-300">NPM not found</div>
-            )}
-          </div>
-        )}
+
+        {userLoading && <LoadingDialog open={isOpen} onClose={onClose} />}
+
+        <div className="snap-y overflow-y-auto max-h-[300px]">
+          
+            {user?.map((item, index) => (             
+              <div
+                key={index}
+                onClick={() => handleUserSelect(item)}
+                className={`cursor-pointer p-2 my-2 rounded-lg ${glassmorphism({
+                  hover: true,
+                })} ${item.npm === getValues("user.npm") && glassmorphism({ container: true })}`}
+              >
+                {item.npm} - {item.name}
+              </div>
+            ))}
+          
+          {user.length == 0 &&
+            <div className="text-center text-neutral-300">NPM not found</div>
+          }
+        </div>
       </DialogContent>
     </BaseDialog>
   );

@@ -2,8 +2,9 @@ import { KasSubmissionCreateModel, UserModel } from "@api/kasSubmission/model";
 import { createContext, useContext, useState } from "react";
 import useDialog, { UseDialogReturn } from "@hooks/useDialog";
 
+
 type StateType = {
-  users: UserModel[];
+  user: UserModel[];
   userLoading: boolean;
   createKasLoading: boolean;
   uploadFileLoading: boolean;
@@ -12,7 +13,7 @@ type StateType = {
     "bca" | "mandiri" | "gopay" | "cash" | "ovo" | "dana",
     string
   >;
-
+  
   filters: {
     npm: string;
     name: string;
@@ -20,7 +21,7 @@ type StateType = {
 };
 
 export const initialState: StateType = {
-  users: [],
+  user: [],
   userLoading: false,
   kassubmissionreqDetails: {} as KasSubmissionCreateModel,
   createKasLoading: false,

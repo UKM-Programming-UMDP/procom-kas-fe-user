@@ -32,32 +32,14 @@ export default class KasSubmissionService {
     callback.onFullfilled && callback.onFullfilled();
   }
 
-  // async get(params: string, callback: FetchCallback<UserModel>) {
-  //   const targetPath = `${this.userPath}?${params}`;
+  async get(params: string, callback: FetchCallback<UserModel[]>) {
+    const targetPath = `${this.userPath}?${params}`;
 
-  //   const res = await this.api.GET<UserModel>(targetPath);
-  //   if (!res?.status) {
-  //     callback.onError(res?.message || "unknown error");
-  //   } else {
-  //     if (res.data) callback.onSuccess(res.data);
-  //   }
-
-  //   callback.onFullfilled && callback.onFullfilled();
-  // }
-  async get(params: string, callback: FetchCallback<UserModel[]>) { 
-    const targetPath = params ? `${this.userPath}?${params}` : this.userPath;
-  
-    try {
-      const res = await this.api.GET<UserModel[]>(targetPath); 
-      if (!res?.status) {
-        callback.onError(res?.message || "Gagal mengambil data");
-      } else {
-        callback.onSuccess(res.data);
-      }
-    } catch (error) {
-      callback.onError("Gagal mengambil data: " + String(error));
-    } finally {
-      callback.onFullfilled?.();
+    const res = await this.api.GET<UserModel[]>(targetPath);
+    if (!res?.status) {
+      callback.onError(res?.message || "unknown error");
+    } else {
+      callback.onSuccess(res?.data);
     }
   }
 }

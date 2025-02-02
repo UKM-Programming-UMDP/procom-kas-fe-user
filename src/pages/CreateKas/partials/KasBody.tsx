@@ -14,7 +14,7 @@ const KasBody: React.FC = () => {
   const { handleSubmit } = useForm<KasSubmissionCreateModel>();
   
   return (
-    <div className={`p-5 text-dark-700 ${glassmorphism({ container: true, border: true })} ` }>
+    <div className={`p-5 text-dark-700 ${glassmorphism({ container: true, border: true })} `}>
       <SearchUser />
       <PayedAmount />
       <NoteKas />

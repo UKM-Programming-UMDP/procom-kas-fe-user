@@ -26,7 +26,7 @@ function BaseDialog(props: Props): JSX.Element {
       }}
       disableRestoreFocus={true}
     >
-      {title ? (
+      {title && (
         <DialogTitle
           fontSize="0.9rem"
           sx={{
@@ -36,11 +36,11 @@ function BaseDialog(props: Props): JSX.Element {
           }}
         >
           {title}
-          {message ? (
+          {message && (
             <div className="italic text-neutral-300">{message}</div>
-          ) : null}
+          )}
         </DialogTitle>
-      ) : null}
+      )}
       {children}
     </Dialog>
   );

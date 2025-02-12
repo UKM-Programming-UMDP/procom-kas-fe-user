@@ -34,7 +34,7 @@ const Note: React.FC = () => {
                   field.onChange(e);
                   handleInputChange(e.target.value);
                 }}
-                className={`shadow-lg outline-none text-white w-full px-3 py-2 rounded-lg text-md text-black ${glassmorphism(
+                className={`shadow-lg outline-none  w-full px-3 py-2 rounded-lg text-md text-white ${glassmorphism(
                   {
                     container: true,
                     hover: true,

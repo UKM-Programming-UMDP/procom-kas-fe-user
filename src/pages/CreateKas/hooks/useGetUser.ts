@@ -17,7 +17,7 @@ const useGetUser = (): HookReturn => {
   
   const handleActiveUser = () => {
     const activeUser = state.user.find((user) => user.npm === getValues("user.npm"));
-    return activeUser ? { npm: activeUser.npm, name: activeUser.name }: null;
+    return activeUser && { npm: activeUser.npm, name: activeUser.name };
   };
 
   const fetchUsers = (

@@ -7,7 +7,7 @@ import { useFormContext } from "react-hook-form";
 
 interface HookReturn {
   fetchUsers: (filterParams?: FilterParams) => void;
-  handleActiveUser: () => { npm: string; name: string } | null;
+  handleActiveUser: () => void;
 }
 
 const useGetUser = (): HookReturn => {

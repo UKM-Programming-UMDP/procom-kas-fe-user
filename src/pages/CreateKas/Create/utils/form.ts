@@ -1,8 +1,6 @@
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  KasSubmissionCreateModel,
-} from "@api/kasSubmission/model";
+import { KasSubmissionCreateModel } from "@api/kasSubmission/model";
 
 export const kassubmissionreqDefaultValues: KasSubmissionCreateModel = {
   user: {
@@ -31,7 +29,7 @@ export const kassubmissionValidations = yupResolver(
       .string()
       .typeError("Payed Amount is required")
       .required("Note is Required"),
-    evidence: yup.string().notRequired().required("evidence is Required"),
+    evidence: yup.string().required("Note is Required"),
   }),
 );
 

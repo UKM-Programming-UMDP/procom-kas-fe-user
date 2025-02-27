@@ -3,18 +3,18 @@ import { Controller, useFormContext } from "react-hook-form";
 import { Search } from "@mui/icons-material";
 import glassmorphism from "@utils/glassmorphism";
 import DialogUsers from "./DialogUsers";
-import useGetUser from "../hooks/useGetUser";
-import { LocalStorage } from "@utils/localStorage";
+import useGetUser from "../hooks/useUser";
+import { useLocalStorage } from "@utils/localStorage";
 
 const SearchUser = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const {control, getValues, setValue } = useFormContext();
-  const {fetchUsers, handleActiveUser } = useGetUser();
-  const {getItem} = LocalStorage("user.npm");
-  const active= handleActiveUser();
+  const { control, getValues, setValue } = useFormContext();
+  const { fetchUsers, handleActiveUser } = useGetUser();
+  const { getItem } = useLocalStorage();
+  const active = handleActiveUser();
 
   useEffect(() => {
-    const storedNpm = getItem();
+    const storedNpm = getItem("user.npm");
     if (!getValues("user.npm") && storedNpm) {
       fetchUsers();
       setValue("user.npm", storedNpm);

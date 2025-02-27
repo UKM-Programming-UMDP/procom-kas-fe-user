@@ -2,18 +2,18 @@ import React from "react";
 import { useCreateKasContext } from "@pages/CreateKas/context/index";
 import glassmorphism from "@utils/glassmorphism";
 import { useFormContext } from "react-hook-form";
-import { LocalStorage } from "@utils/localStorage";
+import { useLocalStorage } from "@utils/localStorage";
 
 const QuickNote: React.FC = () => {
   const { state } = useCreateKasContext();
   const { setValue } = useFormContext();
   const { predefinedNotes } = state;
-  const { setItem, getItem } = LocalStorage("note");
+  const { setItem, getItem } = useLocalStorage();
 
   const handleQuickNote = (key: keyof typeof predefinedNotes) => {
     const note = predefinedNotes[key];
-    setItem(note);
-    setValue("note", getItem());
+    setItem("note", note);
+    setValue("note", getItem("note"));
   };
 
   return (

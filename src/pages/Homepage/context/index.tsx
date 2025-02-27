@@ -3,10 +3,12 @@ import { createContext, useContext, useState } from "react";
 
 type StateType = {
   app: AppType;
+  evidenceKas: File[] | null;
 };
 
 export const initialState: StateType = {
   app: "home",
+  evidenceKas: null,
 };
 
 type ContextType = {

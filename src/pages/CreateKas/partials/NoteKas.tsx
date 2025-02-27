@@ -2,18 +2,18 @@ import React, { useEffect } from "react";
 import glassmorphism from "@utils/glassmorphism";
 import QuickNote from "./QuickNote";
 import { Controller, useFormContext } from "react-hook-form";
-import { LocalStorage } from "@utils/localStorage";
+import { useLocalStorage } from "@utils/localStorage";
 
 const Note: React.FC = () => {
   const { control, setValue } = useFormContext();
-  const { setItem, getItem } = LocalStorage("note");
+  const { setItem, getItem } = useLocalStorage();
 
   useEffect(() => {
-    setValue("note", getItem());
+    setValue("note", getItem("note"));
   }, [setValue, getItem]);
 
   const handleInputChange = (value: string) => {
-    setItem(value);
+    setItem("note", value);
   };
 
   return (

@@ -3,9 +3,9 @@ import { BaseDialog, DialogContent } from "@components/Dialog";
 import { useFormContext } from "react-hook-form";
 import { SearchBar } from "@components/Input";
 import { LoadingDialog } from "@components/Dialog";
-import useGetUser from "../hooks/useGetUser";
+import useGetUser from "../hooks/useUser";
 import glassmorphism from "@utils/glassmorphism";
-import { LocalStorage } from "@utils/localStorage";
+import { useLocalStorage } from "@utils/localStorage";
 import { UserModel } from "@api/kasSubmission/model";
 import useUserFilter from "../List/hooks/useUserFilter";
 import { useCreateKasContext } from "../context";
@@ -18,19 +18,19 @@ interface Props {
 const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
   const { handleChangeSearch } = useUserFilter();
   const { setValue, getValues } = useFormContext();
-  const { setItem } = LocalStorage("user.npm");
+  const { setItem } = useLocalStorage();
   const { state } = useCreateKasContext();
   const { userLoading, user } = state;
   const { fetchUsers } = useGetUser();
-  
+
   useEffect(() => {
-      fetchUsers();
-  }, [])
+    fetchUsers();
+  }, []);
 
   const handleUserSelect = (selectedUser: UserModel) => {
     const selectedNpm = selectedUser.npm;
     setValue("user.npm", selectedNpm);
-    setItem(selectedNpm);
+    setItem("user.npm", selectedNpm);
     onClose();
   };
 
@@ -50,31 +50,31 @@ const DialogUsers: React.FC<Props> = ({ isOpen, onClose }) => {
           <SearchBar
             placeholder="Search..."
             onChange={handleChangeSearch}
-            className={`w-full pl-10 pr-4 py-2 focus:border-cyan-500 rounded-lg outline-none ${glassmorphism({
-              container: true,
-            })}`}
+            className={`w-full pl-10 pr-4 py-2 focus:border-cyan-500 rounded-lg outline-none ${glassmorphism(
+              {
+                container: true,
+              },
+            )}`}
           />
         </div>
 
         {userLoading && <LoadingDialog open={isOpen} onClose={onClose} />}
-
         <div className="snap-y overflow-y-auto max-h-[300px]">
-          
-            {user?.map((item, index) => (             
-              <div
-                key={index}
-                onClick={() => handleUserSelect(item)}
-                className={`cursor-pointer p-2 my-2 rounded-lg ${glassmorphism({
-                  hover: true,
-                })} ${item.npm === getValues("user.npm") && glassmorphism({ container: true })}`}
-              >
-                {item.npm} - {item.name}
-              </div>
-            ))}
-          
-          {user.length == 0 &&
+          {user?.map((item, index) => (
+            <div
+              key={index}
+              onClick={() => handleUserSelect(item)}
+              className={`cursor-pointer p-2 my-2 rounded-lg ${glassmorphism({
+                hover: true,
+              })} ${item.npm === getValues("user.npm") && glassmorphism({ container: true })}`}
+            >
+              {item.npm} - {item.name}
+            </div>
+          ))}
+
+          {user.length == 0 && (
             <div className="text-center text-neutral-300">NPM not found</div>
-          }
+          )}
         </div>
       </DialogContent>
     </BaseDialog>

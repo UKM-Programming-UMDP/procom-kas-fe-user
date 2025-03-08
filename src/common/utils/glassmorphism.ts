@@ -8,6 +8,7 @@ const glassmorphism = ({ container, border, hover }: GlassmorphismProps) => {
   if (container) {
     classes += "bg-fuchsia-300/5 ";
   }
+
   if (hover) {
     classes += "hover:bg-violet-300/10 transition-all duration-200 ";
   }

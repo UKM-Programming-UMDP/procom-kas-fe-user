@@ -1,3 +1,9 @@
+export type FilterParams = {
+  params: {
+    [key: string]: string | number;
+  };
+};
+
 export type APIResponse<T = void> = {
   status: boolean;
   status_code: number;
@@ -7,9 +13,21 @@ export type APIResponse<T = void> = {
   pagination?: PaginationType;
 } | null;
 
+export type CommonOptions = {
+  value: number | string;
+  label: string;
+};
+
 export type FilterType = {
-  order_by?: "desc" | "asc";
-  sort?: string;
+  key: string;
+  label: string;
+  options: CommonOptions[];
+};
+
+export type FetchCallback<T> = {
+  onSuccess: (data: T) => void;
+  onError: (errMessage: string) => void;
+  onFullfilled?: () => void;
 };
 
 export type PaginationType = {
@@ -24,7 +42,12 @@ export type APIFieldError = {
   message: string;
 };
 
-export type AppType = "home" | "payed kas" | "balance" | "balance history";
+export type AppType =
+  | "home"
+  | "payed kas"
+  | "balance"
+  | "balance history"
+  | "kas submission";
 
 export type AppList = {
   displayName: string;

@@ -1,10 +1,10 @@
-import { BalanceHistoryType } from "@services/balanceHistory";
+import { BalanceHistoryModel } from "@api/balanceHistory/model";
 import { cn } from "@utils/index";
 import { amountFormatter } from "@utils/formatter";
 import glassmorphism from "@utils/glassmorphism";
 
 interface Props {
-  history: BalanceHistoryType;
+  history: BalanceHistoryModel;
 }
 const BalanceHistoryCard = (props: Props) => {
   const { history } = props;

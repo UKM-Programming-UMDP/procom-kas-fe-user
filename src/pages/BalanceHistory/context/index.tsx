@@ -1,11 +1,11 @@
-import { BalanceHistoryType } from "@services/balanceHistory";
+import { BalanceHistoryModel } from "@api/balanceHistory/model";
 import { FilterType, PaginationType } from "@types";
 import { createContext, useContext, useState } from "react";
 
 type BalanceHistoryStateType = {
   balance: number;
   balanceLoading: boolean;
-  balanceHistory: BalanceHistoryType[];
+  balanceHistory: BalanceHistoryModel[];
   balanceHistoryLoading: boolean;
   mode: "list" | "table" | "chart";
   filter?: FilterType;

@@ -1,4 +1,4 @@
-import BalanceHistoryServices from "@services/balanceHistory";
+import BalanceHistoryServices from "@api/balanceHistory/balanceHistory";
 import { useBalanceContext } from "../context";
 import { balanceHistoryFormatter } from "@utils/formatter";
 import { errMessage, snackbar } from "@utils/snackbar";

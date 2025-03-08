@@ -1,4 +1,4 @@
-import BalanceHistoryServices from "@services/balanceHistory";
+import BalanceHistoryServices from "@api/balanceHistory/balanceHistory";
 import { useBalanceHistoryContext } from "../context";
 import { FilterType, PaginationType } from "@types";
 import { balanceHistoryFormatter } from "@utils/formatter";

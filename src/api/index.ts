@@ -3,80 +3,128 @@
 import { APIResponse } from "@types";
 import axios, {
   AxiosError,
-  AxiosHeaders,
   AxiosInstance,
   AxiosRequestConfig,
   isAxiosError,
 } from "axios";
 
 type Headers = {
-  Accept: string;
   "Content-type": string;
 };
 
 export default class API {
-  headers: Headers = {
-    Accept: "application/json",
-    "Content-type": "application/json",
-  };
   api: AxiosInstance;
+  private headers: Headers;
 
   constructor() {
+    this.headers = {
+      "Content-type": "application/json",
+    };
     this.api = axios.create({
       baseURL: `${import.meta.env.VITE_BACKEND_URL}/v1`,
-      headers: this.headers as unknown as AxiosHeaders,
       httpsAgent: false,
     } as AxiosRequestConfig);
   }
 
   async GET<T>(path: string): Promise<APIResponse<T>> {
     try {
-      const res = await this.api.get(path);
+      const res = await this.api.get(path, { headers: this.headers });
       return res.data;
     } catch (err: AxiosError | any) {
       if (isAxiosError(err)) {
-        return err?.response?.data;
+        return {
+          status: false,
+          message: err?.response?.data?.message || err?.response?.data,
+          data: null,
+        } as unknown as APIResponse<T>;
       } else {
-        return err;
+        return {
+          status: false,
+          message: "Internal Server Error",
+        } as APIResponse<T>;
       }
     }
   }
 
-  async POST<T>(path: string, data: any): Promise<APIResponse<T>> {
+  async POST<T, U = T>(path: string, data: any): Promise<APIResponse<U>> {
     try {
-      const res = await this.api.post(path, data);
+      const res = await this.api.post(path, data, { headers: this.headers });
       return res.data;
     } catch (err: AxiosError | any) {
       if (isAxiosError(err)) {
-        return err?.response?.data;
+        return {
+          status: false,
+          message: err?.response?.data?.message || err?.response?.data,
+          data: null,
+        } as unknown as APIResponse<U>;
       } else {
-        return err;
+        return {
+          status: false,
+          message: "Internal Server Error",
+        } as APIResponse<U>;
       }
     }
   }
 
-  async PUT<T>(path: string, data: any): Promise<APIResponse<T>> {
+  async POSTFORM<T, U = T>(path: string, data: any): Promise<APIResponse<U>> {
     try {
-      const res = await this.api.put(path, data);
+      const headers: Headers = {
+        "Content-type": "multipart/form-data",
+      };
+      const res = await this.api.post(path, data, { headers });
       return res.data;
     } catch (err: AxiosError | any) {
       if (isAxiosError(err)) {
-        return err?.response?.data;
+        return {
+          status: false,
+          message: err?.response?.data?.message || err?.response?.data,
+          data: null,
+        } as unknown as APIResponse<U>;
       } else {
-        return err;
+        return {
+          status: false,
+          message: "Internal Server Error",
+        } as APIResponse<U>;
       }
     }
   }
 
-  async DELETE<T>(path: string): Promise<APIResponse<T>> {
+  async PUT<T, U = T>(path: string, data: any): Promise<APIResponse<U>> {
+    try {
+      const res = await this.api.put(path, data, { headers: this.headers });
+      return res.data;
+    } catch (err: AxiosError | any) {
+      if (isAxiosError(err)) {
+        return {
+          status: false,
+          message: err?.response?.data?.message || err?.response?.data,
+          data: null,
+        } as unknown as APIResponse<U>;
+      } else {
+        return {
+          status: false,
+          message: "Internal Server Error",
+        } as APIResponse<U>;
+      }
+    }
+  }
+
+  async DELETE<T, U = T>(path: string): Promise<APIResponse<U>> {
     try {
       const res = await this.api.delete(path);
       return res.data;
     } catch (err: AxiosError | any) {
       if (isAxiosError(err)) {
-        return err?.response?.data;
+        return {
+          status: false,
+          message: err?.response?.data?.message || err?.response?.data,
+          data: null,
+        } as unknown as APIResponse<U>;
       } else {
-        return err;
+        return {
+          status: false,
+          message: "Internal Server Error",
+        } as APIResponse<U>;
       }
     }
   }

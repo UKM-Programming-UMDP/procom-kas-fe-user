@@ -1,6 +1,6 @@
 import { snackbar, errMessage } from "@utils/snackbar";
 import { usePayedKasContext } from "../context";
-import PayedKasService from "@services/payedKas";
+import PayedKasService from "@api/payedKas/payedKas";
 
 interface HookReturn {
   payedKasService: PayedKasService;

@@ -1,4 +1,4 @@
-import { BalanceHistoryType } from "@services/balanceHistory";
+import { BalanceHistoryModel } from "@api/balanceHistory/model";
 import { useState, useEffect } from "react";
 
 type GroupedChartDataType = {
@@ -6,7 +6,7 @@ type GroupedChartDataType = {
   total_amount: number;
 };
 
-function useGroupedChartData(balanceHistory: BalanceHistoryType[]) {
+function useGroupedChartData(balanceHistory: BalanceHistoryModel[]) {
   const [groupedChartData, setGroupedChartData] = useState<
     GroupedChartDataType[]
   >([]);

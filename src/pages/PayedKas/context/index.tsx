@@ -1,8 +1,8 @@
-import { GetResponse } from "@services/payedKas";
+import { PayedKasModel } from "@api/payedKas/model";
 import { createContext, useContext, useState } from "react";
 
 type StateType = {
-  payedKas: GetResponse[];
+  payedKas: PayedKasModel[];
   payedKasLoading: boolean;
 };
 

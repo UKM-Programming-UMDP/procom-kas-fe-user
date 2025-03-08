@@ -11,7 +11,7 @@ import AppearFadeIn from "@components/Animation/AppearFadeIn";
 import Balance from "@pages/Balance";
 import BalanceHistory from "@pages/BalanceHistory";
 import PayedKas from "@pages/PayedKas";
-
+import CreateKas from "@pages/CreateKas";
 const HomepageLayout = () => {
   const { state } = useHomepageContext();
   const { handleChangeApp } = useHomepage();
@@ -22,6 +22,7 @@ const HomepageLayout = () => {
     "payed kas": <PayedKas />,
     balance: <Balance />,
     "balance history": <BalanceHistory />,
+    "kas submission": <CreateKas />,
   };
 
   const isAppHome = state.app === "home";

@@ -8,7 +8,7 @@ const UploadImage = () => {
 
   const onDropFile = async (files: File[]) => {
     setValue("evidence", files);
-    trigger();
+    trigger("evidence");
   };
 
   return (
@@ -19,7 +19,7 @@ const UploadImage = () => {
         control={control}
         render={({ fieldState }) => (
           <Dropzone
-            acceptTypeFile={["jpg", "png"]}
+            acceptTypeFile={["jpg", "jpeg", "png"]}
             error={!!fieldState.error}
             helperText={fieldState.error?.message}
             onDropFile={onDropFile}

@@ -79,4 +79,4 @@ const AmountPaid: React.FC = () => {
   );
 };
 
-export default PayedAmountSetter;
+export default AmountPaid;

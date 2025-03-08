@@ -18,4 +18,18 @@ export default class FileServices {
 
     callback.onFullfilled && callback.onFullfilled();
   }
+
+  async delete(urlId: string, callback: FetchCallback<UploadModel>) {
+    const targetPath = `${this.basePath}/${urlId}`;
+
+    const res = await this.api.DELETE<UploadModel>(targetPath);
+
+    if (!res?.status) {
+      callback.onError(res?.message || "unknown error");
+    } else {
+      if (res.data) callback.onSuccess(res?.data);
+    }
+
+    callback.onFullfilled && callback.onFullfilled();
+  }
 }

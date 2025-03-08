@@ -1,20 +1,16 @@
 import React, { useEffect } from "react";
 import glassmorphism from "@utils/glassmorphism";
-import QuickNote from "./QuickNote";
 import { Controller, useFormContext } from "react-hook-form";
 import { useLocalStorage } from "@utils/localStorage";
+import QuickNoteOptions from "./QuickNoteOptions";
 
-const Note: React.FC = () => {
+const NoteKas: React.FC = () => {
   const { control, setValue } = useFormContext();
   const { setItem, getItem } = useLocalStorage();
 
   useEffect(() => {
     setValue("note", getItem("note"));
   }, [setValue, getItem]);
-
-  const handleInputChange = (value: string) => {
-    setItem("note", value);
-  };
 
   return (
     <>
@@ -32,7 +28,7 @@ const Note: React.FC = () => {
                 {...field}
                 onChange={(e) => {
                   field.onChange(e);
-                  handleInputChange(e.target.value);
+                  setItem("note", e.target.value);
                 }}
                 className={`shadow-lg outline-none  w-full px-3 py-2 rounded-lg text-md text-white ${glassmorphism(
                   {
@@ -50,9 +46,9 @@ const Note: React.FC = () => {
           )}
         />
       </div>
-      <QuickNote />
+      <QuickNoteOptions />
     </>
   );
 };
 
-export default Note;
+export default NoteKas;

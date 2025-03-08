@@ -29,7 +29,14 @@ export const kassubmissionValidations = yupResolver(
       .string()
       .typeError("Payed Amount is required")
       .required("Note is Required"),
-    evidence: yup.string().required("Note is Required"),
+    evidence: yup
+      .mixed<File[] | string>()
+      .test("is-required", "Required", (value) => {
+        if (!value) return false;
+        if (Array.isArray(value)) return value.length > 0;
+        if (typeof value === "string") return value.trim() !== "";
+        return false;
+      }),
   }),
 );
 

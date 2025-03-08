@@ -17,12 +17,11 @@ export type UserModel = {
   name: string;
 };
 
-export type KasSubmissionCreateModel  = {
+export type KasSubmissionCreateModel = {
   user: {
     npm: string;
   };
   payed_amount: number;
   note: string;
-  evidence: string;
+  evidence: string | File[];
 };
-

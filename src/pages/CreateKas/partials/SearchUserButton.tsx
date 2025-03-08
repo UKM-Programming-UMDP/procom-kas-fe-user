@@ -6,7 +6,7 @@ import DialogUsers from "./DialogUsers";
 import useGetUser from "../hooks/useUser";
 import { useLocalStorage } from "@utils/localStorage";
 
-const SearchUser = () => {
+const SearchUserButton = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { control, getValues, setValue } = useFormContext();
   const { fetchUsers, handleActiveUser } = useGetUser();
@@ -58,4 +58,4 @@ const SearchUser = () => {
   );
 };
 
-export default SearchUser;
+export default SearchUserButton;

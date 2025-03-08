@@ -4,15 +4,11 @@ import useDialog, { UseDialogReturn } from "@hooks/useDialog";
 
 type StateType = {
   user: UserModel[];
-  evidenceKas: File[];
   userLoading: boolean;
   createKasLoading: boolean;
   uploadFileLoading: boolean;
   kassubmissionreqDetails: KasSubmissionCreateModel;
-  predefinedNotes: Record<
-    "bca" | "mandiri" | "gopay" | "cash" | "ovo" | "dana",
-    string
-  >;
+  listNoteOptions: string[];
 
   filters: {
     npm: string;
@@ -26,15 +22,14 @@ export const initialState: StateType = {
   kassubmissionreqDetails: {} as KasSubmissionCreateModel,
   createKasLoading: false,
   uploadFileLoading: false,
-  evidenceKas: [],
-  predefinedNotes: {
-    bca: "Payment via BCA",
-    mandiri: "Payment via Mandiri",
-    gopay: "Payment via Gopay",
-    cash: "Payment via cash",
-    ovo: "Payment via OVO",
-    dana: "Payment via DANA",
-  },
+  listNoteOptions: [
+    "Payment via BCA",
+    "Payment via Mandiri",
+    "Payment via Gopay",
+    "Payment via cash",
+    "Payment via OVO",
+    "Payment via DANA",
+  ],
 
   filters: {
     npm: "",

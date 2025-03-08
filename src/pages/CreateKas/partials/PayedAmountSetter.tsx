@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { cn } from "@utils/index";
 import glassmorphism from "@utils/glassmorphism";
 import { Controller, useFormContext } from "react-hook-form";
 
-const PayedAmount: React.FC = () => {
+const PayedAmountSetter: React.FC = () => {
   const [monthCount, setMonthCount] = useState<number>(0);
   const { control, setValue, trigger } = useFormContext();
 
@@ -79,4 +79,4 @@ const PayedAmount: React.FC = () => {
   );
 };
 
-export default PayedAmount;
+export default PayedAmountSetter;

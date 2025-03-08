@@ -2,39 +2,16 @@ import KasSubmissionService from "@api/kasSubmission/kasSubmission";
 import { KasSubmissionCreateModel } from "@api/kasSubmission/model";
 import { snackbar } from "@utils/snackbar";
 import { useFormContext } from "react-hook-form";
-import FileServices from "@api/file/file";
 import { useCreateKasContext } from "@pages/CreateKas/context";
 import { Redirect } from "../utils/redirect";
+import useUploadFile from "@hooks/useUploadFile";
 
 const useCreateKasSubmission = () => {
   const kasService = new KasSubmissionService();
-  const fileService = new FileServices();
-  const { setValue, trigger, handleSubmit } = useFormContext();
-  const { state, setState } = useCreateKasContext();
+  const { getValues, trigger, handleSubmit } = useFormContext();
+  const { setState } = useCreateKasContext();
   const { handleRedirect } = Redirect();
-
-  const handleChangeFile = (file: File[]) => {
-    setState((prev) => ({
-      ...prev,
-      evidenceKas: file,
-    }));
-    setValue("evidence", file[0]);
-  };
-
-  const handleUploadImage = async (files: File[]) => {
-    const formData = new FormData();
-    formData.append("file", files[0]);
-
-    await fileService.post(formData, {
-      onSuccess: (data) => {
-        setValue("evidence", data.url_id);
-        trigger("evidence");
-      },
-      onError: (errMessage) => {
-        snackbar.error(errMessage);
-      },
-    });
-  };
+  const { handleUploadImage } = useUploadFile();
 
   const handleSubmitForm = async () => {
     return handleSubmit(async (values) => {
@@ -44,20 +21,15 @@ const useCreateKasSubmission = () => {
         note: values.note,
         evidence: values.evidence,
       };
-
-      setState((prevState) => ({
-        ...prevState,
-        kassubmissionreqDetails: submissionData,
-        createKasLoading: true,
-      }));
-
+      console.log(values.evidence + "-1");
       kasService.post(JSON.stringify(submissionData), {
-        onSuccess: () => {
+        onSuccess: (data) => {
           snackbar.success("Successfully, Wait for Admin Validation");
           setState((prevState) => ({
             ...prevState,
             submissionKasLoading: false,
           }));
+          console.log(data);
           handleRedirect();
         },
         onError: (errMessage) => {
@@ -72,17 +44,31 @@ const useCreateKasSubmission = () => {
   };
 
   const handleUploadAndSubmit = async () => {
+    const fileImage = getValues("evidence");
+    trigger();
+    console.log(fileImage);
     const isValid = await trigger();
-    if (!isValid || (state.evidenceKas && state.evidenceKas.length > 0)) {
+    if (!isValid || !fileImage) {
       return;
     }
-    await handleUploadImage(state.evidenceKas);
+
+    setState((prevState) => ({
+      ...prevState,
+      createKasLoading: true,
+    }));
+
+    console.log(fileImage + "2");
+    await handleUploadImage(fileImage);
     await handleSubmit(handleSubmitForm)();
+
+    setState((prevState) => ({
+      ...prevState,
+      createKasLoading: false,
+    }));
   };
 
   return {
     handleUploadAndSubmit,
-    handleChangeFile,
     handleSubmitForm,
     handleUploadImage,
   };

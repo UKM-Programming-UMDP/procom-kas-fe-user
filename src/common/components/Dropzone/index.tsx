@@ -3,32 +3,35 @@ import { Upload } from "@mui/icons-material";
 import clsx from "clsx";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { useFormContext } from "react-hook-form";
 
 interface Props {
   acceptTypeFile?: string[];
-  onChangeFile: (isFile: File[]) => void;
   error?: boolean;
   helperText?: string;
 }
 
 const Dropzone = (props: Props) => {
-  const { error, helperText, acceptTypeFile, onChangeFile } = props;
+  const { error, helperText, acceptTypeFile } = props;
   const [imgUrl, setImgUrl] = useState<string | null>(null);
+  const { setValue, getValues, trigger } = useFormContext();
 
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    onChangeFile(acceptedFiles);
-    setImgUrl(URL.createObjectURL(acceptedFiles[0]));
+  const onDrop = useCallback(async (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    setImgUrl(URL.createObjectURL(file));
+    setValue("evidence", acceptedFiles);
+    trigger("evidence");
   }, []);
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
     onDrop,
     noClick: true,
     accept: acceptTypeFile?.reduce(
-      (acc, data) => {
-        acc[`image/${data}`] = [];
+      (acc, type) => {
+        acc[`image/${type}`] = [];
         return acc;
       },
-      {} as { [key: string]: string[] },
+      {} as Record<string, string[]>,
     ),
   });
 
@@ -41,7 +44,6 @@ const Dropzone = (props: Props) => {
         })}
       >
         <input {...getInputProps()} />
-
         <div
           className={clsx(
             "p-3 w-full flex gap-2 items-center justify-center border border-dashed cursor-pointer text-sm",
@@ -58,6 +60,7 @@ const Dropzone = (props: Props) => {
       </div>
 
       {helperText && <span className="text-xs text-red-500">{helperText}</span>}
+
       {isDragActive && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50 pointer-events-none">
           <span className="text-white text-2xl">

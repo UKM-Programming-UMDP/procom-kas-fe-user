@@ -4,6 +4,12 @@ import { KasSubmissionCreateModel } from "@api/kasSubmission/model";
 
 const UploadImage = () => {
   const { control } = useFormContext<KasSubmissionCreateModel>();
+  const { setValue, trigger } = useFormContext();
+
+  const onDropFile = async (files: File[]) => {
+    setValue("evidence", files);
+    trigger();
+  };
 
   return (
     <div className="mb-3 w-full">
@@ -16,6 +22,7 @@ const UploadImage = () => {
             acceptTypeFile={["jpg", "png"]}
             error={!!fieldState.error}
             helperText={fieldState.error?.message}
+            onDropFile={onDropFile}
           />
         )}
       />

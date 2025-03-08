@@ -3,24 +3,28 @@ import { Upload } from "@mui/icons-material";
 import clsx from "clsx";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { useFormContext } from "react-hook-form";
 
 interface Props {
   acceptTypeFile?: string[];
   error?: boolean;
   helperText?: string;
+  onDropFile(files: File[]): void;
 }
 
 const Dropzone = (props: Props) => {
-  const { error, helperText, acceptTypeFile } = props;
+  const { error, helperText, acceptTypeFile, onDropFile } = props;
   const [imgUrl, setImgUrl] = useState<string | null>(null);
-  const { setValue, getValues, trigger } = useFormContext();
-
+  const acceptFile = acceptTypeFile?.reduce(
+    (acc, type) => {
+      acc[`image/${type}`] = [];
+      return acc;
+    },
+    {} as Record<string, string[]>,
+  );
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    const file = acceptedFiles[0];
-    setImgUrl(URL.createObjectURL(file));
-    setValue("evidence", acceptedFiles);
-    trigger("evidence");
+    setImgUrl(URL.createObjectURL(acceptedFiles[0]));
+    onDropFile(acceptedFiles);
+    // setImgUrl("");
   }, []);
 
   const { getRootProps, getInputProps, isDragActive, open } = useDropzone({

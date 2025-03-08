@@ -13,7 +13,7 @@ const useCreateKasSubmission = () => {
   const { handleRedirect } = Redirect();
   const { handleUploadImage } = useUploadFile();
 
-  const handleSubmitForm = async () => {
+  const handleKasSubmission = async () => {
     return handleSubmit(async (values) => {
       const submissionData: KasSubmissionCreateModel = {
         user: { npm: values.user.npm },
@@ -43,10 +43,10 @@ const useCreateKasSubmission = () => {
     })();
   };
 
-  const handleUploadAndSubmit = async () => {
+  const handleSubmitForm = async () => {
     const fileImage = getValues("evidence");
     trigger();
-    console.log(fileImage);
+    console.log("fileImage", fileImage);
     const isValid = await trigger();
     if (!isValid || !fileImage) {
       return;
@@ -59,7 +59,7 @@ const useCreateKasSubmission = () => {
 
     console.log(fileImage + "2");
     await handleUploadImage(fileImage);
-    await handleSubmit(handleSubmitForm)();
+    await handleSubmit(handleKasSubmission)();
 
     setState((prevState) => ({
       ...prevState,
@@ -68,9 +68,7 @@ const useCreateKasSubmission = () => {
   };
 
   return {
-    handleUploadAndSubmit,
     handleSubmitForm,
-    handleUploadImage,
   };
 };
 

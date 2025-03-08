@@ -1,7 +1,7 @@
 import React from "react";
 import NoteKas from "./NoteKas";
 import glassmorphism from "@utils/glassmorphism";
-import PayedAmountSetter from "./PayedAmountSetter";
+import PayedAmountSetter from "./AmountPaid";
 import UploadImage from "./UploadImage";
 import useCreateKasSubmission from "../Create/hooks/useCreateKasSubmission";
 import { ActionButton } from "@components/Button";
@@ -10,7 +10,7 @@ import SearchUserButton from "./SearchUserButton";
 
 const KasBody: React.FC = () => {
   const { state } = useCreateKasContext();
-  const { handleUploadAndSubmit } = useCreateKasSubmission();
+  const { handleSubmitForm } = useCreateKasSubmission();
 
   return (
     <div
@@ -22,7 +22,7 @@ const KasBody: React.FC = () => {
       <UploadImage />
       <ActionButton
         label="Submit"
-        onClick={handleUploadAndSubmit}
+        onClick={handleSubmitForm}
         submitLoading={state.createKasLoading}
         variant="contained"
         size="large"

@@ -25,19 +25,11 @@ const useCreateKasSubmission = () => {
       kasService.post(JSON.stringify(submissionData), {
         onSuccess: (data) => {
           snackbar.success("Successfully, Wait for Admin Validation");
-          setState((prevState) => ({
-            ...prevState,
-            submissionKasLoading: false,
-          }));
           console.log(data);
           handleRedirect();
         },
         onError: (errMessage) => {
           snackbar.error(errMessage);
-          setState((prevState) => ({
-            ...prevState,
-            submissionKasLoading: false,
-          }));
         },
       });
     })();
